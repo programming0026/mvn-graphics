@@ -1,0 +1,47 @@
+package com.juniverse.graphics.style;
+
+/**
+ * Patrones de relleno estándar de BGI ({@code fill_styles}).
+ */
+public enum FillPattern {
+    EMPTY(PatternMask.of(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)),
+    SOLID(PatternMask.of(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF)),
+    LINE(PatternMask.of(0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00)),
+    LIGHT_SLASH(PatternMask.of(0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80)),
+    SLASH(PatternMask.of(0xE0, 0xC1, 0x83, 0x07, 0x0E, 0x1C, 0x38, 0x70)),
+    BACKSLASH(PatternMask.of(0xF0, 0x78, 0x3C, 0x1E, 0x0F, 0x87, 0xC3, 0xE1)),
+    LIGHT_BACKSLASH(PatternMask.of(0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01)),
+    HATCH(PatternMask.of(0xFF, 0x88, 0x88, 0x88, 0xFF, 0x88, 0x88, 0x88)),
+    CROSS_HATCH(PatternMask.of(0x81, 0x42, 0x24, 0x18, 0x18, 0x24, 0x42, 0x81)),
+    INTERLEAVE(PatternMask.of(0xCC, 0x33, 0xCC, 0x33, 0xCC, 0x33, 0xCC, 0x33)),
+    WIDE_DOT(PatternMask.of(0x80, 0x00, 0x08, 0x00, 0x80, 0x00, 0x08, 0x00)),
+    CLOSE_DOT(PatternMask.of(0x88, 0x00, 0x22, 0x00, 0x88, 0x00, 0x22, 0x00)),
+    /** Patrón definido por el usuario mediante {@code setfillpattern}. */
+    USER(null);
+
+    private final PatternMask mask;
+
+    private FillPattern(PatternMask mask) {
+        this.mask = mask;
+    }
+
+    /**
+     * Máscara predefinida del patrón.
+     *
+     * @throws IllegalStateException si se solicita para {@link #USER}
+     */
+    public PatternMask mask() {
+        if (mask == null) {
+            throw new IllegalStateException("The USER pattern has no predefined mask");
+        }
+        return mask;
+    }
+
+    /** Obtiene el patrón a partir de su código numérico BGI. */
+    public static FillPattern fromCode(int code) {
+        if (code < 0 || code >= values().length) {
+            throw new IllegalArgumentException("Invalid fill pattern: " + code);
+        }
+        return values()[code];
+    }
+}
