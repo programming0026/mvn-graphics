@@ -1,5 +1,7 @@
 # mvn-graphics
 
+[![CI](https://github.com/programming0026/mvn-graphics/actions/workflows/ci.yml/badge.svg)](https://github.com/programming0026/mvn-graphics/actions/workflows/ci.yml)
+
 Reescritura en **Java 21** de la biblioteca gráfica **BGI** (`graphics.h`) de Borland
 Turbo C / WinBGI, usando **SDL 3** a través de [LWJGL](https://www.lwjgl.org/).
 
@@ -127,6 +129,20 @@ actual. El README de la biblioteca contiene la tabla completa de equivalencias c
 
 El detalle de los paquetes, el modelo de hilos y las diferencias con WinBGI está en el
 [README de la biblioteca](mvn-sdl-graphics/README.md).
+
+## Integración continua
+
+El flujo [`.github/workflows/ci.yml`](.github/workflows/ci.yml) se ejecuta con cada push o
+pull request a `main`, y también se puede lanzar a mano desde la pestaña *Actions*.
+
+* Compila y prueba la biblioteca (`mvn clean install`) y luego los ejemplos
+  (`mvn clean verify`).
+* Se ejecuta en **Windows, Linux y macOS**: así se comprueba que cada sistema descargue sus
+  binarios nativos de SDL 3.
+* Las pruebas no abren ventanas, por eso funcionan en los servidores de GitHub.
+* Publica como artefactos, uno por sistema operativo, los jars de la biblioteca (clases,
+  fuentes, javadoc y pruebas) y el jar ejecutable de los ejemplos. Si alguna prueba falla,
+  también publica sus reportes.
 
 ## Licencia
 
