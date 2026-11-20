@@ -78,7 +78,6 @@ public final class Main {
         initGraph(DETECT, VGA, "");
         int errorCode = graphResult();
         if (errorCode != GR_OK) {
-            // API fluida: graphErrorMsg solo se evalúa si el nivel ERROR está activo (Sonar S2629).
             LOG.atError()
                     .setMessage("Could not open the menu: {}")
                     .addArgument(() -> graphErrorMsg(errorCode))
@@ -119,8 +118,6 @@ public final class Main {
      * en lugar de terminar la aplicación.
      */
     private static void run(Example example) {
-        // Se lee una sola vez y se pasa como variable: los argumentos del log no
-        // deben requerir evaluación (Sonar S2629).
         String title = example.title();
         LOG.info("Running example {}", title);
         try {

@@ -4,6 +4,26 @@ Programas de ejemplo de la biblioteca [`sdl-graphics`](../mvn-sdl-graphics/READM
 (BGI / `graphics.h` para Java 21 con SDL 3). Incluye programas clásicos de Turbo C portados
 a la biblioteca.
 
+![Menú de ejemplos](docs/images/menu.png)
+
+## Galería
+
+| | |
+|:---:|:---:|
+| ![DemoGraphics: figuras, líneas y texto](docs/images/demo-graphics-showcase.png)<br>`DemoGraphics`: figuras, estilos de línea y texto | ![DemoGraphics: patrones de relleno](docs/images/demo-graphics-patterns.png)<br>`DemoGraphics`: los 12 patrones de relleno |
+| ![DemoGraphics: plasma](docs/images/demo-graphics-plasma.png)<br>`DemoGraphics`: plasma con colores RGB | ![FireEffect](docs/images/fire-effect.png)<br>`FireEffect` (`FIRE.C`) |
+| ![FourierSeries](docs/images/fourier-series.png)<br>`FourierSeries` (`FOURIER.C`) con 15 armónicos | ![SevenSegmentDisplay](docs/images/seven-segment-display.png)<br>`SevenSegmentDisplay` (`DISPLAY.C`) |
+| ![FunctionGrapher: tabla](docs/images/function-grapher-table.png)<br>`FunctionGrapher` (`GRAFICA.C`): tabla | ![FunctionGrapher: gráfica](docs/images/function-grapher-plot.png)<br>`FunctionGrapher`: gráfica con `Plot2D` |
+| ![BgiDemo: paleta](docs/images/bgidemo-palette.png)<br>`BgiDemo` (`BGIDEMO.C`): paleta | ![BgiDemo: arcos](docs/images/bgidemo-arcs.png)<br>`BgiDemo`: arcos |
+| ![BgiDemo: moveTo/lineTo](docs/images/bgidemo-lineto.png)<br>`BgiDemo`: `moveTo` / `lineTo` | |
+
+Las capturas se generan sin abrir ventanas con una prueba que normalmente está desactivada
+(`screenshot.ExampleScreenshotsTest`). Para regenerarlas en `docs/images`:
+
+```bash
+mvn test -Dtest=ExampleScreenshotsTest -Dscreenshots=true
+```
+
 ## Requisitos
 
 Primero instale la biblioteca en el repositorio local de Maven:

@@ -97,14 +97,11 @@ public final class SdlDisplay implements Display {
         SDL_SetWindowMinimumSize(window, Math.min(MIN_WINDOW_SIZE, width), Math.min(MIN_WINDOW_SIZE, height));
         SDL_SetWindowPosition(window, position(spec.left()), position(spec.top()));
 
-        // NULL como nombre de driver: SDL elige el mejor renderer disponible.
         this.renderer = nSDL_CreateRenderer(window, MemoryUtil.NULL);
         if (renderer == MemoryUtil.NULL) {
             SDL_DestroyWindow(window);
             throw new PlatformException("Could not create the renderer: " + SDL_GetError());
         }
-        // Las coordenadas de dibujo y del mouse siguen siendo las de BGI aunque
-        // la ventana se maximice o cambie de tamaño.
         applyPresentation();
         try {
             allocateTexture();
@@ -133,8 +130,6 @@ public final class SdlDisplay implements Display {
         updateScaleMode();
         page.copyTo(uploadPixels, width, height);
         SDL_UpdateTexture(texture, null, upload, width * Integer.BYTES);
-        // SDL_RenderClear limpia toda la ventana (incluidas las bandas que no
-        // cubre la página), así que el fondo ocupa la ventana completa.
         SDL_SetRenderDrawColor(renderer, (byte) (borderArgb >> 16), (byte) (borderArgb >> 8),
                 (byte) borderArgb, (byte) 0xFF);
         SDL_RenderClear(renderer);
@@ -167,8 +162,6 @@ public final class SdlDisplay implements Display {
     /** Aplica la presentación lógica según el modo de escalado y el tamaño de la página. */
     private void applyPresentation() {
         int presentation = switch (scalingMode) {
-            // En RESIZE la página suele medir lo mismo que la ventana (escala 1:1);
-            // solo si la ventana es más chica se reduce conservando la proporción.
             case RESIZE, KEEP_ASPECT -> SDL_LOGICAL_PRESENTATION_LETTERBOX;
             case STRETCH -> SDL_LOGICAL_PRESENTATION_STRETCH;
             case INTEGER -> SDL_LOGICAL_PRESENTATION_INTEGER_SCALE;

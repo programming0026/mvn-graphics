@@ -27,6 +27,6 @@ public record FontSpec(FontName font, float pixelSize, double stretchX) {
             float size = (float) (font.baseSize() * USER_REFERENCE_SIZE * scale.scaleY());
             return new FontSpec(font, Math.max(1f, size), scale.scaleX() / scale.scaleY());
         }
-        return new FontSpec(font, font.baseSize() * settings.charSize(), 1.0);
+        return new FontSpec(font, font.baseSize() * (float)settings.charSize(), 1.0);
     }
 }

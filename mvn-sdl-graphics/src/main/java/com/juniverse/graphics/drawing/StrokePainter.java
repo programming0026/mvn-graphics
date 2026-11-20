@@ -41,7 +41,7 @@ public final class StrokePainter {
             });
         }
         if (points.size() == 1) {
-            Point only = points.get(0);
+            Point only = points.getFirst();
             addThick(pixels, only.x(), only.y(), thickness, true);
         }
         paint(pixels);
