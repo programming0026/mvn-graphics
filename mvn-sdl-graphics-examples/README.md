@@ -68,9 +68,9 @@ también se vuelve al menú.
 ```
 com.juniverse.graphics.examples
 ├── Main         Menú de ejemplos
-├── bgidemo      DemoGraphics y BGIDEMO.C (BgiDemo, DemoFrame y sus demostraciones)
-├── firedemo     FIRE.C (FireEffect)
-├── mathdemo     FOURIER.C, GRAFICA.C/H y DISPLAY.C
+├── bgidemo      DemoGraphics (BgiDemo, DemoFrame y sus demostraciones)
+├── firedemo     (FireEffect)
+├── mathdemo     Fourier y Grafica
 ├── dto          Records: Example (entrada del menú), PaletteBox
 └── exception    ExampleAbortedException
 ```
@@ -117,15 +117,15 @@ Para cambiar el nivel sin recompilar, use
 
 ## Ejemplos
 
-| Original (Turbo C) | Clase Java | Qué hace |
+| Original | Clase Java | Qué hace |
 |--------------------|------------|----------|
 | — | `DemoGraphics` | Recorrido por la biblioteca: figuras, patrones, plasma, animación con doble búfer y dibujo con el mouse |
-| `DISPLAY.C` | `SevenSegmentDisplay` | Display de 7 segmentos que cuenta de 00 a 19 (rectángulos + `floodFill`) |
-| `FOURIER.C` | `FourierSeries` | Pide un número de términos y dibuja la onda cuadrada como suma de armónicos; incluye lectura de texto en modo gráfico (`gscanfxy`/`ggets`) |
-| `FIRE.C` | `FireEffect` | Efecto de fuego del modo 13h (320x200, 256 colores) usando un búfer en memoria, paleta RGB y `putImage` |
-| `GRAFICA.H` | `Plot2D` | Mini biblioteca para graficar en coordenadas lógicas (ventana lógica, ejes, divisiones, etiquetas) |
-| `GRAFICA.C` | `FunctionGrapher` | Tabula una función y la grafica con `Plot2D`; la función se cambia en las constantes `FUNCTION` y `FUNCTION_NAME` |
-| `BGIDEMO.C` | `bgidemo.BgiDemo` | La demostración oficial de Borland: 20 pantallas con colores, paleta, píxeles, imágenes, barras, arcos, pasteles, líneas, fuentes, rellenos y polígonos |
+| `DISPLAY` | `SevenSegmentDisplay` | Display de 7 segmentos que cuenta de 00 a 19 (rectángulos + `floodFill`) |
+| `FOURIER` | `FourierSeries` | Pide un número de términos y dibuja la onda cuadrada como suma de armónicos; incluye lectura de texto en modo gráfico (`gscanfxy`/`ggets`) |
+| `FIRE` | `FireEffect` | Efecto de fuego del modo 13h (320x200, 256 colores) usando un búfer en memoria, paleta RGB y `putImage` |
+| `GRAFICA` | `Plot2D` | Mini biblioteca para graficar en coordenadas lógicas (ventana lógica, ejes, divisiones, etiquetas) |
+| `GRAFICA` | `FunctionGrapher` | Tabula una función y la grafica con `Plot2D`; la función se cambia en las constantes `FUNCTION` y `FUNCTION_NAME` |
+| `BGIDEMO` | `bgidemo.BgiDemo` | La demostración oficial de Borland: 20 pantallas con colores, paleta, píxeles, imágenes, barras, arcos, pasteles, líneas, fuentes, rellenos y polígonos |
 
 Para ejecutar cada uno:
 
@@ -142,15 +142,13 @@ mvn compile exec:java -Dexec.mainClass=com.juniverse.graphics.examples.bgidemo.B
 * **Ventana maximizable:** los ejemplos portados usan coordenadas fijas, así que activan
   `setWindowScaling(ScalingMode.KEEP_ASPECT)`. Al maximizar, el dibujo completo se amplía
   conservando la proporción.
-* **`GRAFICA.H`:**
+* **`Grafica`:**
   - `Title` calculaba la posición en pantalla pero escribía con las coordenadas lógicas;
     aquí usa la posición transformada. `FunctionGrapher` coloca el título arriba a la
     izquierda, lejos de los ejes.
   - Los números de los ejes ya no se enciman con las marcas: los del eje X van debajo del
     eje y los del eje Y, a la derecha de su marca. El 0 se escribe una sola vez.
-  - Las variables globales (`W1..W4`, `U1`, `U2`, ...) pasan a ser el estado de cada
-    instancia de `Plot2D`.
-* **`BGIDEMO.C`:**
+* **`BGIDemo`:**
   - Las 20 demostraciones se agrupan por tema en clases del paquete `bgidemo`
     (`ColorDemos`, `BarDemos`, `TextDemos`, ...). Comparten `DemoFrame`, que contiene
     `MainWindow`, `StatusLine`, `Pause` y `gprintf`.
@@ -168,9 +166,9 @@ mvn compile exec:java -Dexec.mainClass=com.juniverse.graphics.examples.bgidemo.B
       caracteres que en DOS (Ç ü é ñ ¿ ░▒▓ │┤ ±≥≤ ...).
     - Cada carácter se mide con la fuente actual antes de escribirlo, para que las líneas
       no se salgan de la ventana. El original medía con la fuente anterior.
-* **`FOURIER.C`:** la lectura de texto restaura el fondo exacto al borrar con Retroceso
+* **`Fourier`:** la lectura de texto restaura el fondo exacto al borrar con Retroceso
   (el original pintaba un hueco con el color de fondo) y muestra un cursor.
-* **`FIRE.C`:**
+* **`Fire`:**
   - La paleta VGA de 6 bits se convierte a RGB.
   - La simulación sigue siendo de 320x200, pero se muestra al doble y se escala al
     maximizar.
