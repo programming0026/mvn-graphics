@@ -3,21 +3,21 @@ package com.juniverse.graphics.dto;
 import com.juniverse.graphics.style.LineStyle;
 
 /**
- * Configuración de línea actual (equivalente a {@code linesettingstype}).
+ * Current line settings (equivalent to {@code linesettingstype}).
  *
- * @param style       estilo de la línea
- * @param userPattern patrón de 16 bits usado cuando el estilo es {@link LineStyle#USER_BIT}
- * @param thickness   grosor en píxeles ({@link #NORMAL_WIDTH} o {@link #THICK_WIDTH})
+ * @param style       line style
+ * @param userPattern 16-bit pattern used when the style is {@link LineStyle#USER_BIT}
+ * @param thickness   thickness in pixels ({@link #NORMAL_WIDTH} or {@link #THICK_WIDTH})
  */
 public record LineSettings(LineStyle style, int userPattern, int thickness) {
 
-    /** Grosor normal (NORM_WIDTH). */
+    /** Normal thickness (NORM_WIDTH). */
     public static final int NORMAL_WIDTH = 1;
 
-    /** Grosor grueso (THICK_WIDTH). */
+    /** Thick thickness (THICK_WIDTH). */
     public static final int THICK_WIDTH = 3;
 
-    /** Configuración por defecto: línea sólida de un píxel. */
+    /** Default settings: solid one-pixel line. */
     public static final LineSettings DEFAULT = new LineSettings(LineStyle.SOLID, 0xFFFF, NORMAL_WIDTH);
 
     public LineSettings {
@@ -30,7 +30,7 @@ public record LineSettings(LineStyle style, int userPattern, int thickness) {
         userPattern &= 0xFFFF;
     }
 
-    /** Patrón de 16 bits que realmente se aplica al dibujar. */
+    /** 16-bit pattern that is actually applied when drawing. */
     public int effectivePattern() {
         return style == LineStyle.USER_BIT ? userPattern : style.pattern();
     }

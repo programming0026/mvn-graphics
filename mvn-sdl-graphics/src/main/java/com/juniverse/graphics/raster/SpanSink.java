@@ -1,17 +1,17 @@
 package com.juniverse.graphics.raster;
 
 /**
- * Receptor de tramos horizontales (spans) generados al rellenar figuras.
+ * Receiver of horizontal spans generated when filling shapes.
  */
 @FunctionalInterface
 public interface SpanSink {
 
     /**
-     * Recibe un tramo horizontal inclusivo.
+     * Receives an inclusive horizontal span.
      *
-     * @param y      fila del tramo
-     * @param xStart primera columna (inclusive)
-     * @param xEnd   última columna (inclusive), siempre &gt;= {@code xStart}
+     * @param y      row of the span
+     * @param xStart first column (inclusive)
+     * @param xEnd   last column (inclusive), always &gt;= {@code xStart}
      */
     void accept(int y, int xStart, int xEnd);
 }

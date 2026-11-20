@@ -12,7 +12,7 @@ import com.juniverse.graphics.text.VerticalAlignment;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Demostraciones de curvas: {@code ArcDemo}, {@code CircleDemo} y
+ * Curve demonstrations: {@code ArcDemo}, {@code CircleDemo} and
  * {@code PieDemo}.
  */
 public final class CurveDemos {
@@ -23,7 +23,7 @@ public final class CurveDemos {
         this.frame = frame;
     }
 
-    /** Arcos al azar unidos a su centro hasta que se presione una tecla (ArcDemo). */
+    /** Random arcs joined to their center until a key is pressed (ArcDemo). */
     public void arcDemo() {
         frame.mainWindow("Arc Demonstration");
         frame.statusLine("ESC Aborts - Press a Key to stop");
@@ -40,7 +40,7 @@ public final class CurveDemos {
         frame.pause();
     }
 
-    /** Circunferencias al azar hasta que se presione una tecla (CircleDemo). */
+    /** Random circles until a key is pressed (CircleDemo). */
     public void circleDemo() {
         frame.mainWindow("Circle Demonstration");
         frame.statusLine("ESC Aborts - Press a Key to stop");
@@ -53,7 +53,7 @@ public final class CurveDemos {
         frame.pause();
     }
 
-    /** Gráfica de pastel con cuatro rebanadas y sus porcentajes (PieDemo). */
+    /** Pie chart with four slices and their percentages (PieDemo). */
     public void pieDemo() {
         frame.mainWindow("Pie Chart Demonstration");
 
@@ -91,7 +91,7 @@ public final class CurveDemos {
         frame.pause();
     }
 
-    /** Escribe una etiqueta a {@code labelRadius} del centro, en el ángulo indicado. */
+    /** Writes a label at {@code labelRadius} from the center, at the given angle. */
     private void label(int centerX, int centerY, int labelRadius, double degrees,
                        HorizontalAlignment horizontal, VerticalAlignment vertical, String text) {
         double radians = Math.toRadians(degrees);
@@ -101,7 +101,7 @@ public final class CurveDemos {
         outTextXY(x, y, text);
     }
 
-    /** Corrige una distancia vertical según la relación de aspecto (macro adjasp). */
+    /** Corrects a vertical distance according to the aspect ratio (adjasp macro). */
     private int adjustAspect(int y) {
         return (int) (frame.aspectRatio() * y);
     }

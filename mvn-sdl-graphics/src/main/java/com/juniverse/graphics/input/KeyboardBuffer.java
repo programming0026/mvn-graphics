@@ -5,35 +5,35 @@ import java.util.Deque;
 import java.util.NoSuchElementException;
 
 /**
- * Cola de teclas pendientes de una ventana (equivale a {@code kbd_queue}).
+ * Queue of pending keys of a window (equivalent to {@code kbd_queue}).
  */
 public final class KeyboardBuffer {
 
-    /** Prefijo que antecede a una tecla extendida. */
+    /** Prefix that precedes an extended key. */
     public static final int EXTENDED_PREFIX = 0;
 
     private final Deque<Integer> keys = new ArrayDeque<>();
 
-    /** Agrega un carácter o código de control (por ejemplo 13 para Enter). */
+    /** Adds a character or control code (for example 13 for Enter). */
     public void push(int code) {
         keys.addLast(code);
     }
 
-    /** Agrega una tecla extendida como la secuencia 0, código. */
+    /** Adds an extended key as the sequence 0, code. */
     public void pushExtended(ExtendedKey key) {
         keys.addLast(EXTENDED_PREFIX);
         keys.addLast(key.code());
     }
 
-    /** Indica si hay teclas pendientes (equivale a {@code kbhit}). */
+    /** Tells whether there are pending keys (equivalent to {@code kbhit}). */
     public boolean hasKey() {
         return !keys.isEmpty();
     }
 
     /**
-     * Extrae la siguiente tecla.
+     * Takes the next key.
      *
-     * @throws NoSuchElementException si la cola está vacía
+     * @throws NoSuchElementException if the queue is empty
      */
     public int poll() {
         Integer code = keys.pollFirst();
@@ -43,7 +43,7 @@ public final class KeyboardBuffer {
         return code;
     }
 
-    /** Descarta todas las teclas pendientes. */
+    /** Discards all pending keys. */
     public void clear() {
         keys.clear();
     }

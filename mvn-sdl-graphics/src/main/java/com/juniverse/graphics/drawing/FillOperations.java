@@ -5,28 +5,28 @@ import com.juniverse.graphics.dto.Point;
 import java.util.List;
 
 /**
- * Operaciones de figuras rellenas con el patrón y color de relleno actuales.
+ * Operations for shapes filled with the current fill pattern and color.
  */
 public interface FillOperations {
 
-    /** Rellena un rectángulo sin dibujar su borde. */
+    /** Fills a rectangle without drawing its border. */
     void bar(int left, int top, int right, int bottom);
 
-    /** Dibuja una barra rellena con contorno tridimensional. */
+    /** Draws a filled bar with a three-dimensional outline. */
     void bar3d(int left, int top, int right, int bottom, int depth, boolean drawTop);
 
-    /** Dibuja y rellena una elipse completa. */
+    /** Draws and fills a complete ellipse. */
     void fillEllipse(int x, int y, int radiusX, int radiusY);
 
-    /** Dibuja y rellena un polígono cerrado. */
+    /** Draws and fills a closed polygon. */
     void fillPoly(List<Point> points);
 
-    /** Dibuja y rellena un sector circular ("rebanada de pastel"). */
+    /** Draws and fills a circular sector ("pie slice"). */
     void pieSlice(int x, int y, int startAngle, int endAngle, int radius);
 
-    /** Dibuja y rellena un sector elíptico. */
+    /** Draws and fills an elliptical sector. */
     void sector(int x, int y, int startAngle, int endAngle, int radiusX, int radiusY);
 
-    /** Rellena la región que contiene a (x, y) delimitada por el color de borde. */
+    /** Fills the region containing (x, y) delimited by the border color. */
     void floodFill(int x, int y, int borderColorCode);
 }

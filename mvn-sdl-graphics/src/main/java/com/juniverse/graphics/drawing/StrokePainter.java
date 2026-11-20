@@ -9,11 +9,11 @@ import com.juniverse.graphics.dto.LineSettings;
 import java.util.List;
 
 /**
- * Traza contornos aplicando el estilo de línea, el grosor, el color y el
- * modo de escritura actuales.
+ * Draws outlines applying the current line style, thickness, color and
+ * write mode.
  * <p>
- * Cada contorno se acumula primero en un {@link PixelSet} para que ningún
- * píxel se dibuje dos veces (importante en modo XOR).
+ * Each outline is first accumulated in a {@link PixelSet} so that no
+ * pixel is drawn twice (important in XOR mode).
  */
 public final class StrokePainter {
 
@@ -23,7 +23,7 @@ public final class StrokePainter {
         this.context = context;
     }
 
-    /** Dibuja una polilínea con el estilo de línea actual. */
+    /** Draws a polyline with the current line style. */
     public void strokePolyline(List<Point> points) {
         LineSettings settings = context.state().lineSettings();
         int pattern = settings.effectivePattern();
@@ -47,28 +47,28 @@ public final class StrokePainter {
         paint(pixels);
     }
 
-    /** Dibuja un arco elíptico sólido con el grosor actual. */
+    /** Draws a solid elliptical arc with the current thickness. */
     public void strokeArc(int x, int y, int startAngle, int endAngle, int radiusX, int radiusY) {
         PixelSet pixels = new PixelSet();
         addArc(pixels, x, y, startAngle, endAngle, radiusX, radiusY);
         paint(pixels);
     }
 
-    /** Agrega a un conjunto los píxeles de un arco sólido con el grosor actual. */
+    /** Adds to a set the pixels of a solid arc with the current thickness. */
     public void addArc(PixelSet pixels, int x, int y, int startAngle, int endAngle, int radiusX, int radiusY) {
         int thickness = context.state().lineSettings().thickness();
         EllipseRasterizer.traceArc(x, y, radiusX, radiusY, startAngle, endAngle,
                 (px, py) -> addSquare(pixels, px, py, thickness));
     }
 
-    /** Agrega a un conjunto los píxeles de un segmento sólido con el grosor actual. */
+    /** Adds to a set the pixels of a solid segment with the current thickness. */
     public void addSolidLine(PixelSet pixels, int x0, int y0, int x1, int y1) {
         int thickness = context.state().lineSettings().thickness();
         boolean horizontal = LineRasterizer.isMostlyHorizontal(x0, y0, x1, y1);
         LineRasterizer.trace(x0, y0, x1, y1, (x, y) -> addThick(pixels, x, y, thickness, horizontal));
     }
 
-    /** Dibuja todos los píxeles del conjunto con el color y modo actuales. */
+    /** Draws all the pixels of the set with the current color and mode. */
     public void paint(PixelSet pixels) {
         DrawingState state = context.state();
         int argb = state.colorArgb();

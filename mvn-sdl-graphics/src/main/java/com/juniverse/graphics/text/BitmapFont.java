@@ -4,24 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Fuente de mapa de bits de 8x8 píxeles, equivalente a la fuente por defecto
- * de BGI ({@code DEFAULT_FONT}), basada en la fuente clásica de IBM PC
- * (font8x8, de dominio público).
+ * 8x8-pixel bitmap font, equivalent to BGI's default font
+ * ({@code DEFAULT_FONT}), based on the classic IBM PC font
+ * (font8x8, public domain).
  * <p>
- * Cada glifo son 8 filas de arriba hacia abajo; en cada fila el bit 0
- * corresponde a la columna izquierda. Incluye ASCII imprimible y los
- * caracteres del español (á é í ó ú ü ñ ¿ ¡ y sus mayúsculas) y, a través de
- * {@link Cp437Glyphs}, el resto de la página de códigos 437 de DOS.
+ * Each glyph is 8 rows from top to bottom; in each row bit 0
+ * corresponds to the left column. It includes printable ASCII and the
+ * Spanish characters (á é í ó ú ü ñ ¿ ¡ and their capitals) and, through
+ * {@link Cp437Glyphs}, the rest of DOS code page 437.
  */
 public final class BitmapFont {
 
-    /** Ancho y alto de cada glifo en píxeles. */
+    /** Width and height of each glyph in pixels. */
     public static final int GLYPH_SIZE = 8;
 
     private static final char FIRST_ASCII = ' ';
     private static final char FALLBACK = '?';
 
-    /** Glifos de U+0020 a U+007E. */
+    /** Glyphs from U+0020 to U+007E. */
     private static final int[][] ASCII = {
             {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, // ' '
             {0x18, 0x3C, 0x3C, 0x18, 0x18, 0x00, 0x18, 0x00}, // !
@@ -120,7 +120,7 @@ public final class BitmapFont {
             {0x6E, 0x3B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, // ~
     };
 
-    /** Caracteres del español construidos a partir de los glifos base. */
+    /** Spanish characters built from the base glyphs. */
     private static final Map<Character, int[]> EXTRA = new HashMap<>();
 
     static {
@@ -146,18 +146,18 @@ public final class BitmapFont {
     }
 
     /**
-     * Devuelve las 8 filas del glifo de un carácter. Los caracteres sin glifo
-     * se muestran como {@code '?'}.
+     * Returns the 8 rows of a character's glyph. Characters without a glyph
+     * are shown as {@code '?'}.
      * <p>
-     * Busca primero en ASCII, luego en los caracteres del español y por último
-     * en el resto de la página de códigos 437 de DOS ({@link Cp437Glyphs}).
+     * Looks first in ASCII, then in the Spanish characters and finally
+     * in the rest of DOS code page 437 ({@link Cp437Glyphs}).
      */
     public static int[] glyph(char character) {
         int[] found = find(character);
         return found != null ? found : ASCII[FALLBACK - FIRST_ASCII];
     }
 
-    /** Indica si la fuente tiene un glifo propio para el carácter (sin usar {@code '?'}). */
+    /** Tells whether the font has its own glyph for the character (without using {@code '?'}). */
     public static boolean hasGlyph(char character) {
         return find(character) != null;
     }
@@ -170,7 +170,7 @@ public final class BitmapFont {
         return extra != null ? extra : Cp437Glyphs.glyph(character);
     }
 
-    /** Indica si el píxel (x, y) del glifo está encendido. */
+    /** Tells whether pixel (x, y) of the glyph is on. */
     public static boolean isSet(int[] glyph, int x, int y) {
         return (glyph[y] & (1 << x)) != 0;
     }

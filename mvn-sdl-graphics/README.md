@@ -1,5 +1,7 @@
 # SDL Graphics: WinBGI para Java 21 con SDL 3
 
+[Read in English](README.en.md)
+
 Reescritura en **Java 21** de la biblioteca **WinBGI** (la versión para Windows de
 Borland Graphics Interface, `graphics.h`), usando **SDL 3** a través de los bindings de
 [LWJGL 3.4](https://www.lwjgl.org/).

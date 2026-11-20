@@ -22,13 +22,13 @@ import java.util.Optional;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Menú principal de los ejemplos.
+ * Main menu of the examples.
  * <p>
- * Muestra una ventana con la lista de ejemplos numerados. Al presionar el
- * número de uno, el menú se cierra, el ejemplo se ejecuta en su propia
- * ventana y, al terminar, el menú vuelve a aparecer. ESC sale del programa.
+ * Shows a window with the numbered list of examples. When the
+ * number of one is pressed, the menu closes, the example runs in its own
+ * window and, when it finishes, the menu appears again. ESC exits the program.
  * <p>
- * Para agregar un ejemplo basta con añadirlo a {@link #EXAMPLES}.
+ * To add an example it is enough to add it to {@link #EXAMPLES}.
  */
 public final class Main {
 
@@ -37,7 +37,7 @@ public final class Main {
     private static final int ESC = 27;
     private static final String[] NO_ARGUMENTS = {};
 
-    /** Ejemplos disponibles, en el orden en que aparecen en el menú. */
+    /** Available examples, in the order they appear in the menu. */
     public static final List<Example> EXAMPLES = List.of(
             new Example("DemoGraphics", "Shapes, patterns, plasma, animation and mouse",
                     () -> DemoGraphics.main(NO_ARGUMENTS)),
@@ -70,9 +70,9 @@ public final class Main {
     }
 
     /**
-     * Abre el menú y espera a que el usuario elija un ejemplo.
+     * Opens the menu and waits for the user to choose an example.
      *
-     * @return el ejemplo elegido, o vacío si se presionó ESC
+     * @return the chosen example, or empty if ESC was pressed
      */
     public static Optional<Example> chooseExample() {
         initGraph(DETECT, VGA, "");
@@ -94,7 +94,7 @@ public final class Main {
         }
     }
 
-    /** Lee teclas hasta obtener un número de ejemplo válido o ESC. */
+    /** Reads keys until a valid example number or ESC is obtained. */
     private static Optional<Example> readChoice() {
         while (true) {
             int key = getch();
@@ -114,8 +114,8 @@ public final class Main {
     }
 
     /**
-     * Ejecuta un ejemplo. Si falla, el error se registra y se vuelve al menú
-     * en lugar de terminar la aplicación.
+     * Runs an example. If it fails, the error is logged and execution returns to the menu
+     * instead of terminating the application.
      */
     private static void run(Example example) {
         String title = example.title();
@@ -129,7 +129,7 @@ public final class Main {
         }
     }
 
-    /** Dibuja el menú: título, lista numerada de ejemplos e instrucciones. */
+    /** Draws the menu: title, numbered list of examples and instructions. */
     private static void drawMenu() {
         setBkColor(BgiColor.BLUE);
         clearDevice();

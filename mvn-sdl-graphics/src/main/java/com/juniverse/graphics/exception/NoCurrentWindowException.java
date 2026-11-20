@@ -1,7 +1,7 @@
 package com.juniverse.graphics.exception;
 
 /**
- * Se lanza cuando se intenta dibujar sin una ventana gráfica abierta.
+ * Thrown when trying to draw without an open graphics window.
  */
 public class NoCurrentWindowException extends IllegalStateException {
 

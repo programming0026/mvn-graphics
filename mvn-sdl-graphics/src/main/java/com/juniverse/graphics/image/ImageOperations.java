@@ -6,29 +6,29 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * Operaciones de captura, pegado y archivos de imagen.
+ * Image capture, paste and file operations.
  */
 public interface ImageOperations {
 
-    /** Valor que indica "hasta el borde de la imagen o de la pantalla". */
+    /** Value meaning "up to the edge of the image or the screen". */
     int TO_EDGE = Integer.MAX_VALUE;
 
-    /** Captura una región rectangular del viewport. */
+    /** Captures a rectangular region of the viewport. */
     BgiImage getImage(int left, int top, int right, int bottom);
 
-    /** Pega una imagen con la esquina superior izquierda en (left, top). */
+    /** Pastes an image with its top-left corner at (left, top). */
     void putImage(int left, int top, BgiImage image, RasterOperation operation);
 
     /**
-     * Lee un archivo de imagen y lo dibuja ajustado al rectángulo indicado.
-     * Si {@code right} o {@code bottom} valen {@link #TO_EDGE}, se usa el
-     * tamaño natural de la imagen.
+     * Reads an image file and draws it fitted to the given rectangle.
+     * If {@code right} or {@code bottom} are {@link #TO_EDGE}, the
+     * natural size of the image is used.
      */
     void readImageFile(Path file, int left, int top, int right, int bottom) throws IOException;
 
     /**
-     * Guarda en un archivo la región indicada. Si {@code right} o
-     * {@code bottom} valen {@link #TO_EDGE}, se usa el borde del viewport.
+     * Saves the given region to a file. If {@code right} or
+     * {@code bottom} are {@link #TO_EDGE}, the viewport edge is used.
      */
     void writeImageFile(Path file, int left, int top, int right, int bottom) throws IOException;
 }

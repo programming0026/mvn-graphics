@@ -10,7 +10,7 @@ import java.util.Random;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Demostraciones de píxeles e imágenes: {@code PutPixelDemo} y
+ * Pixel and image demonstrations: {@code PutPixelDemo} and
  * {@code PutImageDemo}.
  */
 public final class PixelDemos {
@@ -18,13 +18,13 @@ public final class PixelDemos {
     private static final int PIXEL_SEED = 1958;
     private static final int PIXEL_COUNT = 5000;
     /**
-     * En una PC de la época, poner y quitar 5000 puntos tardaba varios
-     * segundos y se veía el proceso. Hoy tarda menos de un cuadro de pantalla,
-     * así que se dibuja en tandas con una pequeña pausa para que se aprecie.
+     * On a PC of that era, putting and removing 5000 points took several
+     * seconds and the process was visible. Today it takes less than one screen frame,
+     * so it is drawn in batches with a small pause so that it can be appreciated.
      */
     private static final int PIXELS_PER_STEP = 50;
     private static final int STEP_DELAY_MILLIS = 20;
-    /** Tiempo que se muestra el campo completo de puntos antes de borrarlo. */
+    /** Time the complete field of points is shown before erasing it. */
     private static final int FULL_FIELD_MILLIS = 1500;
 
     private final DemoFrame frame;
@@ -34,8 +34,8 @@ public final class PixelDemos {
     }
 
     /**
-     * Pone 5000 puntos al azar y luego los borra repitiendo la misma secuencia
-     * aleatoria (PutPixelDemo).
+     * Puts 5000 random points and then erases them by repeating the same
+     * random sequence (PutPixelDemo).
      */
     public void putPixelDemo() {
         frame.mainWindow("PutPixel / GetPixel Demonstration");
@@ -65,14 +65,14 @@ public final class PixelDemos {
         frame.pause();
     }
 
-    /** Hace una pequeña pausa cada {@link #PIXELS_PER_STEP} puntos para que se vea el avance. */
+    /** Makes a small pause every {@link #PIXELS_PER_STEP} points so the progress is visible. */
     private static void paceDrawing(int index) {
         if ((index + 1) % PIXELS_PER_STEP == 0) {
             delay(STEP_DELAY_MILLIS);
         }
     }
 
-    /** Un platillo volador que se mueve entre estrellas con getImage/putImage XOR (PutImageDemo). */
+    /** A flying saucer moving between stars with getImage/putImage XOR (PutImageDemo). */
     public void putImageDemo() {
         final int radius = 20;
         final int startX = 100;
@@ -107,9 +107,9 @@ public final class PixelDemos {
         int y = frame.maxY() / 2;
         int pauseTime = 70;
         while (!kbhit()) {
-            putImage(x, y, saucer, RasterOperation.XOR); // dibuja
+            putImage(x, y, saucer, RasterOperation.XOR); // draws
             delay(pauseTime);
-            putImage(x, y, saucer, RasterOperation.XOR); // borra
+            putImage(x, y, saucer, RasterOperation.XOR); // erases
 
             int step = frame.random(2 * radius);
             if ((step / 2) % 2 != 0) {

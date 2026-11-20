@@ -5,7 +5,7 @@ import com.juniverse.graphics.dto.Point;
 import java.util.List;
 
 /**
- * Implementación de {@link LineOperations} sobre un {@link DrawingContext}.
+ * Implementation of {@link LineOperations} on a {@link DrawingContext}.
  */
 public final class LineDrawer implements LineOperations {
 

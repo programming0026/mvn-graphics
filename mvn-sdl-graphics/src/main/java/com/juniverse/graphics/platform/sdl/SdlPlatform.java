@@ -28,10 +28,10 @@ import static org.lwjgl.sdl.SDLVideo.SDL_GetDisplayBounds;
 import static org.lwjgl.sdl.SDLVideo.SDL_GetPrimaryDisplay;
 
 /**
- * Implementación de {@link Platform} con SDL3 (a través de LWJGL).
+ * Implementation of {@link Platform} with SDL3 (through LWJGL).
  * <p>
- * Debe crearse y usarse siempre desde el mismo hilo (en macOS, el hilo
- * principal, ejecutando la JVM con {@code -XstartOnFirstThread}).
+ * It must always be created and used from the same thread (on macOS, the main
+ * thread, running the JVM with {@code -XstartOnFirstThread}).
  */
 public final class SdlPlatform implements Platform {
 
@@ -40,9 +40,9 @@ public final class SdlPlatform implements Platform {
     private boolean closed;
 
     /**
-     * Inicializa el subsistema de video de SDL.
+     * Initializes the SDL video subsystem.
      *
-     * @throws PlatformException si SDL no puede inicializarse
+     * @throws PlatformException if SDL cannot be initialized
      */
     public SdlPlatform() {
         if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -96,8 +96,8 @@ public final class SdlPlatform implements Platform {
     }
 
     /**
-     * Las ventanas pueden estar escaladas: las coordenadas del mouse se
-     * convierten de píxeles de la ventana a coordenadas BGI.
+     * Windows may be scaled: mouse coordinates are
+     * converted from window pixels to BGI coordinates.
      */
     private void convertMouseCoordinates() {
         int windowId = switch (event.type()) {

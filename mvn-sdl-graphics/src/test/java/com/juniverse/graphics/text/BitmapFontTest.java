@@ -30,7 +30,7 @@ public class BitmapFontTest {
 
     @Test
     public void glyphPixelsMatchFontData() {
-        // Fila 4 de la 'A' (0x3F): barra horizontal de las columnas 0 a 5.
+        // Row 4 of 'A' (0x3F): horizontal bar of columns 0 to 5.
         TextMask mask = rasterizer.render("A", spec(1));
         for (int x = 0; x <= 5; x++) {
             assertTrue(mask.isSet(x, 4));
@@ -62,20 +62,20 @@ public class BitmapFontTest {
         for (int code = 0; code < 256; code++) {
             char character = CodePage437.toUnicode(code);
             assertTrue(BitmapFont.hasGlyph(character),
-                    "Falta el glifo de " + character + " (código " + code + ")");
+                    "Missing glyph for " + character + " (code " + code + ")");
         }
     }
 
     @Test
     public void glyphsAreDrawnAsDescribed() {
-        // Línea simple vertical: columnas 3 y 4 en las 8 filas (bit 0 = columna izquierda).
+        // Single vertical line: columns 3 and 4 in all 8 rows (bit 0 = left column).
         for (int row : BitmapFont.glyph('│')) {
             assertEquals(0x18, row);
         }
-        // Bloque completo y medio bloque inferior.
+        // Full block and lower half block.
         assertArrayEquals(new int[]{0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}, BitmapFont.glyph('█'));
         assertArrayEquals(new int[]{0, 0, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF}, BitmapFont.glyph('▄'));
-        // Las letras acentuadas conservan el cuerpo de la letra base (filas 2..7).
+        // Accented letters keep the body of the base letter (rows 2..7).
         int[] base = BitmapFont.glyph('o');
         int[] accented = BitmapFont.glyph('ô');
         for (int row = 2; row < 8; row++) {

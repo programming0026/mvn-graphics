@@ -3,12 +3,12 @@ package com.juniverse.graphics.window;
 import com.juniverse.graphics.raster.FrameBuffer;
 
 /**
- * Conjunto de páginas de una ventana con la página activa (donde se dibuja)
- * y la página visual (la que se muestra).
+ * Set of pages of a window with the active page (where drawing happens)
+ * and the visual page (the one that is shown).
  */
 public final class PageSet {
 
-    /** Número máximo de páginas (igual que WinBGI). */
+    /** Maximum number of pages (same as WinBGI). */
     public static final int MAX_PAGES = 4;
 
     private final FrameBuffer[] pages = new FrameBuffer[MAX_PAGES];
@@ -16,9 +16,9 @@ public final class PageSet {
     private int visualPage;
 
     /**
-     * Crea las páginas rellenas con el color de fondo inicial.
+     * Creates the pages filled with the initial background color.
      *
-     * @param backgroundArgb color ARGB opaco con el que se inicializan las páginas
+     * @param backgroundArgb opaque ARGB color the pages are initialized with
      */
     public PageSet(int width, int height, int backgroundArgb) {
         for (int i = 0; i < MAX_PAGES; i++) {
@@ -28,11 +28,11 @@ public final class PageSet {
     }
 
     /**
-     * Garantiza que las páginas midan al menos el tamaño indicado. Las páginas
-     * solo crecen, nunca se achican: así, si la ventana se reduce o se
-     * minimiza, lo dibujado fuera de la parte visible no se pierde. El
-     * contenido se conserva anclado arriba a la izquierda y el área nueva se
-     * rellena con el color indicado.
+     * Guarantees that the pages are at least the given size. Pages
+     * only grow, they never shrink: this way, if the window shrinks or is
+     * minimized, what was drawn outside the visible part is not lost. The
+     * content is kept anchored at the top-left and the new area is
+     * filled with the given color.
      */
     public void ensureCapacity(int width, int height, int backgroundArgb) {
         int newWidth = Math.max(width, capacityWidth());
@@ -48,29 +48,29 @@ public final class PageSet {
         }
     }
 
-    /** Rellena todas las páginas con un color. */
+    /** Fills all pages with a color. */
     public void clearAll(int argb) {
         for (FrameBuffer page : pages) {
             page.fill(argb);
         }
     }
 
-    /** Ancho real en memoria de las páginas. */
+    /** Actual in-memory width of the pages. */
     public int capacityWidth() {
         return pages[0].width();
     }
 
-    /** Alto real en memoria de las páginas. */
+    /** Actual in-memory height of the pages. */
     public int capacityHeight() {
         return pages[0].height();
     }
 
-    /** Página donde se dibuja actualmente. */
+    /** Page currently being drawn on. */
     public FrameBuffer active() {
         return pages[activePage];
     }
 
-    /** Página que se muestra en pantalla. */
+    /** Page shown on screen. */
     public FrameBuffer visual() {
         return pages[visualPage];
     }
@@ -83,15 +83,15 @@ public final class PageSet {
         return visualPage;
     }
 
-    /** Indica si se está mostrando la misma página en la que se dibuja. */
+    /** Tells whether the page being shown is the same one being drawn on. */
     public boolean isViewingActivePage() {
         return activePage == visualPage;
     }
 
     /**
-     * Cambia la página activa.
+     * Changes the active page.
      *
-     * @return falso si el número de página no es válido
+     * @return false if the page number is not valid
      */
     public boolean setActive(int page) {
         if (!isValid(page)) {
@@ -102,9 +102,9 @@ public final class PageSet {
     }
 
     /**
-     * Cambia la página visual.
+     * Changes the visual page.
      *
-     * @return falso si el número de página no es válido
+     * @return false if the page number is not valid
      */
     public boolean setVisual(int page) {
         if (!isValid(page)) {
@@ -115,8 +115,8 @@ public final class PageSet {
     }
 
     /**
-     * Alterna las páginas 0 y 1: la página en la que se dibujó pasa a mostrarse
-     * (mismo comportamiento que {@code swapbuffers} de WinBGI).
+     * Swaps pages 0 and 1: the page that was drawn on becomes the displayed one
+     * (same behavior as WinBGI's {@code swapbuffers}).
      */
     public void swap() {
         if (activePage == 0) {

@@ -15,10 +15,10 @@ import com.juniverse.graphics.style.RasterOperation;
 import java.util.Objects;
 
 /**
- * Estado gráfico de una ventana: colores, estilos, viewport y posición actual.
+ * Graphics state of a window: colors, styles, viewport and current position.
  * <p>
- * Equivale a la parte de dibujo de la estructura {@code WindowData} de
- * WinBGI. Solo guarda datos; no dibuja nada.
+ * Equivalent to the drawing part of WinBGI's {@code WindowData}
+ * structure. It only stores data; it draws nothing.
  */
 public final class DrawingState {
 
@@ -43,7 +43,7 @@ public final class DrawingState {
         reset();
     }
 
-    /** Restaura todos los valores por defecto (equivale a {@code graphdefaults}). */
+    /** Restores all default values (equivalent to {@code graphdefaults}). */
     public void reset() {
         palette.reset();
         color = BgiColor.WHITE.code();
@@ -59,8 +59,8 @@ public final class DrawingState {
     }
 
     /**
-     * Actualiza el tamaño de la pantalla (por ejemplo, al maximizar la
-     * ventana). Si el viewport cubría toda la pantalla, se amplía con ella.
+     * Updates the screen size (for example, when maximizing the
+     * window). If the viewport covered the whole screen, it grows with it.
      */
     public void resizeScreen(int width, int height) {
         boolean fullScreenViewport = viewport.equals(Viewport.fullScreen(screenWidth, screenHeight));
@@ -91,7 +91,7 @@ public final class DrawingState {
         this.color = colorCode;
     }
 
-    /** Color de dibujo actual convertido a ARGB. */
+    /** Current drawing color converted to ARGB. */
     public int colorArgb() {
         return palette.toArgb(color);
     }
@@ -104,7 +104,7 @@ public final class DrawingState {
         this.backgroundColor = colorCode;
     }
 
-    /** Color de fondo actual convertido a ARGB. */
+    /** Current background color converted to ARGB. */
     public int backgroundArgb() {
         return palette.toArgb(backgroundColor);
     }
@@ -133,7 +133,7 @@ public final class DrawingState {
         this.userFillPattern = Objects.requireNonNull(userFillPattern);
     }
 
-    /** Máscara de relleno efectiva según el patrón actual. */
+    /** Effective fill mask according to the current pattern. */
     public PatternMask activeFillMask() {
         return fillSettings.pattern() == FillPattern.USER ? userFillPattern : fillSettings.pattern().mask();
     }
@@ -154,7 +154,7 @@ public final class DrawingState {
         this.viewport = Objects.requireNonNull(viewport);
     }
 
-    /** Posición actual (CP), relativa al viewport. */
+    /** Current position (CP), relative to the viewport. */
     public Point position() {
         return position;
     }

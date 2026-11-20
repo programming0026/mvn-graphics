@@ -9,11 +9,11 @@ import java.util.Deque;
 import java.util.List;
 
 /**
- * Relleno por inundación (flood fill) acotado por un color de borde.
+ * Flood fill bounded by a border color.
  * <p>
- * Primero calcula toda la región (sin modificar el lienzo) y después la
- * entrega como tramos horizontales. Separar el cálculo del pintado permite
- * rellenar con patrones sin que el propio relleno altere la búsqueda.
+ * It first computes the whole region (without modifying the canvas) and then
+ * delivers it as horizontal spans. Separating the computation from the painting allows
+ * filling with patterns without the fill itself altering the search.
  */
 public final class FloodFillRasterizer {
 
@@ -21,14 +21,14 @@ public final class FloodFillRasterizer {
     }
 
     /**
-     * Calcula la región conectada (4-vecindad) que contiene a la semilla y
-     * cuyos píxeles son distintos del color de borde.
+     * Computes the connected region (4-neighborhood) that contains the seed and
+     * whose pixels differ from the border color.
      *
-     * @param canvas     lienzo a analizar
-     * @param seedX      columna semilla (relativa al viewport)
-     * @param seedY      fila semilla (relativa al viewport)
-     * @param borderArgb color ARGB que delimita la región
-     * @param sink       receptor de los tramos de la región
+     * @param canvas     canvas to analyze
+     * @param seedX      seed column (viewport-relative)
+     * @param seedY      seed row (viewport-relative)
+     * @param borderArgb ARGB color that delimits the region
+     * @param sink       receiver of the region's spans
      */
     public static void fill(Canvas canvas, int seedX, int seedY, int borderArgb, SpanSink sink) {
         Region region = new Region(canvas, borderArgb);
@@ -72,7 +72,7 @@ public final class FloodFillRasterizer {
         }
     }
 
-    /** Estado de la búsqueda: límites del lienzo y píxeles ya visitados. */
+    /** Search state: canvas limits and already visited pixels. */
     private static final class Region {
         private final Canvas canvas;
         private final int borderArgb;

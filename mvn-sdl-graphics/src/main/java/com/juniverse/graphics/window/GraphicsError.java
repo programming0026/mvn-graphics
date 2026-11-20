@@ -1,7 +1,7 @@
 package com.juniverse.graphics.window;
 
 /**
- * Códigos de error de BGI ({@code graph_errors}) con sus mensajes.
+ * BGI error codes ({@code graph_errors}) with their messages.
  */
 public enum GraphicsError {
     OK(0, "No error"),
@@ -30,17 +30,17 @@ public enum GraphicsError {
         this.message = message;
     }
 
-    /** Código numérico BGI (0 = sin error, negativo = error). */
+    /** BGI numeric code (0 = no error, negative = error). */
     public int code() {
         return code;
     }
 
-    /** Mensaje descriptivo (equivale a {@code grapherrormsg}). */
+    /** Descriptive message (equivalent to {@code grapherrormsg}). */
     public String message() {
         return message;
     }
 
-    /** Busca el error correspondiente a un código numérico. */
+    /** Looks up the error corresponding to a numeric code. */
     public static GraphicsError fromCode(int code) {
         for (GraphicsError error : values()) {
             if (error.code == code) {

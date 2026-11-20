@@ -1,9 +1,9 @@
 package com.juniverse.graphics.text;
 
 /**
- * Mapa de bits monocromático de un texto ya rasterizado.
+ * Monochrome bitmap of an already rasterized text.
  * <p>
- * Es inmutable: las transformaciones devuelven una nueva máscara.
+ * It is immutable: transformations return a new mask.
  */
 public final class TextMask {
 
@@ -20,7 +20,7 @@ public final class TextMask {
         this.bits = bits.clone();
     }
 
-    /** Máscara vacía con el alto indicado (por ejemplo, para un texto vacío). */
+    /** Empty mask with the given height (for example, for an empty text). */
     public static TextMask empty(int height) {
         return new TextMask(0, height, new boolean[0]);
     }
@@ -33,12 +33,12 @@ public final class TextMask {
         return height;
     }
 
-    /** Indica si el píxel (x, y) pertenece a algún glifo. */
+    /** Tells whether pixel (x, y) belongs to some glyph. */
     public boolean isSet(int x, int y) {
         return bits[y * width + x];
     }
 
-    /** Devuelve la máscara girada 90° en sentido antihorario (texto vertical). */
+    /** Returns the mask rotated 90° counterclockwise (vertical text). */
     public TextMask rotateCounterClockwise() {
         boolean[] rotated = new boolean[bits.length];
         for (int y = 0; y < height; y++) {

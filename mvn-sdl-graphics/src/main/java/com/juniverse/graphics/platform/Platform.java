@@ -7,27 +7,27 @@ import com.juniverse.graphics.dto.InputEvent;
 import java.util.function.Consumer;
 
 /**
- * Servicios que la biblioteca necesita del sistema de ventanas.
+ * Services the library needs from the window system.
  * <p>
- * Es el puerto que aísla al núcleo de cualquier tecnología concreta (SDL3 en
- * la implementación por defecto). Para pruebas o para otro backend basta con
- * proporcionar otra implementación.
+ * It is the port that isolates the core from any concrete technology (SDL3 in
+ * the default implementation). For tests or another backend it is enough to
+ * provide another implementation.
  */
 public interface Platform extends AutoCloseable {
 
-    /** Crea y muestra una ventana nativa. */
+    /** Creates and shows a native window. */
     Display openDisplay(DisplaySpec spec);
 
-    /** Entrega al consumidor todos los eventos pendientes sin bloquear. */
+    /** Delivers all pending events to the consumer without blocking. */
     void pollEvents(Consumer<InputEvent> consumer);
 
-    /** Tamaño de la pantalla principal. */
+    /** Size of the main screen. */
     ScreenSize screenSize();
 
-    /** Muestra un cuadro de diálogo de error. */
+    /** Shows an error dialog. */
     void showErrorMessage(String title, String message);
 
-    /** Libera los recursos globales de la plataforma. */
+    /** Releases the global resources of the platform. */
     @Override
     void close();
 }

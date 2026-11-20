@@ -3,12 +3,12 @@ package com.juniverse.graphics.text;
 import com.juniverse.graphics.dto.FontSpec;
 
 /**
- * Rasterizador basado en la fuente de mapa de bits {@link BitmapFont}.
+ * Rasterizer based on the {@link BitmapFont} bitmap font.
  * <p>
- * Reproduce el comportamiento de la fuente por defecto de BGI: cada carácter
- * ocupa una celda de 8x8 píxeles multiplicada por el tamaño de carácter
- * (charSize 2 = 16x16, charSize 3 = 24x24, ...). La ampliación es por
- * repetición de píxeles, así que el texto siempre se ve nítido.
+ * Reproduces the behavior of BGI's default font: each character
+ * takes an 8x8-pixel cell multiplied by the character size
+ * (charSize 2 = 16x16, charSize 3 = 24x24, ...). Enlargement is by
+ * pixel repetition, so the text always looks sharp.
  */
 public final class BitmapGlyphRasterizer implements GlyphRasterizer {
 

@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Glifos de 8x8 para los caracteres de la página de códigos 437 de DOS que no
- * están en ASCII: símbolos de los códigos 1..31 (☺♥♪...), letras acentuadas,
- * líneas para dibujar cuadros (│┤╗═...), bloques (░▒▓█), letras griegas y
- * símbolos matemáticos.
+ * 8x8 glyphs for the DOS code page 437 characters that are not
+ * in ASCII: symbols of codes 1..31 (☺♥♪...), accented letters,
+ * box-drawing lines (│┤╗═...), blocks (░▒▓█), Greek letters and
+ * mathematical symbols.
  * <p>
- * Los glifos se escriben como dibujos de 8 filas de 8 caracteres, donde
- * {@code '#'} es un píxel encendido y {@code '.'} uno apagado; la primera
- * columna es la izquierda. Así se pueden revisar y corregir a simple vista.
- * Las letras acentuadas se componen a partir de la letra base de
- * {@link BitmapFont} más el acento.
+ * Glyphs are written as drawings of 8 rows of 8 characters, where
+ * {@code '#'} is an on pixel and {@code '.'} an off one; the first
+ * column is the left one. This way they can be reviewed and fixed at a glance.
+ * Accented letters are composed from the base letter of
+ * {@link BitmapFont} plus the accent.
  */
 public final class Cp437Glyphs {
 
@@ -21,14 +21,14 @@ public final class Cp437Glyphs {
     private static final char ON = '#';
     private static final char OFF = '.';
 
-    // Acentos de dos filas para minúsculas (el cuerpo empieza en la fila 2).
-    // El agudo (á é í ó ú) ya está en BitmapFont junto con el resto del español.
+    // Two-row accents for lowercase letters (the body starts at row 2).
+    // The acute accent (á é í ó ú) is already in BitmapFont along with the rest of Spanish.
     private static final String[] GRAVE = {".##.....", "..##...."};
     private static final String[] CIRCUMFLEX = {"..##....", ".#..#..."};
     private static final String[] DIAERESIS = {"##..##..", "........"};
     private static final String[] RING = {".###....", ".#.#...."};
 
-    // Acentos de una fila para mayúsculas.
+    // One-row accents for capital letters.
     private static final String DIAERESIS_UPPER = "##..##..";
     private static final String RING_UPPER = "..##....";
 
@@ -47,14 +47,14 @@ public final class Cp437Glyphs {
     }
 
     /**
-     * Glifo del carácter, o {@code null} si no pertenece a esta tabla.
+     * Glyph of the character, or {@code null} if it does not belong to this table.
      */
     public static int[] glyph(char character) {
         return GLYPHS.get(character);
     }
 
     // ------------------------------------------------------------------
-    // Códigos 0x01..0x1F y 0x7F
+    // Codes 0x01..0x1F and 0x7F
     // ------------------------------------------------------------------
 
     private static void addControlSymbols() {
@@ -93,7 +93,7 @@ public final class Cp437Glyphs {
     }
 
     // ------------------------------------------------------------------
-    // Letras acentuadas (las del español ya están en BitmapFont)
+    // Accented letters (the Spanish ones are already in BitmapFont)
     // ------------------------------------------------------------------
 
     private static void addAccentedLetters() {
@@ -121,7 +121,7 @@ public final class Cp437Glyphs {
     }
 
     // ------------------------------------------------------------------
-    // Ligaduras, monedas y signos de 0x80..0xAF
+    // Ligatures, currencies and signs of 0x80..0xAF
     // ------------------------------------------------------------------
 
     private static void addLatinSymbols() {
@@ -143,7 +143,7 @@ public final class Cp437Glyphs {
     }
 
     // ------------------------------------------------------------------
-    // Sombreados y bloques
+    // Shading and blocks
     // ------------------------------------------------------------------
 
     private static void addShadesAndBlocks() {
@@ -163,13 +163,13 @@ public final class Cp437Glyphs {
     }
 
     // ------------------------------------------------------------------
-    // Líneas para dibujar cuadros. Línea simple: 2 píxeles (columnas o filas
-    // 3 y 4). Línea doble: dos líneas de 1 píxel (columnas o filas 2 y 5).
+    // Box-drawing lines. Single line: 2 pixels (columns or rows
+    // 3 and 4). Double line: two 1-pixel lines (columns or rows 2 and 5).
     // ------------------------------------------------------------------
 
     private static void addBoxDrawing() {
-        final String sv = "...##...";   // vertical simple
-        final String dv = "..#..#..";   // vertical doble
+        final String sv = "...##...";   // single vertical
+        final String dv = "..#..#..";   // double vertical
         final String none = "........";
         final String full = "########";
 
@@ -216,7 +216,7 @@ public final class Cp437Glyphs {
     }
 
     // ------------------------------------------------------------------
-    // Letras griegas y símbolos matemáticos de 0xE0..0xFD
+    // Greek letters and mathematical symbols of 0xE0..0xFD
     // ------------------------------------------------------------------
 
     private static void addGreekAndMath() {
@@ -253,10 +253,10 @@ public final class Cp437Glyphs {
     }
 
     // ------------------------------------------------------------------
-    // Construcción de glifos
+    // Glyph construction
     // ------------------------------------------------------------------
 
-    /** Registra un glifo dibujado con 8 filas de {@code '#'} y {@code '.'}. */
+    /** Registers a glyph drawn with 8 rows of {@code '#'} and {@code '.'}. */
     private static void put(char character, String... rows) {
         if (rows.length != SIZE) {
             throw new IllegalStateException("Glyph '" + character + "' must have " + SIZE + " rows");
@@ -269,8 +269,8 @@ public final class Cp437Glyphs {
     }
 
     /**
-     * Registra un glifo formado por filas repetidas: pares (fila, repeticiones),
-     * por ejemplo {@code stack('┤', "...##...", 3, "#####...", 2, "...##...", 3)}.
+     * Registers a glyph made of repeated rows: (row, repetitions) pairs,
+     * for example {@code stack('┤', "...##...", 3, "#####...", 2, "...##...", 3)}.
      */
     private static void stack(char character, Object... rowsAndCounts) {
         String[] rows = new String[SIZE];
@@ -288,7 +288,7 @@ public final class Cp437Glyphs {
         put(character, rows);
     }
 
-    /** Minúscula acentuada: el acento ocupa las filas 0 y 1, sobre el cuerpo de la letra base. */
+    /** Accented lowercase: the accent takes rows 0 and 1, above the body of the base letter. */
     private static void lower(char character, char base, String[] accent) {
         int[] glyph = BitmapFont.glyph(base).clone();
         glyph[0] = parseRow(character, accent[0]);
@@ -297,8 +297,8 @@ public final class Cp437Glyphs {
     }
 
     /**
-     * Mayúscula acentuada: el acento ocupa la fila 0 y la letra base se
-     * compacta en las filas 1..6 (se omite su fila central).
+     * Accented capital: the accent takes row 0 and the base letter is
+     * compacted into rows 1..6 (its middle row is omitted).
      */
     private static void upper(char character, char base, String accent) {
         int[] source = BitmapFont.glyph(base);
@@ -313,7 +313,7 @@ public final class Cp437Glyphs {
         GLYPHS.put(character, glyph);
     }
 
-    /** Letra con cedilla: la letra base completa y la cedilla en la fila 7. */
+    /** Letter with cedilla: the full base letter and the cedilla in row 7. */
     private static void cedilla(char character, char base, String mark) {
         int[] glyph = BitmapFont.glyph(base).clone();
         glyph[SIZE - 1] = parseRow(character, mark);

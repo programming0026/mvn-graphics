@@ -1,15 +1,15 @@
 package com.juniverse.graphics.window;
 
 /**
- * Política que decide cuándo procesar eventos y refrescar la pantalla
- * después de una operación de dibujo.
+ * Policy that decides when to process events and refresh the screen
+ * after a drawing operation.
  */
 @FunctionalInterface
 public interface FrameScheduler {
 
-    /** Planificador que nunca refresca automáticamente (útil en pruebas). */
+    /** Scheduler that never refreshes automatically (useful in tests). */
     FrameScheduler MANUAL = () -> { };
 
-    /** Solicita un refresco; la implementación puede posponerlo para limitar los FPS. */
+    /** Requests a refresh; the implementation may postpone it to limit the FPS. */
     void requestFrame();
 }

@@ -10,7 +10,7 @@ import com.juniverse.graphics.text.VerticalAlignment;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Demostraciones de barras: {@code Bar3DDemo}, {@code BarDemo} y
+ * Bar demonstrations: {@code Bar3DDemo}, {@code BarDemo} and
  * {@code RandomBars}.
  */
 public final class BarDemos {
@@ -25,7 +25,7 @@ public final class BarDemos {
         this.frame = frame;
     }
 
-    /** Gráfica de barras tridimensionales (Bar3DDemo). */
+    /** Three-dimensional bar chart (Bar3DDemo). */
     public void bar3dDemo() {
         frame.mainWindow("Bar 3-D / Rectangle Demonstration");
 
@@ -62,7 +62,7 @@ public final class BarDemos {
         frame.pause();
     }
 
-    /** Gráfica de barras planas con bar y rectangle (BarDemo). */
+    /** Flat bar chart with bar and rectangle (BarDemo). */
     public void barDemo() {
         frame.mainWindow("Bar / Rectangle demonstration");
 
@@ -99,7 +99,7 @@ public final class BarDemos {
         frame.pause();
     }
 
-    /** Barras de colores y tamaños al azar hasta que se presione una tecla (RandomBars). */
+    /** Bars of random colors and sizes until a key is pressed (RandomBars). */
     public void randomBars() {
         frame.mainWindow("Random Bars");
         frame.statusLine("Esc aborts or press a key...");
@@ -113,7 +113,7 @@ public final class BarDemos {
         frame.pause();
     }
 
-    /** Marcas y números 0..5 del eje vertical. */
+    /** Ticks and numbers 0..5 of the vertical axis. */
     private static void drawYAxisLabels(int h, int areaHeight, int yStep) {
         int j = areaHeight - h;
         setTextJustify(HorizontalAlignment.CENTER, VerticalAlignment.CENTER);

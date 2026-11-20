@@ -20,23 +20,23 @@ import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
 /**
- * Administra las ventanas gráficas abiertas, la ventana actual y el ciclo de
- * eventos.
+ * Manages the open graphics windows, the current window and the
+ * event cycle.
  * <p>
- * BGI es una API de modo inmediato y bloqueante ({@code getch}, {@code delay}),
- * así que no hay un hilo de interfaz separado: los eventos se procesan en el
- * hilo del programa cada vez que este espera o, como máximo una vez por
- * cuadro (~60 FPS), mientras dibuja. Así SDL siempre se usa desde un único hilo.
+ * BGI is an immediate-mode, blocking API ({@code getch}, {@code delay}),
+ * so there is no separate UI thread: events are processed on the
+ * program's thread every time it waits or, at most once per
+ * frame (about 60 FPS), while it draws. This way SDL is always used from a single thread.
  */
 public final class WindowManager implements FrameScheduler {
 
-    /** Intervalo mínimo entre refrescos automáticos (~60 cuadros por segundo). */
+    /** Minimum interval between automatic refreshes (about 60 frames per second). */
     private static final long FRAME_INTERVAL_NANOS = 1_000_000_000L / 60;
 
-    /** Pausa máxima entre consultas de eventos al esperar. */
+    /** Maximum pause between event polls while waiting. */
     private static final long POLL_SLEEP_MILLIS = 5;
 
-    /** Identificador que indica que no hay ventana actual. */
+    /** Identifier meaning there is no current window. */
     public static final int NO_CURRENT_WINDOW = -1;
 
     private final Supplier<Platform> platformFactory;
@@ -54,12 +54,12 @@ public final class WindowManager implements FrameScheduler {
     private long lastFrameNanos;
 
     /**
-     * @param platformFactory crea la plataforma la primera vez que se abre una ventana
-     * @param glyphs          motor de texto compartido por las ventanas
-     * @param fileStore       almacenamiento de imágenes compartido por las ventanas
-     * @param exitAction      acción ejecutada cuando el usuario cierra una ventana con
-     *                        {@link WindowOptions#exitOnClose()} (normalmente {@code System.exit})
-     * @param clock           reloj monotónico en nanosegundos
+     * @param platformFactory creates the platform the first time a window is opened
+     * @param glyphs          text engine shared by the windows
+     * @param fileStore       image storage shared by the windows
+     * @param exitAction      action run when the user closes a window with
+     *                        {@link WindowOptions#exitOnClose()} (normally {@code System.exit})
+     * @param clock           monotonic clock in nanoseconds
      */
     public WindowManager(Supplier<Platform> platformFactory, GlyphRasterizer glyphs, ImageFileStore fileStore,
                          Runnable exitAction, LongSupplier clock) {
@@ -71,23 +71,23 @@ public final class WindowManager implements FrameScheduler {
     }
 
     // ------------------------------------------------------------------
-    // Ciclo de vida de las ventanas
+    // Window lifecycle
     // ------------------------------------------------------------------
 
     /**
-     * Abre una ventana nueva y la convierte en la ventana actual.
+     * Opens a new window and makes it the current window.
      *
-     * @return identificador BGI de la ventana
+     * @return BGI identifier of the window
      */
     public int openWindow(DisplaySpec spec, WindowOptions options) {
         return openWindow(spec, options, windowMode(spec));
     }
 
     /**
-     * Abre una ventana nueva asociada a un modo gráfico BGI (usado por
-     * {@code initGraph}) y la convierte en la ventana actual.
+     * Opens a new window associated with a BGI graphics mode (used by
+     * {@code initGraph}) and makes it the current window.
      *
-     * @return identificador BGI de la ventana
+     * @return BGI identifier of the window
      */
     public int openWindow(DisplaySpec spec, WindowOptions options, GraphicsMode mode) {
         int id = windows.size();
@@ -97,11 +97,11 @@ public final class WindowManager implements FrameScheduler {
     }
 
     /**
-     * Cambia el modo gráfico de una ventana (equivale a {@code setgraphmode}):
-     * la pantalla se borra y se restauran los valores por defecto. Si la
-     * resolución es la misma se reutiliza la ventana; si cambia, la ventana se
-     * recrea con la nueva resolución. En ambos casos conserva su identificador
-     * y su modo de escalado.
+     * Changes the graphics mode of a window (equivalent to {@code setgraphmode}):
+     * the screen is cleared and the default values are restored. If the
+     * resolution is the same the window is reused; if it changes, the window is
+     * recreated with the new resolution. In both cases it keeps its identifier
+     * and its scaling mode.
      */
     public void changeMode(int id, GraphicsMode mode) {
         GraphicsWindow old = find(id).orElseThrow(NoCurrentWindowException::new);
@@ -124,20 +124,20 @@ public final class WindowManager implements FrameScheduler {
         return window;
     }
 
-    /** Modo que se informa para ventanas abiertas con {@code initWindow} (VGA, tamaño libre). */
+    /** Mode reported for windows opened with {@code initWindow} (VGA, free size). */
     private static GraphicsMode windowMode(DisplaySpec spec) {
         GraphicsMode vgaHigh = GraphicsDriver.VGA.highestMode().orElseThrow();
         return new GraphicsMode(GraphicsDriver.VGA, vgaHigh.number(), "VGA", spec.width(), spec.height());
     }
 
-    /** Registra un error que no pertenece a ninguna ventana (por ejemplo, un initGraph fallido). */
+    /** Records an error that does not belong to any window (for example, a failed initGraph). */
     public void reportError(GraphicsError error) {
         pendingError = Objects.requireNonNull(error);
     }
 
     /**
-     * Devuelve y reinicia el último error (equivale a {@code graphresult}).
-     * Los errores globales tienen prioridad sobre los de la ventana actual.
+     * Returns and resets the last error (equivalent to {@code graphresult}).
+     * Global errors take priority over those of the current window.
      */
     public GraphicsError takeLastError() {
         if (pendingError != GraphicsError.OK) {
@@ -148,12 +148,12 @@ public final class WindowManager implements FrameScheduler {
         return find(currentId).map(GraphicsWindow::takeLastError).orElse(GraphicsError.NO_INIT_GRAPH);
     }
 
-    /** Ventana actual. */
+    /** Current window. */
     public GraphicsWindow current() {
         return find(currentId).orElseThrow(NoCurrentWindowException::new);
     }
 
-    /** Busca una ventana abierta por su identificador. */
+    /** Looks up an open window by its identifier. */
     public Optional<GraphicsWindow> find(int id) {
         if (id < 0 || id >= windows.size()) {
             return Optional.empty();
@@ -165,7 +165,7 @@ public final class WindowManager implements FrameScheduler {
         return currentId;
     }
 
-    /** Cambia la ventana actual; los identificadores inválidos se ignoran. */
+    /** Changes the current window; invalid identifiers are ignored. */
     public void setCurrent(int id) {
         if (find(id).isPresent()) {
             currentId = id;
@@ -176,7 +176,7 @@ public final class WindowManager implements FrameScheduler {
         return windows.stream().anyMatch(Objects::nonNull);
     }
 
-    /** Cierra una ventana concreta. */
+    /** Closes a specific window. */
     public void close(int id) {
         find(id).ifPresent(window -> {
             window.close();
@@ -190,7 +190,7 @@ public final class WindowManager implements FrameScheduler {
         }
     }
 
-    /** Cierra todas las ventanas y libera la plataforma. */
+    /** Closes all windows and releases the platform. */
     public void closeAll() {
         for (int id = 0; id < windows.size(); id++) {
             GraphicsWindow window = windows.get(id);
@@ -204,7 +204,7 @@ public final class WindowManager implements FrameScheduler {
     }
 
     // ------------------------------------------------------------------
-    // Eventos y refresco
+    // Events and refresh
     // ------------------------------------------------------------------
 
     @Override
@@ -214,7 +214,7 @@ public final class WindowManager implements FrameScheduler {
         }
     }
 
-    /** Procesa los eventos pendientes y muestra las ventanas con cambios. */
+    /** Processes pending events and shows the windows with changes. */
     public void processEvents() {
         if (processing || platform == null) {
             return;
@@ -223,8 +223,8 @@ public final class WindowManager implements FrameScheduler {
         try {
             platform.pollEvents(this::dispatch);
             if (exitRequested) {
-                // La salida se ejecuta fuera del sondeo para no liberar la
-                // plataforma mientras todavía se están leyendo sus eventos.
+                // Exit runs outside the polling so as not to release the
+                // platform while its events are still being read.
                 exitRequested = false;
                 exit();
                 return;
@@ -240,7 +240,7 @@ public final class WindowManager implements FrameScheduler {
         }
     }
 
-    /** Espera el tiempo indicado manteniendo las ventanas activas (equivale a {@code delay}). */
+    /** Waits the given time keeping the windows alive (equivalent to {@code delay}). */
     public void delay(long millis) {
         long deadline = clock.getAsLong() + millis * 1_000_000L;
         processEvents();
@@ -251,7 +251,7 @@ public final class WindowManager implements FrameScheduler {
         }
     }
 
-    /** Espera y devuelve la siguiente tecla de la ventana actual (equivale a {@code getch}). */
+    /** Waits for and returns the next key of the current window (equivalent to {@code getch}). */
     public int readKey() {
         processEvents();
         while (!current().keyboard().hasKey()) {
@@ -261,7 +261,7 @@ public final class WindowManager implements FrameScheduler {
         return current().keyboard().poll();
     }
 
-    /** Indica si hay una tecla pendiente en la ventana actual (equivale a {@code kbhit}). */
+    /** Tells whether a key is pending in the current window (equivalent to {@code kbhit}). */
     public boolean keyAvailable() {
         processEvents();
         return current().keyboard().hasKey();
@@ -271,7 +271,7 @@ public final class WindowManager implements FrameScheduler {
         return platform().screenSize();
     }
 
-    /** Muestra un cuadro de error (equivale a {@code showerrorbox}). */
+    /** Shows an error box (equivalent to {@code showerrorbox}). */
     public void showError(String message) {
         platform().showErrorMessage("Error", message);
     }

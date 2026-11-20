@@ -1,11 +1,11 @@
 package com.juniverse.graphics.color;
 
 /**
- * Los 16 colores estándar de Borland BGI.
+ * The 16 standard Borland BGI colors.
  * <p>
- * El valor ordinal de cada constante coincide con el código numérico original
- * (BLACK = 0 ... WHITE = 15), por lo que {@link #code()} puede usarse en
- * cualquier método que reciba un código de color.
+ * The ordinal value of each constant matches the original numeric code
+ * (BLACK = 0 ... WHITE = 15), so {@link #code()} can be used in
+ * any method that receives a color code.
  */
 public enum BgiColor {
     BLACK(0x000000),
@@ -25,7 +25,7 @@ public enum BgiColor {
     YELLOW(0xFCFC54),
     WHITE(0xFFFFFF);
 
-    /** Índice máximo de color BGI (equivale a MAXCOLORS). */
+    /** Maximum BGI color index (equivalent to MAXCOLORS). */
     public static final int MAX_COLOR = 15;
 
     private final int defaultRgb;
@@ -34,20 +34,20 @@ public enum BgiColor {
         this.defaultRgb = defaultRgb;
     }
 
-    /** Código numérico BGI del color (0..15). */
+    /** BGI numeric code of the color (0..15). */
     public int code() {
         return ordinal();
     }
 
-    /** Valor RGB por defecto en formato 0xRRGGBB (paleta VGA). */
+    /** Default RGB value in 0xRRGGBB format (VGA palette). */
     public int defaultRgb() {
         return defaultRgb;
     }
 
     /**
-     * Obtiene el color BGI a partir de su código.
+     * Gets the BGI color from its code.
      *
-     * @throws IllegalArgumentException si el código no está entre 0 y 15
+     * @throws IllegalArgumentException if the code is not between 0 and 15
      */
     public static BgiColor fromCode(int code) {
         if (code < 0 || code > MAX_COLOR) {

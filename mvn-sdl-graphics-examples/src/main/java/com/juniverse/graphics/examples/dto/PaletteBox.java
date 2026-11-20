@@ -1,13 +1,13 @@
 package com.juniverse.graphics.examples.dto;
 
 /**
- * Caja de color de la demostración de paleta ({@code PaletteDemo}).
+ * Color box of the palette demonstration ({@code PaletteDemo}).
  *
- * @param left   borde izquierdo
- * @param top    borde superior
- * @param right  borde derecho
- * @param bottom borde inferior
- * @param color  índice de la paleta con el que se pinta
+ * @param left   left edge
+ * @param top    top edge
+ * @param right  right edge
+ * @param bottom bottom edge
+ * @param color  palette index it is painted with
  */
 public record PaletteBox(int left, int top, int right, int bottom, int color) {
 }

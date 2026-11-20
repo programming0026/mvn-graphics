@@ -1,11 +1,11 @@
 package com.juniverse.graphics.text;
 
 /**
- * Dirección del texto (HORIZ_DIR / VERT_DIR).
+ * Text direction (HORIZ_DIR / VERT_DIR).
  */
 public enum TextDirection {
-    /** Texto de izquierda a derecha. */
+    /** Left-to-right text. */
     HORIZONTAL,
-    /** Texto girado 90° en sentido antihorario (de abajo hacia arriba). */
+    /** Text rotated 90° counterclockwise (bottom to top). */
     VERTICAL
 }

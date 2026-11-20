@@ -46,35 +46,35 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Fachada estática con la API clásica de WinBGI.
+ * Static facade with the classic WinBGI API.
  * <p>
- * Cada método equivale a una función de {@code graphics.h} con el nombre en
+ * Each method is equivalent to a {@code graphics.h} function, named in
  * camelCase ({@code putpixel} → {@link #putPixel}, {@code outtextxy} →
- * {@link #outTextXY}, ...). Todas las operaciones actúan sobre la ventana
- * actual. La fachada no contiene lógica: delega en {@link WindowManager} y en
- * los componentes de {@link GraphicsWindow}.
+ * {@link #outTextXY}, ...). All operations act on the current window. The
+ * facade contains no logic: it delegates to {@link WindowManager} and to
+ * the components of {@link GraphicsWindow}.
  * <p>
- * Todas las llamadas deben hacerse desde el mismo hilo.
+ * All calls must be made from the same thread.
  */
 public final class Bgi {
 
-    /** Para {@link #closeGraph(int)}: cierra la ventana actual. */
+    /** For {@link #closeGraph(int)}: closes the current window. */
     public static final int CURRENT_WINDOW = -1;
-    /** Para {@link #closeGraph(int)}: cierra todas las ventanas. */
+    /** For {@link #closeGraph(int)}: closes all windows. */
     public static final int ALL_WINDOWS = -2;
-    /** Valor de {@link #getCurrentWindow()} cuando no hay ventana actual. */
+    /** Value of {@link #getCurrentWindow()} when there is no current window. */
     public static final int NO_CURRENT_WINDOW = WindowManager.NO_CURRENT_WINDOW;
-    /** Valor que indica "hasta el borde" en las funciones de archivos de imagen. */
+    /** Value meaning "up to the edge" in the image file functions. */
     public static final int TO_EDGE = ImageOperations.TO_EDGE;
-    /** Grosor de línea normal. */
+    /** Normal line thickness. */
     public static final int NORM_WIDTH = LineSettings.NORMAL_WIDTH;
-    /** Grosor de línea grueso. */
+    /** Thick line thickness. */
     public static final int THICK_WIDTH = LineSettings.THICK_WIDTH;
-    /** Tamaño de carácter definido por el usuario. */
+    /** User-defined character size. */
     public static final int USER_CHAR_SIZE = TextSettings.USER_CHAR_SIZE;
 
     // ---------------------------------------------------------------------
-    // Controladores y modos de initGraph (mismos valores que graphics.h)
+    // initGraph drivers and modes (same values as graphics.h)
     // ---------------------------------------------------------------------
     public static final int DETECT = GraphicsDriver.DETECT.code();
     public static final int CGA = GraphicsDriver.CGA.code();
@@ -118,7 +118,7 @@ public final class Bgi {
     public static final int IBM8514LO = 0;
     public static final int IBM8514HI = 1;
 
-    /** Código de éxito de {@link #graphResult()} (grOk). */
+    /** Success code of {@link #graphResult()} (grOk). */
     public static final int GR_OK = GraphicsError.OK.code();
 
     private static final String DEFAULT_TITLE = "Windows BGI";
@@ -129,8 +129,8 @@ public final class Bgi {
     }
 
     /**
-     * Reemplaza el gestor de ventanas (por ejemplo, para usar otra plataforma
-     * o para pruebas). Debe llamarse antes de abrir ventanas.
+     * Replaces the window manager (for example, to use another platform
+     * or for tests). Must be called before opening windows.
      */
     public static void configure(WindowManager windowManager) {
         if (manager.hasOpenWindows()) {
@@ -139,7 +139,7 @@ public final class Bgi {
         manager = Objects.requireNonNull(windowManager);
     }
 
-    /** Gestor de ventanas en uso, para quien prefiera la API orientada a objetos. */
+    /** Window manager in use, for those who prefer the object-oriented API. */
     public static WindowManager windowManager() {
         return manager;
     }
@@ -158,22 +158,22 @@ public final class Bgi {
     }
 
     // =====================================================================
-    // Creación de ventanas y control general
+    // Window creation and general control
     // =====================================================================
 
     /**
-     * Inicializa el modo gráfico como en Borland:
+     * Initializes the graphics mode as in Borland:
      * <pre>{@code
      * int gd = DETECT, gm = VGA;
      * initGraph(gd, gm, "");
      * }</pre>
-     * Con {@link #DETECT} el modo se ignora y se usa VGA/VGAHI (640x480). Con
-     * un controlador concreto se abre una ventana con la resolución del modo
-     * (por ejemplo {@code initGraph(VGA, VGAMED, "")} abre 640x350). La ruta
-     * de los controladores se ignora: no se necesitan archivos .BGI.
+     * With {@link #DETECT} the mode is ignored and VGA/VGAHI (640x480) is used. With
+     * a specific driver a window is opened with the mode's resolution
+     * (for example {@code initGraph(VGA, VGAMED, "")} opens 640x350). The path
+     * of the drivers is ignored: no .BGI files are needed.
      * <p>
-     * Si el controlador o el modo no son válidos no se abre ninguna ventana y
-     * {@link #graphResult()} devuelve el código de error.
+     * If the driver or the mode are not valid no window is opened and
+     * {@link #graphResult()} returns the error code.
      */
     public static void initGraph(int graphDriver, int graphMode, String pathToDriver) {
         switch (ModeResolver.resolve(graphDriver, graphMode)) {
@@ -185,7 +185,7 @@ public final class Bgi {
         }
     }
 
-    /** Equivale a {@code initGraph(DETECT, 0, "")}: abre una ventana VGA de 640x480. */
+    /** Equivalent to {@code initGraph(DETECT, 0, "")}: opens a 640x480 VGA window. */
     public static void initGraph() {
         initGraph(DETECT, 0, "");
     }
@@ -195,31 +195,31 @@ public final class Bgi {
         manager.openWindow(spec, WindowOptions.DEFAULT, mode);
     }
 
-    /** Controlador y modo que elegiría la autodetección (equivale a {@code detectgraph}). */
+    /** Driver and mode that autodetection would choose (equivalent to {@code detectgraph}). */
     public static GraphicsMode detectGraph() {
         return ModeResolver.DETECTED;
     }
 
-    /** Número del modo gráfico actual (equivale a {@code getgraphmode}). */
+    /** Number of the current graphics mode (equivalent to {@code getgraphmode}). */
     public static int getGraphMode() {
         return window().graphicsMode().number();
     }
 
-    /** Número de modo más alto del controlador actual (equivale a {@code getmaxmode}). */
+    /** Highest mode number of the current driver (equivalent to {@code getmaxmode}). */
     public static int getMaxMode() {
         return window().graphicsMode().driver().highestModeNumber();
     }
 
-    /** Descripción de un modo del controlador actual (equivale a {@code getmodename}). */
+    /** Description of a mode of the current driver (equivalent to {@code getmodename}). */
     public static String getModeName(int modeNumber) {
         GraphicsDriver driver = window().graphicsMode().driver();
         return driver.mode(modeNumber).map(GraphicsMode::description).orElse("Invalid mode");
     }
 
     /**
-     * Rango de modos de un controlador (equivale a {@code getmoderange}).
+     * Mode range of a driver (equivalent to {@code getmoderange}).
      *
-     * @return {@code {modoMásBajo, modoMásAlto}}, o {@code {-1, -1}} si el controlador no existe
+     * @return {@code {lowestMode, highestMode}}, or {@code {-1, -1}} if the driver does not exist
      */
     public static int[] getModeRange(int graphDriver) {
         return GraphicsDriver.fromCode(graphDriver)
@@ -228,9 +228,9 @@ public final class Bgi {
     }
 
     /**
-     * Cambia el modo gráfico de la ventana actual (equivale a {@code setgraphmode}):
-     * la ventana adopta la resolución del modo, se borra y vuelve a los valores
-     * por defecto.
+     * Changes the graphics mode of the current window (equivalent to {@code setgraphmode}):
+     * the window adopts the mode's resolution, is cleared and goes back to the default
+     * values.
      */
     public static void setGraphMode(int graphMode) {
         GraphicsDriver driver = window().graphicsMode().driver();
@@ -240,8 +240,8 @@ public final class Bgi {
     }
 
     /**
-     * En BGI vuelve al modo texto. Aquí no hay modo texto, así que la ventana
-     * gráfica permanece abierta; se mantiene por compatibilidad.
+     * In BGI this returns to text mode. Here there is no text mode, so the graphics
+     * window stays open; it is kept for compatibility.
      */
     public static void restoreCrtMode() {
         manager.processEvents();
@@ -260,11 +260,11 @@ public final class Bgi {
     }
 
     /**
-     * Abre una ventana gráfica (equivale a {@code initwindow}).
+     * Opens a graphics window (equivalent to {@code initwindow}).
      *
-     * @param doubleBuffer si es verdadero se dibuja en la página 1 y se muestra la 0
-     * @param closeFlag    si es verdadero, cerrar la ventana termina el programa
-     * @return identificador de la ventana
+     * @param doubleBuffer if true, drawing goes to page 1 and page 0 is displayed
+     * @param closeFlag    if true, closing the window terminates the program
+     * @return window identifier
      */
     public static int initWindow(int width, int height, String title, int left, int top,
                                  boolean doubleBuffer, boolean closeFlag) {
@@ -276,12 +276,12 @@ public final class Bgi {
         return manager.openWindow(spec, options);
     }
 
-    /** Cierra todas las ventanas. */
+    /** Closes all windows. */
     public static void closeGraph() {
         closeGraph(ALL_WINDOWS);
     }
 
-    /** Cierra una ventana, la actual ({@link #CURRENT_WINDOW}) o todas ({@link #ALL_WINDOWS}). */
+    /** Closes one window, the current one ({@link #CURRENT_WINDOW}) or all of them ({@link #ALL_WINDOWS}). */
     public static void closeGraph(int windowId) {
         switch (windowId) {
             case ALL_WINDOWS -> manager.closeAll();
@@ -298,7 +298,7 @@ public final class Bgi {
         manager.setCurrent(windowId);
     }
 
-    /** Cambia el título de la ventana actual. */
+    /** Changes the title of the current window. */
     public static void setWindowTitle(String title) {
         window().setTitle(title);
     }
@@ -307,7 +307,7 @@ public final class Bgi {
         window().graphDefaults();
     }
 
-    /** Devuelve y reinicia el código del último error (equivale a {@code graphresult}). */
+    /** Returns and resets the code of the last error (equivalent to {@code graphresult}). */
     public static int graphResult() {
         return manager.takeLastError().code();
     }
@@ -316,7 +316,7 @@ public final class Bgi {
         return GraphicsError.fromCode(errorCode).message();
     }
 
-    /** Nombre del controlador actual (por ejemplo "EGAVGA"), como en Borland. */
+    /** Name of the current driver (for example "EGAVGA"), as in Borland. */
     public static String getDriverName() {
         return window().graphicsMode().driver().fileName();
     }
@@ -333,13 +333,13 @@ public final class Bgi {
         manager.showError(message);
     }
 
-    /** Espera los milisegundos indicados sin congelar la ventana. */
+    /** Waits the given milliseconds without freezing the window. */
     public static void delay(int milliseconds) {
         manager.delay(milliseconds);
     }
 
     // =====================================================================
-    // Dimensiones
+    // Dimensions
     // =====================================================================
 
     public static int getMaxX() {
@@ -358,18 +358,18 @@ public final class Bgi {
         return window().height();
     }
 
-    /** Ancho de la pantalla principal. */
+    /** Width of the main screen. */
     public static int getMaxWidth() {
         return manager.screenSize().width();
     }
 
-    /** Alto de la pantalla principal. */
+    /** Height of the main screen. */
     public static int getMaxHeight() {
         return manager.screenSize().height();
     }
 
     // =====================================================================
-    // Dibujo
+    // Drawing
     // =====================================================================
 
     public static void arc(int x, int y, int startAngle, int endAngle, int radius) {
@@ -396,7 +396,7 @@ public final class Bgi {
         window().screen().clearViewport();
     }
 
-    /** Dibuja una polilínea; las coordenadas van intercaladas: x1, y1, x2, y2, ... */
+    /** Draws a polyline; coordinates are interleaved: x1, y1, x2, y2, ... */
     public static void drawPoly(int... coordinates) {
         window().shapes().drawPoly(toPoints(coordinates));
     }
@@ -413,7 +413,7 @@ public final class Bgi {
         window().fills().fillEllipse(x, y, radiusX, radiusY);
     }
 
-    /** Rellena un polígono; las coordenadas van intercaladas: x1, y1, x2, y2, ... */
+    /** Fills a polygon; coordinates are interleaved: x1, y1, x2, y2, ... */
     public static void fillPoly(int... coordinates) {
         window().fills().fillPoly(toPoints(coordinates));
     }
@@ -487,7 +487,7 @@ public final class Bgi {
     }
 
     // =====================================================================
-    // Colores y estilos
+    // Colors and styles
     // =====================================================================
 
     public static void setColor(int color) {
@@ -539,7 +539,7 @@ public final class Bgi {
         setFillStyle(pattern, color.code());
     }
 
-    /** Define un patrón de relleno de 8 filas (8 bits por fila). */
+    /** Defines an 8-row fill pattern (8 bits per row). */
     public static void setFillPattern(int[] rows, int color) {
         state().setUserFillPattern(PatternMask.of(rows));
         state().setFillSettings(new FillSettings(FillPattern.USER, color));
@@ -553,7 +553,7 @@ public final class Bgi {
         return state().fillSettings();
     }
 
-    /** Selecciona el modo de escritura de las líneas (COPY o XOR). */
+    /** Selects the line write mode (COPY or XOR). */
     public static void setWriteMode(RasterOperation mode) {
         state().setWriteMode(mode);
     }
@@ -568,7 +568,7 @@ public final class Bgi {
     }
 
     // =====================================================================
-    // Refresco y páginas
+    // Refresh and pages
     // =====================================================================
 
     public static boolean getRefreshingBgi() {
@@ -612,7 +612,7 @@ public final class Bgi {
     }
 
     // =====================================================================
-    // Texto
+    // Text
     // =====================================================================
 
     public static void outText(String text) {
@@ -648,7 +648,7 @@ public final class Bgi {
     }
 
     // =====================================================================
-    // Imágenes
+    // Images
     // =====================================================================
 
     public static int imageSize(int left, int top, int right, int bottom) {
@@ -663,7 +663,7 @@ public final class Bgi {
         window().images().putImage(left, top, image, operation);
     }
 
-    /** Dibuja una imagen de archivo con su tamaño natural en (0, 0). */
+    /** Draws an image file at its natural size at (0, 0). */
     public static void readImageFile(String fileName) {
         readImageFile(fileName, 0, 0, TO_EDGE, TO_EDGE);
     }
@@ -677,7 +677,7 @@ public final class Bgi {
         }
     }
 
-    /** Guarda todo el viewport en un archivo (BMP, PNG, JPG o GIF según la extensión). */
+    /** Saves the whole viewport to a file (BMP, PNG, JPG or GIF depending on the extension). */
     public static void writeImageFile(String fileName) {
         writeImageFile(fileName, 0, 0, TO_EDGE, TO_EDGE);
     }
@@ -692,15 +692,15 @@ public final class Bgi {
     }
 
     // =====================================================================
-    // Teclado y mouse
+    // Keyboard and mouse
     // =====================================================================
 
-    /** Espera una tecla. Las teclas extendidas devuelven 0 y luego su código. */
+    /** Waits for a key. Extended keys return 0 and then their code. */
     public static int getch() {
         return manager.readKey();
     }
 
-    /** Indica si hay una tecla pendiente. */
+    /** Tells whether a key is pending. */
     public static boolean kbhit() {
         return manager.keyAvailable();
     }
@@ -720,7 +720,7 @@ public final class Bgi {
         return window().mouse().hasClick(kind);
     }
 
-    /** Extrae el siguiente clic del tipo indicado o {@link Point#NONE} si no hay. */
+    /** Takes the next click of the given kind or {@link Point#NONE} if there is none. */
     public static Point getMouseClick(MouseEventKind kind) {
         manager.processEvents();
         return window().mouse().pollClick(kind);
@@ -738,7 +738,7 @@ public final class Bgi {
         window().mouse().setQueueStatus(kind, enabled);
     }
 
-    /** Indica si el usuario cambió el tamaño de la ventana (equivale a {@code isresizeevent}). */
+    /** Tells whether the user resized the window (equivalent to {@code isresizeevent}). */
     public static boolean isResizeEvent() {
         manager.processEvents();
         return window().isResizeEvent();
@@ -749,10 +749,10 @@ public final class Bgi {
     }
 
     /**
-     * Define cómo se ajusta el dibujo cuando la ventana se maximiza o cambia
-     * de tamaño: {@link ScalingMode#KEEP_ASPECT} (por defecto, conserva la
-     * proporción y rellena el resto con el color de fondo) o
-     * {@link ScalingMode#STRETCH} (cubre toda la ventana, aunque se deforme).
+     * Defines how the drawing adapts when the window is maximized or resized:
+     * {@link ScalingMode#KEEP_ASPECT} (default, keeps the
+     * aspect ratio and fills the rest with the background color) or
+     * {@link ScalingMode#STRETCH} (covers the whole window, even if it gets distorted).
      */
     public static void setWindowScaling(ScalingMode mode) {
         window().setScalingMode(mode);
@@ -763,7 +763,7 @@ public final class Bgi {
     }
 
     // =====================================================================
-    // Paleta y conversión de colores
+    // Palette and color conversion
     // =====================================================================
 
     public static int[] getDefaultPalette() {
@@ -790,7 +790,7 @@ public final class Bgi {
         state().palette().setRgb(colorNumber, red, green, blue);
     }
 
-    /** Crea un código de color RGB (equivale a {@code COLOR(r, g, b)}). */
+    /** Creates an RGB color code (equivalent to {@code COLOR(r, g, b)}). */
     public static int rgb(int red, int green, int blue) {
         return ColorCode.rgb(red, green, blue);
     }
@@ -803,7 +803,7 @@ public final class Bgi {
         return ColorCode.isRgbColor(color);
     }
 
-    /** Valor 0xRRGGBB de un código de color según la paleta actual. */
+    /** 0xRRGGBB value of a color code according to the current palette. */
     public static int convertToRgb(int color) {
         return state().palette().toRgb(color);
     }
@@ -821,7 +821,7 @@ public final class Bgi {
     }
 
     // =====================================================================
-    // Utilidades internas
+    // Internal utilities
     // =====================================================================
 
     private static List<Point> toPoints(int[] coordinates) {

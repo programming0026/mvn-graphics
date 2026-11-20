@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Rasterizado de arcos elípticos y circulares.
+ * Rasterization of elliptical and circular arcs.
  * <p>
- * Los ángulos se expresan en grados con la convención matemática de BGI:
- * 0° apunta a la derecha y los ángulos crecen en sentido antihorario.
+ * Angles are expressed in degrees with BGI's mathematical convention:
+ * 0° points to the right and angles grow counterclockwise.
  */
 public final class EllipseRasterizer {
 
@@ -17,15 +17,15 @@ public final class EllipseRasterizer {
     }
 
     /**
-     * Genera los píxeles contiguos de un arco elíptico.
+     * Generates the contiguous pixels of an elliptical arc.
      *
-     * @param centerX    centro horizontal
-     * @param centerY    centro vertical
-     * @param radiusX    radio horizontal
-     * @param radiusY    radio vertical
-     * @param startAngle ángulo inicial en grados
-     * @param endAngle   ángulo final en grados
-     * @param sink       receptor de píxeles (puede recibir duplicados en los vértices)
+     * @param centerX    horizontal center
+     * @param centerY    vertical center
+     * @param radiusX    horizontal radius
+     * @param radiusY    vertical radius
+     * @param startAngle start angle in degrees
+     * @param endAngle   end angle in degrees
+     * @param sink       pixel receiver (may receive duplicates at the vertices)
      */
     public static void traceArc(int centerX, int centerY, int radiusX, int radiusY,
                                 int startAngle, int endAngle, PointSink sink) {
@@ -40,15 +40,15 @@ public final class EllipseRasterizer {
     }
 
     /**
-     * Calcula los vértices de la poligonal que aproxima el arco. La densidad
-     * de vértices depende del radio para que el resultado sea continuo.
+     * Computes the vertices of the polyline that approximates the arc. The vertex
+     * density depends on the radius so that the result is continuous.
      */
     public static List<Point> arcVertices(int centerX, int centerY, int radiusX, int radiusY,
                                           int startAngle, int endAngle) {
         double start = startAngle;
         double end = normalizeEnd(startAngle, endAngle);
         int radius = Math.max(1, Math.max(Math.abs(radiusX), Math.abs(radiusY)));
-        // Paso angular de aproximadamente un píxel sobre el contorno.
+        // Angular step of approximately one pixel along the outline.
         double stepDegrees = Math.max(0.25, Math.toDegrees(1.0 / radius));
         int steps = Math.max(1, (int) Math.ceil((end - start) / stepDegrees));
 
@@ -63,7 +63,7 @@ public final class EllipseRasterizer {
         return vertices;
     }
 
-    /** Punto de la elipse correspondiente a un ángulo (en grados). */
+    /** Point of the ellipse corresponding to an angle (in degrees). */
     public static Point pointAt(int centerX, int centerY, int radiusX, int radiusY, double angleDegrees) {
         double radians = Math.toRadians(angleDegrees);
         int x = centerX + (int) Math.round(radiusX * Math.cos(radians));
@@ -72,7 +72,7 @@ public final class EllipseRasterizer {
     }
 
     /**
-     * Genera los tramos horizontales que rellenan una elipse completa.
+     * Generates the horizontal spans that fill a complete ellipse.
      */
     public static void fillEllipse(int centerX, int centerY, int radiusX, int radiusY, SpanSink sink) {
         int rx = Math.abs(radiusX);
@@ -89,8 +89,8 @@ public final class EllipseRasterizer {
     }
 
     /**
-     * Ajusta el ángulo final para que el recorrido sea antihorario desde el
-     * inicial. Un recorrido de 360° o más se limita a una vuelta completa.
+     * Adjusts the end angle so that the sweep is counterclockwise from the
+     * start. A sweep of 360° or more is limited to one full turn.
      */
     private static double normalizeEnd(int startAngle, int endAngle) {
         double end = endAngle;

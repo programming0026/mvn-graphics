@@ -1,28 +1,28 @@
 package com.juniverse.graphics.drawing;
 
 /**
- * Operaciones de líneas y de la posición actual (CP).
+ * Line and current position (CP) operations.
  */
 public interface LineOperations {
 
-    /** Dibuja una línea entre dos puntos (no modifica la posición actual). */
+    /** Draws a line between two points (does not modify the current position). */
     void line(int x1, int y1, int x2, int y2);
 
-    /** Dibuja una línea desde la posición actual hasta (x, y) y mueve la posición. */
+    /** Draws a line from the current position to (x, y) and moves the position. */
     void lineTo(int x, int y);
 
-    /** Dibuja una línea relativa a la posición actual y mueve la posición. */
+    /** Draws a line relative to the current position and moves the position. */
     void lineRel(int dx, int dy);
 
-    /** Mueve la posición actual a (x, y). */
+    /** Moves the current position to (x, y). */
     void moveTo(int x, int y);
 
-    /** Mueve la posición actual de forma relativa. */
+    /** Moves the current position relatively. */
     void moveRel(int dx, int dy);
 
-    /** Coordenada x de la posición actual (relativa al viewport). */
+    /** x coordinate of the current position (relative to the viewport). */
     int getX();
 
-    /** Coordenada y de la posición actual (relativa al viewport). */
+    /** y coordinate of the current position (relative to the viewport). */
     int getY();
 }

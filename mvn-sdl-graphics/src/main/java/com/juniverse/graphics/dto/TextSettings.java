@@ -6,24 +6,24 @@ import com.juniverse.graphics.text.TextDirection;
 import com.juniverse.graphics.text.VerticalAlignment;
 
 /**
- * Configuración de texto actual (equivalente a {@code textsettingstype}).
+ * Current text settings (equivalent to {@code textsettingstype}).
  *
- * @param font       fuente
- * @param direction  dirección
- * @param charSize   factor de tamaño (1..10) o {@link #USER_CHAR_SIZE}
- * @param horizontal justificación horizontal
- * @param vertical   justificación vertical
+ * @param font       font
+ * @param direction  direction
+ * @param charSize   size factor (1..10) or {@link #USER_CHAR_SIZE}
+ * @param horizontal horizontal justification
+ * @param vertical   vertical justification
  */
 public record TextSettings(FontName font, TextDirection direction, int charSize,
                            HorizontalAlignment horizontal, VerticalAlignment vertical) {
 
-    /** Tamaño definido por el usuario con {@code setusercharsize}. */
+    /** Size defined by the user with {@code setusercharsize}. */
     public static final int USER_CHAR_SIZE = 0;
 
-    /** Tamaño máximo admitido. */
+    /** Maximum allowed size. */
     public static final int MAX_CHAR_SIZE = 10;
 
-    /** Configuración por defecto de BGI. */
+    /** BGI default settings. */
     public static final TextSettings DEFAULT = new TextSettings(FontName.DEFAULT, TextDirection.HORIZONTAL, 1,
             HorizontalAlignment.LEFT, VerticalAlignment.TOP);
 

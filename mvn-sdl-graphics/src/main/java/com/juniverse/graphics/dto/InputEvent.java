@@ -4,44 +4,44 @@ import com.juniverse.graphics.input.ExtendedKey;
 import com.juniverse.graphics.input.MouseButton;
 
 /**
- * Eventos de entrada independientes de la plataforma.
+ * Platform-independent input events.
  * <p>
- * La capa de plataforma (SDL) traduce sus eventos nativos a estos tipos, de
- * modo que el resto de la biblioteca nunca depende de SDL directamente.
- * {@code displayId} identifica la ventana nativa que originó el evento.
+ * The platform layer (SDL) translates its native events to these types, so
+ * that the rest of the library never depends on SDL directly.
+ * {@code displayId} identifies the native window that originated the event.
  */
 public sealed interface InputEvent {
 
-    /** Carácter o código de control escrito (Enter = 13, Esc = 27, ...). */
+    /** Character or control code typed (Enter = 13, Esc = 27, ...). */
     public record KeyTyped(int displayId, int code) implements InputEvent {
     }
 
-    /** Tecla extendida presionada (flechas, F1..F9, Inicio, ...). */
+    /** Extended key pressed (arrows, F1..F9, Home, ...). */
     public record ExtendedKeyPressed(int displayId, ExtendedKey key) implements InputEvent {
     }
 
-    /** El mouse se movió dentro de la ventana. */
+    /** The mouse moved inside the window. */
     public record MouseMoved(int displayId, int x, int y) implements InputEvent {
     }
 
-    /** Un botón del mouse cambió de estado. {@code clicks} vale 2 en un doble clic. */
+    /** A mouse button changed state. {@code clicks} is 2 on a double click. */
     public record MouseButtonChanged(int displayId, MouseButton button, boolean pressed, int clicks,
                               int x, int y) implements InputEvent {
     }
 
-    /** El usuario pidió cerrar la ventana. */
+    /** The user asked to close the window. */
     public record CloseRequested(int displayId) implements InputEvent {
     }
 
-    /** La ventana cambió de tamaño (por ejemplo, al maximizarla). */
+    /** The window changed size (for example, when maximized). */
     public record Resized(int displayId) implements InputEvent {
     }
 
-    /** La ventana necesita volver a dibujarse. */
+    /** The window needs to be redrawn. */
     public record Exposed(int displayId) implements InputEvent {
     }
 
-    /** Se solicitó terminar la aplicación (por ejemplo, con Ctrl+C). */
+    /** Application termination was requested (for example, with Ctrl+C). */
     public record QuitRequested() implements InputEvent {
     }
 }

@@ -1,16 +1,16 @@
 package com.juniverse.graphics.text;
 
 /**
- * Justificación vertical del texto (BOTTOM_TEXT, VCENTER_TEXT, TOP_TEXT).
+ * Vertical text justification (BOTTOM_TEXT, VCENTER_TEXT, TOP_TEXT).
  * <p>
- * El orden de las constantes respeta los códigos numéricos de BGI.
+ * The order of the constants respects the BGI numeric codes.
  */
 public enum VerticalAlignment {
     BOTTOM,
     CENTER,
     TOP;
 
-    /** Desplazamiento a aplicar al origen para un texto de alto {@code height}. */
+    /** Offset to apply to the origin for a text of height {@code height}. */
     public int offset(int height) {
         return switch (this) {
             case TOP -> 0;

@@ -17,12 +17,12 @@ import java.util.Random;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Estado y utilidades comunes de la demostración de Borland ({@code BGIDEMO.C}).
+ * Common state and utilities of the Borland demonstration ({@code BGIDEMO.C}).
  * <p>
- * Reúne las variables globales del original ({@code GraphDriver},
- * {@code MaxX}, {@code MaxColors}, {@code AspectRatio}, ...) y las funciones
- * auxiliares que comparten todas las demostraciones: {@code MainWindow},
- * {@code StatusLine}, {@code DrawBorder}, {@code Pause}, {@code gprintf} y
+ * It gathers the global variables of the original ({@code GraphDriver},
+ * {@code MaxX}, {@code MaxColors}, {@code AspectRatio}, ...) and the
+ * helper functions shared by all the demonstrations: {@code MainWindow},
+ * {@code StatusLine}, {@code DrawBorder}, {@code Pause}, {@code gprintf} and
  * {@code changetextstyle}.
  */
 public final class DemoFrame {
@@ -62,8 +62,8 @@ public final class DemoFrame {
     }
 
     /**
-     * Inicia el modo gráfico con autodetección y lee la configuración
-     * (equivale a {@code Initialize}).
+     * Starts the graphics mode with autodetection and reads the configuration
+     * (equivalent to {@code Initialize}).
      */
     public static DemoFrame initialize() {
         int driver = DETECT;
@@ -103,12 +103,12 @@ public final class DemoFrame {
         return originalPalette.clone();
     }
 
-    /** Número aleatorio de 0 a {@code bound - 1} (equivale a {@code random(n)} de Turbo C). */
+    /** Random number from 0 to {@code bound - 1} (equivalent to {@code random(n)} of Turbo C). */
     public int random(int bound) {
         return bound <= 0 ? 0 : random.nextInt(bound);
     }
 
-    /** Borra la pantalla, dibuja el encabezado y el marco y deja el viewport de trabajo (MainWindow). */
+    /** Clears the screen, draws the header and the frame and leaves the working viewport (MainWindow). */
     public void mainWindow(String header) {
         clearDevice();
         setColor(maxColors - 1);
@@ -123,7 +123,7 @@ public final class DemoFrame {
         setViewport(1, height + 5, maxX - 1, maxY - (height + 5), true);
     }
 
-    /** Muestra un mensaje en la línea de estado inferior (StatusLine). */
+    /** Shows a message on the bottom status line (StatusLine). */
     public void statusLine(String message) {
         setViewport(0, 0, maxX, maxY, true);
         setColor(maxColors - 1);
@@ -139,7 +139,7 @@ public final class DemoFrame {
         setViewport(1, height + 5, maxX - 1, maxY - (height + 5), true);
     }
 
-    /** Dibuja un marco alrededor del viewport actual (DrawBorder). */
+    /** Draws a frame around the current viewport (DrawBorder). */
     public void drawBorder() {
         setColor(maxColors - 1);
         setLineStyle(LineStyle.SOLID, 0, NORM_WIDTH);
@@ -148,9 +148,9 @@ public final class DemoFrame {
     }
 
     /**
-     * Espera una tecla (Pause). ESC termina la demostración: en lugar del
-     * {@code exit()} del original se lanza {@link ExampleAbortedException},
-     * que {@link BgiDemo} atrapa para cerrar la ventana y volver al menú.
+     * Waits for a key (Pause). ESC ends the demonstration: instead of the
+     * {@code exit()} of the original, {@link ExampleAbortedException} is thrown,
+     * which {@link BgiDemo} catches to close the window and return to the menu.
      */
     public void pause() {
         statusLine("Esc aborts or press a key...");
@@ -159,19 +159,19 @@ public final class DemoFrame {
             throw new ExampleAbortedException("BgiDemo aborted with ESC");
         }
         if (key == 0) {
-            getch(); // Código de la tecla extendida.
+            getch(); // Extended key code.
         }
         clearDevice();
     }
 
-    /** Cambia el estilo de texto (changetextstyle). */
+    /** Changes the text style (changetextstyle). */
     public void changeTextStyle(FontName font, TextDirection direction, int charSize) {
         setTextStyle(font, direction, charSize);
     }
 
     /**
-     * Escribe texto con formato en (x, y) y devuelve la y de la línea
-     * siguiente (equivale a gprintf, que recibía x e y por referencia).
+     * Writes formatted text at (x, y) and returns the y of the next
+     * line (equivalent to gprintf, which received x and y by reference).
      */
     public int print(int x, int y, String format, Object... arguments) {
         outTextXY(x, y, String.format(Locale.ROOT, format, arguments));

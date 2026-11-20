@@ -7,8 +7,8 @@ import java.nio.file.Path;
 import java.util.Locale;
 
 /**
- * Implementación de {@link ImageFileStore} basada en {@code javax.imageio}.
- * Admite BMP, PNG, JPG y GIF.
+ * Implementation of {@link ImageFileStore} based on {@code javax.imageio}.
+ * Supports BMP, PNG, JPG and GIF.
  */
 public final class ImageIoFileStore implements ImageFileStore {
 

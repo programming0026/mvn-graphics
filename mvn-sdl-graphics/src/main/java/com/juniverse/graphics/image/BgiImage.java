@@ -1,14 +1,14 @@
 package com.juniverse.graphics.image;
 
 /**
- * Imagen inmutable en memoria, en formato ARGB.
+ * Immutable in-memory image, in ARGB format.
  * <p>
- * Sustituye al bloque de memoria opaco ({@code void* bitmap}) que usaban
- * {@code getimage} y {@code putimage} en WinBGI.
+ * Replaces the opaque memory block ({@code void* bitmap}) used by
+ * {@code getimage} and {@code putimage} in WinBGI.
  */
 public final class BgiImage {
 
-    /** Bytes reservados para el encabezado (ancho y alto) en {@link #byteSize}. */
+    /** Bytes reserved for the header (width and height) in {@link #byteSize}. */
     private static final int HEADER_BYTES = 2 * Integer.BYTES;
 
     private final int width;
@@ -32,17 +32,17 @@ public final class BgiImage {
         return height;
     }
 
-    /** Píxel ARGB en la posición indicada. */
+    /** ARGB pixel at the given position. */
     public int pixel(int x, int y) {
         return pixels[y * width + x];
     }
 
-    /** Copia de todos los píxeles ARGB, fila por fila. */
+    /** Copy of all ARGB pixels, row by row. */
     public int[] pixels() {
         return pixels.clone();
     }
 
-    /** Devuelve una copia redimensionada (vecino más cercano). */
+    /** Returns a resized copy (nearest neighbor). */
     public BgiImage scaledTo(int newWidth, int newHeight) {
         if (newWidth == width && newHeight == height) {
             return this;
@@ -58,7 +58,7 @@ public final class BgiImage {
         return new BgiImage(newWidth, newHeight, scaled);
     }
 
-    /** Memoria aproximada que ocupa una imagen del tamaño indicado (equivale a {@code imagesize}). */
+    /** Approximate memory taken by an image of the given size (equivalent to {@code imagesize}). */
     public static int byteSize(int width, int height) {
         return HEADER_BYTES + Math.abs(width) * Math.abs(height) * Integer.BYTES;
     }

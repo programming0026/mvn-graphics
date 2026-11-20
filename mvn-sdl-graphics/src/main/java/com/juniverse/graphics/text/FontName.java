@@ -3,10 +3,10 @@ package com.juniverse.graphics.text;
 import java.awt.Font;
 
 /**
- * Fuentes de BGI ({@code font_names}).
+ * BGI fonts ({@code font_names}).
  * <p>
- * Las fuentes vectoriales originales de Borland (.CHR) se sustituyen por las
- * fuentes lógicas de Java que más se les parecen.
+ * Borland's original vector fonts (.CHR) are replaced by the
+ * Java logical fonts that most resemble them.
  */
 public enum FontName {
     DEFAULT(Font.MONOSPACED, Font.BOLD, 8),
@@ -31,22 +31,22 @@ public enum FontName {
         this.baseSize = baseSize;
     }
 
-    /** Familia de fuente lógica de Java. */
+    /** Java logical font family. */
     public String family() {
         return family;
     }
 
-    /** Estilo AWT ({@link Font#PLAIN}, {@link Font#BOLD}, ...). */
+    /** AWT style ({@link Font#PLAIN}, {@link Font#BOLD}, ...). */
     public int style() {
         return style;
     }
 
-    /** Tamaño en píxeles para un factor de escala 1. */
+    /** Size in pixels for a scale factor of 1. */
     public int baseSize() {
         return baseSize;
     }
 
-    /** Obtiene la fuente a partir de su código numérico BGI. */
+    /** Gets the font from its BGI numeric code. */
     public static FontName fromCode(int code) {
         if (code < 0 || code >= values().length) {
             throw new IllegalArgumentException("Invalid font: " + code);

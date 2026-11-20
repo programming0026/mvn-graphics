@@ -8,10 +8,10 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * Implementación de {@link ScreenOperations}.
+ * Implementation of {@link ScreenOperations}.
  * <p>
- * A diferencia de los demás dibujantes, necesita acceso directo a la página
- * activa porque {@code cleardevice} ignora el viewport.
+ * Unlike the other painters, it needs direct access to the active
+ * page because {@code cleardevice} ignores the viewport.
  */
 public final class ScreenClearer implements ScreenOperations {
 

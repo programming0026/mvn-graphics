@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Plataforma en memoria para pruebas: no abre ventanas reales y permite
- * inyectar eventos de entrada.
+ * In-memory platform for tests: it opens no real windows and allows
+ * injecting input events.
  */
 public final class FakePlatform implements Platform {
 
@@ -53,7 +53,7 @@ public final class FakePlatform implements Platform {
         closed = true;
     }
 
-    /** Encola un evento que se entregará en el próximo sondeo. */
+    /** Queues an event to be delivered on the next poll. */
     public void enqueue(InputEvent event) {
         pendingEvents.add(event);
     }
@@ -66,7 +66,7 @@ public final class FakePlatform implements Platform {
         return closed;
     }
 
-    /** Ventana falsa que cuenta las presentaciones. */
+    /** Fake window that counts the presentations. */
     public static final class FakeDisplay implements Display {
         private final int id;
         private int presentCount;
@@ -86,12 +86,12 @@ public final class FakePlatform implements Platform {
             return outputSize;
         }
 
-        /** Simula que el usuario cambió el tamaño de la ventana. */
+        /** Simulates the user resizing the window. */
         public void setOutputSize(Size outputSize) {
             this.outputSize = outputSize;
         }
 
-        /** Tamaño de la última página presentada. */
+        /** Size of the last presented page. */
         public Size lastPageSize() {
             return lastPageSize;
         }

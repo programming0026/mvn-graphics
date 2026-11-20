@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Pruebas de {@link Plot2D}. Está en el mismo paquete porque
- * {@code formatNumber} es visible solo dentro de él.
+ * Tests for {@link Plot2D}. It is in the same package because
+ * {@code formatNumber} is visible only inside it.
  */
 public class Plot2DTest {
 

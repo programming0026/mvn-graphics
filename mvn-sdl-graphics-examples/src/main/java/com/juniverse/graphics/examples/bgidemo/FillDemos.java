@@ -12,12 +12,12 @@ import java.util.List;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Demostraciones de relleno: {@code FillStyleDemo}, {@code FillPatternDemo}
- * y {@code PolyDemo}.
+ * Fill demonstrations: {@code FillStyleDemo}, {@code FillPatternDemo}
+ * and {@code PolyDemo}.
  */
 public final class FillDemos {
 
-    /** Patrones de usuario de FillPatternDemo (8 filas de 8 bits). */
+    /** User patterns of FillPatternDemo (8 rows of 8 bits). */
     private static final int[][] USER_PATTERNS = {
             {0xAA, 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA, 0x55},
             {0x33, 0x33, 0xCC, 0xCC, 0x33, 0x33, 0xCC, 0xCC},
@@ -41,21 +41,21 @@ public final class FillDemos {
         this.frame = frame;
     }
 
-    /** Muestra los 12 estilos de relleno predefinidos (FillStyleDemo). */
+    /** Shows the 12 predefined fill styles (FillStyleDemo). */
     public void fillStyleDemo() {
         frame.mainWindow("Pre-defined Fill Styles");
         drawBoxGrid(style -> setFillStyle(FillPattern.fromCode(style), frame.maxColors() - 1));
         frame.pause();
     }
 
-    /** Muestra 12 patrones de relleno definidos por el usuario (FillPatternDemo). */
+    /** Shows 12 user-defined fill patterns (FillPatternDemo). */
     public void fillPatternDemo() {
         frame.mainWindow("User Defined Fill Styles");
         drawBoxGrid(style -> setFillPattern(USER_PATTERNS[style], frame.maxColors() - 1));
         frame.pause();
     }
 
-    /** Polígonos rellenos al azar hasta que se presione una tecla (PolyDemo). */
+    /** Random filled polygons until a key is pressed (PolyDemo). */
     public  void polyDemo() {
         frame.mainWindow("DrawPoly / FillPoly Demonstration");
         frame.statusLine("ESC Aborts - Press a Key to stop");
@@ -69,14 +69,14 @@ public final class FillDemos {
             for (int i = 0; i < POLYGON_POINTS - 1; i++) {
                 polygon.add(new Point(frame.random(frame.maxX()), frame.random(frame.maxY())));
             }
-            // Igual que el original: el último punto toma la x del primero y la y del segundo.
+            // Same as the original: the last point takes the x of the first and the y of the second.
             polygon.add(new Point(polygon.get(0).x(), polygon.get(1).y()));
             fillPoly(polygon);
         }
         frame.pause();
     }
 
-    /** Cuadrícula de 3x4 cajas rellenas con el estilo número 0..11. */
+    /** 3x4 grid of boxes filled with style number 0..11. */
     private static void drawBoxGrid(java.util.function.IntConsumer applyStyle) {
         Viewport vp = getViewSettings();
         int w = 2 * ((vp.right() + 1) / 13);

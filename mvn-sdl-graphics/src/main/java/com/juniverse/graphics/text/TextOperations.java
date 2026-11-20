@@ -3,31 +3,31 @@ package com.juniverse.graphics.text;
 import com.juniverse.graphics.dto.TextSettings;
 
 /**
- * Operaciones de texto de BGI.
+ * BGI text operations.
  */
 public interface TextOperations {
 
-    /** Dibuja el texto en la posición actual (y la avanza si la justificación es LEFT horizontal). */
+    /** Draws the text at the current position (and advances it if the horizontal justification is LEFT). */
     void outText(String text);
 
-    /** Dibuja el texto en la posición indicada sin modificar la posición actual. */
+    /** Draws the text at the given position without modifying the current position. */
     void outTextXY(int x, int y, String text);
 
-    /** Ancho en píxeles que ocuparía el texto con la configuración actual. */
+    /** Width in pixels the text would take with the current settings. */
     int textWidth(String text);
 
-    /** Alto en píxeles que ocuparía el texto con la configuración actual. */
+    /** Height in pixels the text would take with the current settings. */
     int textHeight(String text);
 
-    /** Cambia fuente, dirección y tamaño. */
+    /** Changes font, direction and size. */
     void setTextStyle(FontName font, TextDirection direction, int charSize);
 
-    /** Cambia la justificación. */
+    /** Changes the justification. */
     void setTextJustify(HorizontalAlignment horizontal, VerticalAlignment vertical);
 
-    /** Define la escala de usuario usada con {@code USER_CHAR_SIZE}. */
+    /** Defines the user scale used with {@code USER_CHAR_SIZE}. */
     void setUserCharSize(int multX, int divX, int multY, int divY);
 
-    /** Configuración de texto actual. */
+    /** Current text settings. */
     TextSettings textSettings();
 }

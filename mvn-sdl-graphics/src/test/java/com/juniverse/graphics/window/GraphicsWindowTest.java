@@ -257,7 +257,7 @@ public class GraphicsWindowTest {
         assertEquals(BgiColor.YELLOW.code(), window.shapes().getPixel(5, 5));
         assertEquals(new Size(400, 300), display.lastPageSize());
 
-        // Al restaurar una ventana más chica, el área no baja de la resolución inicial.
+        // When restoring a smaller window, the area does not drop below the initial resolution.
         display.setOutputSize(new Size(100, 50));
         platform.enqueue(new InputEvent.Resized(window.displayId()));
         manager.processEvents();
@@ -274,13 +274,13 @@ public class GraphicsWindowTest {
         manager.processEvents();
         window.shapes().rectangle(300, 200, 350, 250);
 
-        // Restaurar o minimizar: solo se achica la parte visible.
+        // Restore or minimize: only the visible part shrinks.
         display.setOutputSize(new Size(0, 0));
         platform.enqueue(new InputEvent.Resized(window.displayId()));
         manager.processEvents();
         assertEquals(200, window.width());
 
-        // Al maximizar de nuevo, el rectángulo sigue ahí.
+        // When maximizing again, the rectangle is still there.
         display.setOutputSize(new Size(400, 300));
         platform.enqueue(new InputEvent.Resized(window.displayId()));
         manager.processEvents();

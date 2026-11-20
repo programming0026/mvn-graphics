@@ -4,11 +4,11 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Conjunto ordenado de píxeles sin duplicados.
+ * Ordered set of pixels without duplicates.
  * <p>
- * Permite construir un contorno completo (por ejemplo, un rectángulo o una
- * polilínea) y dibujar cada píxel una sola vez. Esto es indispensable para el
- * modo XOR, donde dibujar dos veces el mismo píxel lo borraría.
+ * It allows building a complete outline (for example, a rectangle or a
+ * polyline) and drawing each pixel only once. This is essential for
+ * XOR mode, where drawing the same pixel twice would erase it.
  */
 public final class PixelSet implements PointSink {
 
@@ -19,17 +19,17 @@ public final class PixelSet implements PointSink {
         pixels.add(pack(x, y));
     }
 
-    /** Número de píxeles distintos. */
+    /** Number of distinct pixels. */
     public int size() {
         return pixels.size();
     }
 
-    /** Indica si el píxel ya forma parte del conjunto. */
+    /** Tells whether the pixel is already part of the set. */
     public boolean contains(int x, int y) {
         return pixels.contains(pack(x, y));
     }
 
-    /** Recorre los píxeles en el orden en que se agregaron. */
+    /** Iterates over the pixels in the order they were added. */
     public void forEach(PointSink sink) {
         for (long packed : pixels) {
             sink.accept((int) (packed >> 32), (int) packed);

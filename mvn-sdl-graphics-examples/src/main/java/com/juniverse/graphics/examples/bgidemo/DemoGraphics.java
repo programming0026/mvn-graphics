@@ -66,13 +66,13 @@ import static java.lang.Math.abs;
 import static java.lang.Math.sin;
 
 /**
- * Programa de demostración: recorre las principales funciones de la
- * biblioteca al estilo de un programa BGI clásico.
+ * Demonstration program: goes through the main functions of the
+ * library in the style of a classic BGI program.
  * <p>
- * Las figuras se diseñaron sobre una cuadrícula de 640x480 y se escalan con
- * {@link #sx(int)} y {@link #sy(int)}, de modo que la demostración se ve
- * completa en cualquier modo gráfico (por ejemplo VGAMED o IBM8514HI) y
- * también cuando la ventana se maximiza (el área de dibujo crece con ella).
+ * The shapes were designed on a 640x480 grid and are scaled with
+ * {@link #sx(int)} and {@link #sy(int)}, so that the demonstration looks
+ * complete in any graphics mode (for example VGAMED or IBM8514HI) and
+ * also when the window is maximized (the drawing area grows with it).
  */
 public class DemoGraphics {
 
@@ -149,7 +149,7 @@ public class DemoGraphics {
         getch ();
     }
 
-    /** Figuras básicas, estilos de línea y texto. */
+    /** Basic shapes, line styles and text. */
     private static void drawShowcase() {
         setBkColor(BgiColor.BLUE);
         clearDevice();
@@ -212,7 +212,7 @@ public class DemoGraphics {
 
 
 
-    /** Muestra los 12 patrones de relleno estándar. */
+    /** Shows the 12 standard fill patterns. */
     private static void drawPatterns() {
         setBkColor(BgiColor.BLACK);
         clearDevice();
@@ -231,7 +231,7 @@ public class DemoGraphics {
         }
     }
 
-    /** Animación con doble búfer: una pelota que rebota hasta pulsar una tecla. */
+    /** Double-buffered animation: a bouncing ball until a key is pressed. */
     private static void animate() {
         setTextJustify(HorizontalAlignment.LEFT, VerticalAlignment.TOP);
         int radius = sy(20);
@@ -264,7 +264,7 @@ public class DemoGraphics {
         setVisualPage(0);
     }
 
-    /** Dibujo libre con el mouse; ESC termina. */
+    /** Free drawing with the mouse; ESC ends. */
     private static void paintWithMouse() {
         setBkColor(BgiColor.BLACK);
         clearDevice();
@@ -301,9 +301,9 @@ public class DemoGraphics {
     }
 
     /**
-     * Dibuja una pantalla y espera una tecla. Si el usuario maximiza o cambia
-     * el tamaño de la ventana, el área de dibujo crece y la pantalla se
-     * vuelve a dibujar con la nueva resolución.
+     * Draws a screen and waits for a key. If the user maximizes or resizes
+     * the window, the drawing area grows and the screen is
+     * redrawn with the new resolution.
      */
     private static void showUntilKey(Runnable screen, String message) {
         clearResizeEvent();
@@ -326,12 +326,12 @@ public class DemoGraphics {
         outTextXY(getMaxX() / 2, getMaxY() - 5, message);
     }
 
-    /** Escala una coordenada horizontal del diseño de 640 a la resolución actual. */
+    /** Scales a horizontal coordinate of the 640 design to the current resolution. */
     private static int sx(int x) {
         return x * (getMaxX() + 1) / DESIGN_WIDTH;
     }
 
-    /** Escala una coordenada vertical del diseño de 480 a la resolución actual. */
+    /** Scales a vertical coordinate of the 480 design to the current resolution. */
     private static int sy(int y) {
         return y * (getMaxY() + 1) / DESIGN_HEIGHT;
     }

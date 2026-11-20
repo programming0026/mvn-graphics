@@ -12,13 +12,13 @@ import java.util.Random;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Simulacion de fuego.
+ * Fire simulation.
  * <p>
- * Aquí:
+ * Here:
  * <ul>
- *     <li>la memoria de video es el arreglo de "calor" de {@link FireSimulation};</li>
- *     <li>la paleta VGA de 256 colores es {@link #buildPalette()}, en RGB;</li>
- *     <li>cada cuadro se convierte en una {@link BgiImage} y se dibuja con
+ *     <li>the video memory is the "heat" array of {@link FireSimulation};</li>
+ *     <li>the 256-color VGA palette is {@link #buildPalette()}, in RGB;</li>
+ *     <li>each frame is converted into a {@link BgiImage} and drawn with
  *     {@code putImage}.</li>
  * </ul>
  * <p>
@@ -57,10 +57,10 @@ public final class FireEffect {
     }
 
     /**
-     * Construye la paleta de 256 colores del original: negro → rojo →
-     * amarillo → blanco. Los valores de la paleta VGA tienen 6 bits (0..63)
-     * y se convierten a 8 bits. Las entradas que el original no programaba
-     * (129..255) se dejan en blanco.
+     * Builds the 256-color palette of the original: black → red →
+     * yellow → white. VGA palette values have 6 bits (0..63)
+     * and are converted to 8 bits. The entries the original did not program
+     * (129..255) are left white.
      */
     private static int[] buildPalette() {
         int[] palette = new int[256];
@@ -75,23 +75,23 @@ public final class FireEffect {
         return palette;
     }
 
-    /** Convierte un color VGA de 6 bits por canal a un píxel ARGB opaco. */
+    /** Converts a VGA color of 6 bits per channel to an opaque ARGB pixel. */
     private static int vgaColor(int red, int green, int blue) {
         return 0xFF000000 | (red * 255 / 63) << 16 | (green * 255 / 63) << 8 | (blue * 255 / 63);
     }
 
     /**
-     * Simulación del fuego: equivale a la memoria de video del modo 13h,
-     * donde cada byte es un índice de la paleta ("calor").
+     * Fire simulation: equivalent to the video memory of mode 13h,
+     * where each byte is a palette index ("heat").
      */
     public static final class FireSimulation {
 
         public static final int WIDTH = 640;
         public static final int HEIGHT = 480;
 
-        /** Primera fila que se recalcula (las de arriba quedan negras). */
+        /** First row that is recomputed (the ones above stay black). */
         private static final int FIRST_ROW = 60;
-        /** Fila oculta (fuera de la pantalla) donde nacen las chispas. */
+        /** Hidden row (off screen) where the sparks are born. */
         private static final int SOURCE_ROW = HEIGHT;
         private static final int SPARK_HEAT = 160;
 
@@ -107,10 +107,10 @@ public final class FireEffect {
         }
 
         /**
-         * Avanza un cuadro, con el mismo algoritmo que el original: cada
-         * bloque de 2x2 toma el promedio de sus vecinos de abajo menos 1, de
-         * modo que el calor sube y se enfría; en la fila oculta inferior
-         * aparecen chispas al azar.
+         * Advances one frame, with the same algorithm as the original: each
+         * 2x2 block takes the average of its neighbors below minus 1, so
+         * that the heat rises and cools; in the hidden bottom row
+         * sparks appear at random.
          */
         public void step() {
             for (int x = 0; x <= WIDTH; x += 2) {
@@ -127,7 +127,7 @@ public final class FireEffect {
             }
         }
 
-        /** Convierte el calor visible (320x200) en una imagen usando la paleta. */
+        /** Converts the visible heat (320x200) into an image using the palette. */
         public BgiImage render(int[] palette) {
             int[] pixels = new int[WIDTH * HEIGHT];
             for (int y = 0; y < HEIGHT; y++) {
@@ -138,7 +138,7 @@ public final class FireEffect {
             return new BgiImage(WIDTH, HEIGHT, pixels);
         }
 
-        /** Escribe un bloque de 2x2 (equivale a los dos poke() del original). */
+        /** Writes a 2x2 block (equivalent to the two poke() calls of the original). */
         private void setBlock(int x, int y, int value) {
             setHeat(x, y, value);
             setHeat(x + 1, y, value);

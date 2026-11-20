@@ -1,11 +1,11 @@
 package com.juniverse.graphics.dto;
 
 /**
- * Clave de la caché de textos rasterizados: el texto y la fuente con la que
- * se dibujó.
+ * Key of the cache of rasterized texts: the text and the font it was
+ * drawn with.
  *
- * @param text texto rasterizado
- * @param spec fuente usada
+ * @param text rasterized text
+ * @param spec font used
  */
 public record GlyphCacheKey(String text, FontSpec spec) {
 }

@@ -4,24 +4,24 @@ import com.juniverse.graphics.dto.GraphicsMode;
 import com.juniverse.graphics.dto.ModeResolution;
 
 /**
- * Traduce los parámetros de {@code initgraph(&gd, &gm, path)} a un modo
- * gráfico concreto, aplicando las mismas reglas que Borland BGI.
+ * Translates the parameters of {@code initgraph(&gd, &gm, path)} to a specific
+ * graphics mode, applying the same rules as Borland BGI.
  */
 public final class ModeResolver {
 
-    /** Modo que devuelve la autodetección: VGA en VGAHI (640x480). */
+    /** Mode returned by autodetection: VGA in VGAHI (640x480). */
     public static final GraphicsMode DETECTED = GraphicsDriver.VGA.highestMode().orElseThrow();
 
     private ModeResolver() {
     }
 
     /**
-     * Resuelve el modo solicitado.
+     * Resolves the requested mode.
      * <ul>
-     *     <li>Con {@code DETECT} el modo se ignora y se elige VGAHI, igual que en
-     *     BGI (por eso {@code gd = DETECT, gm = VGA} funciona).</li>
-     *     <li>Un controlador desconocido produce {@link ModeFailureReason#INVALID_DRIVER}.</li>
-     *     <li>Un modo que el controlador no tiene produce {@link ModeFailureReason#INVALID_MODE}.</li>
+     *     <li>With {@code DETECT} the mode is ignored and VGAHI is chosen, just as in
+     *     BGI (that is why {@code gd = DETECT, gm = VGA} works).</li>
+     *     <li>An unknown driver produces {@link ModeFailureReason#INVALID_DRIVER}.</li>
+     *     <li>A mode the driver does not have produces {@link ModeFailureReason#INVALID_MODE}.</li>
      * </ul>
      */
     public static ModeResolution resolve(int driverCode, int modeNumber) {

@@ -50,27 +50,27 @@ import static org.lwjgl.sdl.SDLVideo.SDL_WINDOWPOS_CENTERED_MASK;
 import static org.lwjgl.sdl.SDLVideo.SDL_WINDOW_RESIZABLE;
 
 /**
- * Ventana SDL3 que muestra una página mediante una textura de streaming.
+ * SDL3 window that shows a page through a streaming texture.
  * <p>
- * La ventana es redimensionable y maximizable. Según el {@link ScalingMode},
- * la página crece con la ventana (RESIZE) o SDL la escala al tamaño real de
- * la ventana (conservando la proporción, estirándola o por factores enteros);
- * las bandas sobrantes se pintan con el color de fondo. Si la resolución
- * pedida no cabe en la pantalla, la ventana se abre reducida.
+ * The window is resizable and maximizable. Depending on the {@link ScalingMode},
+ * the page grows with the window (RESIZE) or SDL scales it to the real size of
+ * the window (keeping the aspect ratio, stretching it or by integer factors);
+ * the leftover bands are painted with the background color. If the requested
+ * resolution does not fit on the screen, the window opens shrunk.
  */
 public final class SdlDisplay implements Display {
 
-    /** Espacio reservado para la barra de título y los bordes de la ventana. */
+    /** Space reserved for the title bar and the window borders. */
     private static final int DECORATION_WIDTH = 16;
     private static final int DECORATION_HEIGHT = 64;
-    /** Tamaño mínimo de la ventana al redimensionarla. */
+    /** Minimum window size when resizing it. */
     private static final int MIN_WINDOW_SIZE = 160;
 
     private final long window;
     private final long renderer;
     private final int id;
     private final Consumer<SdlDisplay> onClose;
-    // La textura y el búfer de subida se recrean si cambia el tamaño de la página.
+    // The texture and the upload buffer are recreated if the page size changes.
     private SDL_Texture texture;
     private ByteBuffer upload;
     private IntBuffer uploadPixels;
@@ -81,8 +81,8 @@ public final class SdlDisplay implements Display {
     private boolean closed;
 
     /**
-     * @param spec    parámetros de la ventana (el tamaño es la resolución lógica BGI)
-     * @param onClose acción a ejecutar al cerrar (por ejemplo, quitarla del registro)
+     * @param spec    window parameters (the size is the BGI logical resolution)
+     * @param onClose action to run on close (for example, removing it from the registry)
      */
     public SdlDisplay(DisplaySpec spec, Consumer<SdlDisplay> onClose) {
         this.width = spec.width();
@@ -159,7 +159,7 @@ public final class SdlDisplay implements Display {
         }
     }
 
-    /** Aplica la presentación lógica según el modo de escalado y el tamaño de la página. */
+    /** Applies the logical presentation according to the scaling mode and the page size. */
     private void applyPresentation() {
         int presentation = switch (scalingMode) {
             case RESIZE, KEEP_ASPECT -> SDL_LOGICAL_PRESENTATION_LETTERBOX;
@@ -169,7 +169,7 @@ public final class SdlDisplay implements Display {
         SDL_SetRenderLogicalPresentation(renderer, width, height, presentation);
     }
 
-    /** Crea la textura y el búfer de subida para el tamaño de página actual. */
+    /** Creates the texture and the upload buffer for the current page size. */
     private void allocateTexture() {
         texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING,
                 width, height);
@@ -181,7 +181,7 @@ public final class SdlDisplay implements Display {
         scaleMode = -1;
     }
 
-    /** Recrea la textura cuando la página cambia de tamaño (modo RESIZE). */
+    /** Recreates the texture when the page changes size (RESIZE mode). */
     private void resizeTexture(int newWidth, int newHeight) {
         SDL_DestroyTexture(texture);
         MemoryUtil.memFree(upload);
@@ -198,7 +198,7 @@ public final class SdlDisplay implements Display {
         }
     }
 
-    /** Convierte las coordenadas del mouse de un evento a coordenadas BGI. */
+    /** Converts the mouse coordinates of an event to BGI coordinates. */
     public void toLogicalCoordinates(SDL_Event event) {
         if (!closed) {
             SDL_ConvertEventToRenderCoordinates(renderer, event);
@@ -219,10 +219,10 @@ public final class SdlDisplay implements Display {
     }
 
     /**
-     * Elige el filtro de escalado: al reducir se usa interpolación lineal para
-     * que no desaparezcan las líneas de un píxel; al ampliar se usa el vecino
-     * más cercano para que el texto y las líneas se vean nítidos (los filtros
-     * suavizados hacen que las fuentes pequeñas se vean borrosas).
+     * Chooses the scaling filter: when shrinking, linear interpolation is used so
+     * that one-pixel lines do not disappear; when enlarging, nearest neighbor is
+     * used so that text and lines look sharp (smoothing
+     * filters make small fonts look blurry).
      */
     private void updateScaleMode() {
         int wanted;
@@ -240,7 +240,7 @@ public final class SdlDisplay implements Display {
         }
     }
 
-    /** Tamaño inicial de la ventana: el pedido, o reducido si no cabe en la pantalla. */
+    /** Initial window size: the requested one, or shrunk if it does not fit on the screen. */
     private static int[] fitToScreen(int width, int height) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             SDL_Rect usable = SDL_Rect.malloc(stack);

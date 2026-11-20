@@ -3,17 +3,17 @@ package com.juniverse.graphics.dto;
 import java.util.Objects;
 
 /**
- * Parámetros para crear una ventana nativa.
+ * Parameters to create a native window.
  *
- * @param width  ancho del área cliente en píxeles
- * @param height alto del área cliente en píxeles
- * @param title  título de la ventana
- * @param left   posición horizontal en pantalla, o {@link #CENTERED}
- * @param top    posición vertical en pantalla, o {@link #CENTERED}
+ * @param width  width of the client area in pixels
+ * @param height height of the client area in pixels
+ * @param title  window title
+ * @param left   horizontal position on screen, or {@link #CENTERED}
+ * @param top    vertical position on screen, or {@link #CENTERED}
  */
 public record DisplaySpec(int width, int height, String title, int left, int top) {
 
-    /** Valor de posición que centra la ventana en la pantalla. */
+    /** Position value that centers the window on the screen. */
     public static final int CENTERED = Integer.MIN_VALUE;
 
     public DisplaySpec {
@@ -23,7 +23,7 @@ public record DisplaySpec(int width, int height, String title, int left, int top
         Objects.requireNonNull(title, "Title must not be null");
     }
 
-    /** Ventana centrada con el tamaño y título indicados. */
+    /** Window centered with the given size and title. */
     public static DisplaySpec centered(int width, int height, String title) {
         return new DisplaySpec(width, height, title, CENTERED, CENTERED);
     }

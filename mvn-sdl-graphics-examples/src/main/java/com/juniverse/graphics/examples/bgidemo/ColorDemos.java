@@ -11,7 +11,7 @@ import java.util.List;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Demostraciones de color: {@code ColorDemo} y {@code PaletteDemo}.
+ * Color demonstrations: {@code ColorDemo} and {@code PaletteDemo}.
  */
 public final class ColorDemos {
 
@@ -21,7 +21,7 @@ public final class ColorDemos {
         this.frame = frame;
     }
 
-    /** Muestra la paleta actual en una cuadrícula de 3x5 cajas (ColorDemo). */
+    /** Shows the current palette in a 3x5 grid of boxes (ColorDemo). */
     public void colorDemo() {
         frame.mainWindow("Color Demonstration");
 
@@ -53,13 +53,13 @@ public final class ColorDemos {
     }
 
     /**
-     * Llena la pantalla de cajas de colores y cambia la paleta al azar hasta
-     * que se presione una tecla (PaletteDemo).
+     * Fills the screen with colored boxes and changes the palette randomly until
+     * a key is pressed (PaletteDemo).
      * <p>
-     * En una tarjeta EGA/VGA, cambiar una entrada de la paleta recoloreaba al
-     * instante todos los píxeles de ese color. Aquí los píxeles guardan su
-     * color real, así que tras cambiar una entrada se vuelven a pintar las
-     * cajas que la usan.
+     * On an EGA/VGA card, changing a palette entry instantly recolored
+     * all the pixels of that color. Here pixels store their
+     * real color, so after changing an entry the boxes that use it
+     * are repainted.
      */
     public void paletteDemo() {
         frame.mainWindow("Palette Demonstration");
@@ -97,8 +97,8 @@ public final class ColorDemos {
     }
 
     /**
-     * Convierte un color de hardware EGA (6 bits: rgbRGB) a RGB de 8 bits,
-     * que es lo que recibía {@code setpalette} en el original.
+     * Converts an EGA hardware color (6 bits: rgbRGB) to 8-bit RGB,
+     * which is what {@code setpalette} received in the original.
      */
     private static int[] egaToRgb(int ega) {
         int code = ega & 0x3F;
@@ -108,7 +108,7 @@ public final class ColorDemos {
         return new int[]{red * 85, green * 85, blue * 85};
     }
 
-    /** Pinta una caja de PaletteDemo con su color de la paleta actual. */
+    /** Paints a PaletteDemo box with its color from the current palette. */
     private static void paint(PaletteBox box) {
         setFillStyle(FillPattern.SOLID, box.color());
         bar(box.left(), box.top(), box.right(), box.bottom());

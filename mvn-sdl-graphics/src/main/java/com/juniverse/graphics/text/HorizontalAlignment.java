@@ -1,14 +1,14 @@
 package com.juniverse.graphics.text;
 
 /**
- * Justificación horizontal del texto (LEFT_TEXT, CENTER_TEXT, RIGHT_TEXT).
+ * Horizontal text justification (LEFT_TEXT, CENTER_TEXT, RIGHT_TEXT).
  */
 public enum HorizontalAlignment {
     LEFT,
     CENTER,
     RIGHT;
 
-    /** Desplazamiento a aplicar al origen para un texto de ancho {@code width}. */
+    /** Offset to apply to the origin for a text of width {@code width}. */
     public int offset(int width) {
         return switch (this) {
             case LEFT -> 0;

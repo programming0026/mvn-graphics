@@ -1,5 +1,7 @@
 # SDL Graphics: ejemplos
 
+[Read in English](README.en.md)
+
 Programas de ejemplo de la biblioteca [`sdl-graphics`](../mvn-sdl-graphics/README.md)
 (BGI / `graphics.h` para Java 21 con SDL 3). Incluye programas clásicos de Turbo C portados
 a la biblioteca.

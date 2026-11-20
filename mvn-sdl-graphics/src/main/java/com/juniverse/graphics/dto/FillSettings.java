@@ -4,14 +4,14 @@ import com.juniverse.graphics.style.FillPattern;
 import com.juniverse.graphics.color.BgiColor;
 
 /**
- * Configuración de relleno actual (equivalente a {@code fillsettingstype}).
+ * Current fill settings (equivalent to {@code fillsettingstype}).
  *
- * @param pattern patrón de relleno
- * @param color   código de color del relleno
+ * @param pattern fill pattern
+ * @param color   fill color code
  */
 public record FillSettings(FillPattern pattern, int color) {
 
-    /** Relleno por defecto: sólido en blanco. */
+    /** Default fill: solid white. */
     public static final FillSettings DEFAULT = new FillSettings(FillPattern.SOLID, BgiColor.WHITE.code());
 
     public FillSettings {

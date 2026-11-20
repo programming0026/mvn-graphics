@@ -26,11 +26,11 @@ public class FireSimulationTest {
 
         assertEquals(FireEffect.FireSimulation.WIDTH, image.width());
         assertEquals(FireEffect.FireSimulation.HEIGHT, image.height());
-        // Las filas superiores al área simulada nunca se calientan.
+        // The rows above the simulated area never heat up.
         for (int x = 0; x < image.width(); x++) {
             assertEquals(BLACK, image.pixel(x, 0));
         }
-        // En las filas inferiores ya hay fuego.
+        // There is already fire in the lower rows.
         boolean burning = false;
         for (int x = 0; x < image.width(); x++) {
             burning |= image.pixel(x, image.height() - 1) != BLACK;

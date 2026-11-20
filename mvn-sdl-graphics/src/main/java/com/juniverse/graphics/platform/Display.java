@@ -4,33 +4,33 @@ import com.juniverse.graphics.dto.Size;
 import com.juniverse.graphics.raster.FrameBuffer;
 
 /**
- * Ventana nativa capaz de mostrar el contenido de una página.
+ * Native window able to show the content of a page.
  */
 public interface Display extends AutoCloseable {
 
-    /** Identificador nativo con el que la plataforma etiqueta los eventos. */
+    /** Native identifier the platform uses to label events. */
     int id();
 
     /**
-     * Muestra en pantalla la región superior izquierda de la página. Si el
-     * tamaño de la región cambió desde la última vez, la ventana se adapta.
+     * Shows the top-left region of the page on screen. If the
+     * region size changed since the last time, the window adapts.
      *
-     * @param page       página a mostrar
-     * @param area       región visible (puede ser menor que la página)
-     * @param borderArgb color ARGB del área de la ventana que no cubre la página
+     * @param page       page to show
+     * @param area       visible region (may be smaller than the page)
+     * @param borderArgb ARGB color of the window area not covered by the page
      */
     void present(FrameBuffer page, Size area, int borderArgb);
 
-    /** Tamaño real en píxeles del área cliente de la ventana. */
+    /** Actual size in pixels of the window's client area. */
     Size outputSize();
 
-    /** Cambia la forma en que la página se ajusta a la ventana. */
+    /** Changes how the page fits the window. */
     void setScalingMode(ScalingMode mode);
 
-    /** Cambia el título de la ventana. */
+    /** Changes the window title. */
     void setTitle(String title);
 
-    /** Libera los recursos nativos de la ventana. */
+    /** Releases the native resources of the window. */
     @Override
     void close();
 }

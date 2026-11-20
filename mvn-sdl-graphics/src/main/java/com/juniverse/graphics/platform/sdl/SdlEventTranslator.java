@@ -27,14 +27,14 @@ import static org.lwjgl.sdl.SDLMouse.SDL_BUTTON_MIDDLE;
 import static org.lwjgl.sdl.SDLMouse.SDL_BUTTON_RIGHT;
 
 /**
- * Convierte eventos nativos de SDL3 en {@link InputEvent} de la biblioteca.
+ * Converts native SDL3 events into library {@link InputEvent}s.
  */
 public final class SdlEventTranslator {
 
     private SdlEventTranslator() {
     }
 
-    /** Traduce un evento SDL y entrega cero o más eventos equivalentes. */
+    /** Translates an SDL event and delivers zero or more equivalent events. */
     public static void translate(SDL_Event event, Consumer<InputEvent> consumer) {
         switch (event.type()) {
             case SDL_EVENT_QUIT -> consumer.accept(new InputEvent.QuitRequested());
@@ -67,7 +67,7 @@ public final class SdlEventTranslator {
                                 Byte.toUnsignedInt(button.clicks()), (int) button.x(), (int) button.y())));
             }
             default -> {
-                // Los demás eventos de SDL no son relevantes para BGI.
+                // Other SDL events are not relevant to BGI.
             }
         }
     }

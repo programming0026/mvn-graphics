@@ -1,11 +1,11 @@
 package com.juniverse.graphics.input;
 
 /**
- * Tipos de evento de mouse de WinBGI.
+ * WinBGI mouse event kinds.
  * <p>
- * Los códigos coinciden con los mensajes de Windows que usaba WinBGI
- * ({@code WM_MOUSEMOVE}, {@code WM_LBUTTONDOWN}, ...), para facilitar la
- * migración de programas existentes.
+ * The codes match the Windows messages that WinBGI used
+ * ({@code WM_MOUSEMOVE}, {@code WM_LBUTTONDOWN}, ...), to make it easier to
+ * migrate existing programs.
  */
 public enum MouseEventKind {
     MOVE(0x0200),
@@ -25,12 +25,12 @@ public enum MouseEventKind {
         this.code = code;
     }
 
-    /** Código numérico equivalente al mensaje de Windows. */
+    /** Numeric code equivalent to the Windows message. */
     public int code() {
         return code;
     }
 
-    /** Obtiene el tipo de evento a partir de su código. */
+    /** Gets the event kind from its code. */
     public static MouseEventKind fromCode(int code) {
         for (MouseEventKind kind : values()) {
             if (kind.code == code) {
@@ -40,7 +40,7 @@ public enum MouseEventKind {
         throw new IllegalArgumentException("Invalid mouse event kind: " + code);
     }
 
-    /** Evento de botón presionado para el botón indicado. */
+    /** Button-pressed event for the given button. */
     public static MouseEventKind down(MouseButton button) {
         return switch (button) {
             case LEFT -> LEFT_BUTTON_DOWN;
@@ -49,7 +49,7 @@ public enum MouseEventKind {
         };
     }
 
-    /** Evento de botón liberado para el botón indicado. */
+    /** Button-released event for the given button. */
     public static MouseEventKind up(MouseButton button) {
         return switch (button) {
             case LEFT -> LEFT_BUTTON_UP;
@@ -58,7 +58,7 @@ public enum MouseEventKind {
         };
     }
 
-    /** Evento de doble clic para el botón indicado. */
+    /** Double-click event for the given button. */
     public static MouseEventKind doubleClick(MouseButton button) {
         return switch (button) {
             case LEFT -> LEFT_BUTTON_DOUBLE_CLICK;

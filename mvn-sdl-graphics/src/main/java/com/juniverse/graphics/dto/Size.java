@@ -1,7 +1,7 @@
 package com.juniverse.graphics.dto;
 
 /**
- * Tamaño inmutable en píxeles.
+ * Immutable size in pixels.
  */
 public record Size(int width, int height) {
 }

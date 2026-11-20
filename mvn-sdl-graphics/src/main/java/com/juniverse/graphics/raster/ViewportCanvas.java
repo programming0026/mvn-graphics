@@ -8,11 +8,11 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * Implementación de {@link Canvas} que traslada las coordenadas al viewport
- * actual y aplica el recorte sobre la página activa.
+ * Implementation of {@link Canvas} that translates coordinates to the current
+ * viewport and applies clipping on the active page.
  * <p>
- * La página y el viewport se obtienen mediante proveedores para que el lienzo
- * siempre dibuje sobre la página activa vigente sin necesidad de recrearlo.
+ * The page and the viewport are obtained through suppliers so that the canvas
+ * always draws on the current active page without needing to be recreated.
  */
 public final class ViewportCanvas implements Canvas {
 

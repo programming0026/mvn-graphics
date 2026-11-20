@@ -3,17 +3,17 @@ package com.juniverse.graphics.dto;
 import com.juniverse.graphics.driver.GraphicsDriver;
 
 /**
- * Modo gráfico de BGI: combinación de controlador, número de modo y resolución.
+ * BGI graphics mode: combination of driver, mode number and resolution.
  *
- * @param driver controlador al que pertenece el modo
- * @param number número de modo BGI (por ejemplo {@code VGAHI = 2})
- * @param label  nombre corto del modo (por ejemplo {@code "VGAHI"})
- * @param width  ancho en píxeles
- * @param height alto en píxeles
+ * @param driver driver the mode belongs to
+ * @param number BGI mode number (for example {@code VGAHI = 2})
+ * @param label  short name of the mode (for example {@code "VGAHI"})
+ * @param width  width in pixels
+ * @param height height in pixels
  */
 public record GraphicsMode(GraphicsDriver driver, int number, String label, int width, int height) {
 
-    /** Nombre descriptivo del modo (equivale a {@code getmodename}). */
+    /** Descriptive name of the mode (equivalent to {@code getmodename}). */
     public String description() {
         return width + " x " + height + " " + label;
     }

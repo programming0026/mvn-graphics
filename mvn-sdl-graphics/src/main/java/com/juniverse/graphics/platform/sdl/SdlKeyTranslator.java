@@ -25,10 +25,10 @@ import static org.lwjgl.sdl.SDLKeycode.SDLK_UP;
 import static org.lwjgl.sdl.SDLKeycode.SDL_KMOD_CTRL;
 
 /**
- * Traduce las teclas de SDL a los códigos que espera {@code getch()}.
+ * Translates SDL keys to the codes expected by {@code getch()}.
  * <p>
- * Los caracteres imprimibles llegan por {@code SDL_EVENT_TEXT_INPUT}; aquí se
- * resuelven solo las teclas de control y las extendidas.
+ * Printable characters arrive through {@code SDL_EVENT_TEXT_INPUT}; here only
+ * control keys and extended keys are resolved.
  */
 public final class SdlKeyTranslator {
 
@@ -58,9 +58,9 @@ public final class SdlKeyTranslator {
     }
 
     /**
-     * Traduce una pulsación de tecla.
+     * Translates a key press.
      *
-     * @return el evento equivalente, o vacío si la tecla llegará como texto
+     * @return the equivalent event, or empty if the key will arrive as text
      */
     public static Optional<InputEvent> translate(int displayId, int keycode, int modifiers) {
         Integer control = CONTROL_KEYS.get(keycode);
@@ -77,7 +77,7 @@ public final class SdlKeyTranslator {
             return Optional.of(new InputEvent.ExtendedKeyPressed(displayId, function));
         }
         if ((modifiers & SDL_KMOD_CTRL) != 0 && keycode >= 'a' && keycode <= 'z') {
-            // Ctrl+A = 1 ... Ctrl+Z = 26, como en conio.
+            // Ctrl+A = 1 ... Ctrl+Z = 26, as in conio.
             return Optional.of(new InputEvent.KeyTyped(displayId, keycode - CONTROL_OFFSET));
         }
         return Optional.empty();

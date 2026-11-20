@@ -16,20 +16,20 @@ import java.util.regex.Pattern;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Port de {@code FOURIER.C}: construye una onda cuadrada sumando los
- * armónicos de su serie de Fourier.
+ * Port of {@code FOURIER.C}: builds a square wave by summing the
+ * harmonics of its Fourier series.
  * <pre>
  *   y = sin(wt) + (1/3) sin(3wt) + (1/5) sin(5wt) + (1/7) sin(7wt) + ...
  * </pre>
- * Cuantos más términos se sumen, más se parece el resultado a una onda
- * cuadrada. El programa pide el número de términos, dibuja la onda y espera
- * una tecla (ESC termina).
+ * The more terms are summed, the more the result resembles a
+ * square wave. The program asks for the number of terms, draws the wave and waits for
+ * a key (ESC ends).
  * <p>
- * Las funciones auxiliares del original se reemplazan así:
+ * The helper functions of the original are replaced as follows:
  * {@code gprintfxy} → {@link #printAt}, {@code gscanfxy} → {@link #readInt}
- * y {@code ggets} → {@link #readLine}.
+ * and {@code ggets} → {@link #readLine}.
  * <p>
- * Ejecutar con:
+ * Run with:
  * {@code mvn compile exec:java -Dexec.mainClass=com.juniverse.graphics.examples.mathdemo.FourierSeries}
  */
 public final class FourierSeries {
@@ -40,10 +40,10 @@ public final class FourierSeries {
     private static final int ENTER = 13;
     private static final int BACKSPACE = 8;
 
-    /** Patrón de tablero de ajedrez usado como fondo. */
+    /** Checkerboard pattern used as background. */
     private static final int[] BACKGROUND_PATTERN = {0xAA, 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA, 0x55};
 
-    /** Origen de la gráfica y escala de la onda (en píxeles). */
+    /** Origin of the graph and wave scale (in pixels). */
     private static final int ORIGIN_X = 100;
     private static final int ORIGIN_Y = 200;
     private static final int SAMPLES = 400;
@@ -75,9 +75,9 @@ public final class FourierSeries {
     }
 
     /**
-     * Pide el número de términos y dibuja la onda hasta que se presione ESC.
-     * Los {@code exit()} del original se reemplazan por {@code return} para
-     * que la ventana siempre se cierre en {@link #main}.
+     * Asks for the number of terms and draws the wave until ESC is pressed.
+     * The {@code exit()} calls of the original are replaced by {@code return} so
+     * that the window is always closed in {@link #main}.
      */
     private static void run() {
         int maxX = getMaxX();
@@ -115,7 +115,7 @@ public final class FourierSeries {
         }
     }
 
-    /** Borra la pantalla, la rellena con el patrón azul y dibuja el doble marco. */
+    /** Clears the screen, fills it with the blue pattern and draws the double frame. */
     private static void drawBackground(int maxX, int maxY) {
         clearDevice();
         setFillPattern(BACKGROUND_PATTERN, BgiColor.BLUE.code());
@@ -124,7 +124,7 @@ public final class FourierSeries {
         rectangle(0, 0, maxX, maxY);
     }
 
-    /** Dibuja la suma de los primeros {@code terms} armónicos impares. */
+    /** Draws the sum of the first {@code terms} odd harmonics. */
     private static void drawSquareWave(int terms) {
         moveTo(ORIGIN_X, ORIGIN_Y);
         for (int i = 0; i <= SAMPLES; i++) {
@@ -139,9 +139,9 @@ public final class FourierSeries {
     }
 
     /**
-     * Muestra el aviso y espera una tecla (equivale a Pausa()).
+     * Shows the notice and waits for a key (equivalent to Pausa()).
      *
-     * @return verdadero si se presionó ESC para salir
+     * @return true if ESC was pressed to exit
      */
     private static boolean pause() {
         setColor(BgiColor.WHITE);
@@ -150,14 +150,14 @@ public final class FourierSeries {
         return getch() == ESC;
     }
 
-    /** Escribe texto con formato en (x, y) (equivale a gprintfxy). */
+    /** Writes formatted text at (x, y) (equivalent to gprintfxy). */
     private static void printAt(int x, int y, String format, Object... arguments) {
         outTextXY(x, y, String.format(format, arguments));
     }
 
     /**
-     * Lee un número entero escrito en modo gráfico en (x, y) (equivale a
-     * gscanfxy con "%i"). Si el texto no empieza con un número devuelve 0.
+     * Reads an integer typed in graphics mode at (x, y) (equivalent to
+     * gscanfxy with "%i"). If the text does not start with a number it returns 0.
      */
     private static int readInt(int x, int y) {
         Matcher matcher = LEADING_INTEGER.matcher(readLine(x, y));
@@ -172,12 +172,12 @@ public final class FourierSeries {
     }
 
     /**
-     * Lee una línea de texto en modo gráfico (equivale a ggets): muestra cada
-     * carácter escrito, permite borrar con Retroceso y termina con Enter.
+     * Reads a line of text in graphics mode (equivalent to ggets): shows each
+     * typed character, allows deleting with Backspace and ends with Enter.
      * <p>
-     * Antes de escribir cada carácter se guarda la porción de pantalla que
-     * va a cubrir; así, al borrarlo se restaura el fondo exacto (el patrón
-     * azul) en lugar de pintar un hueco negro.
+     * Before writing each character the portion of the screen it
+     * is going to cover is saved; this way, when it is deleted the exact background is restored (the
+     * blue pattern) instead of painting a black hole.
      */
     private static String readLine(int x, int y) {
         int charWidth = textWidth("H");
@@ -196,7 +196,7 @@ public final class FourierSeries {
                 break;
             }
             if (key == 0) {
-                getch(); // Tecla extendida (flechas, F1...): se ignora.
+                getch(); // Extended key (arrows, F1...): ignored.
                 continue;
             }
             toggleCursor(charWidth, charHeight);
@@ -217,7 +217,7 @@ public final class FourierSeries {
         return text.toString();
     }
 
-    /** Dibuja o borra (con XOR) el cursor bajo la posición actual. */
+    /** Draws or erases (with XOR) the cursor under the current position. */
     private static void toggleCursor(int charWidth, int charHeight) {
         setWriteMode(RasterOperation.XOR);
         line(getX(), getY() + charHeight, getX() + charWidth - 1, getY() + charHeight);

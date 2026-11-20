@@ -21,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Ejecuta los ejemplos completos sobre una plataforma falsa (sin ventanas),
- * simulando que el usuario presiona teclas, para comprobar que ninguna
- * pantalla falla.
+ * Runs the complete examples on a fake platform (without windows),
+ * simulating the user pressing keys, to check that no
+ * screen fails.
  */
 public class ExamplesSmokeTest {
 
-    /** Identificador que FakePlatform asigna a la primera ventana. */
+    /** Identifier that FakePlatform assigns to the first window. */
     private static final int FIRST_DISPLAY_ID = 1;
     private static final int ESC = 27;
 
@@ -47,7 +47,7 @@ public class ExamplesSmokeTest {
 
         assertDoesNotThrow(() -> BgiDemo.main(new String[0]));
         assertFalse(Bgi.windowManager().hasOpenWindows());
-        // CRTModeDemo usa setGraphMode con la misma resolución: se reutiliza la ventana.
+        // CRTModeDemo uses setGraphMode with the same resolution: the window is reused.
         assertEquals(1, platform.displays().size());
     }
 
@@ -62,7 +62,7 @@ public class ExamplesSmokeTest {
 
     @Test
     public void bgiDemoEscapeEndsCleanlyWithoutExiting() {
-        // ESC en la primera pausa: antes era exit(); ahora la demo termina y cierra su ventana.
+        // ESC on the first pause: it used to be exit(); now the demo ends and closes its window.
         platform.enqueue(new InputEvent.KeyTyped(FIRST_DISPLAY_ID, ESC));
 
         assertDoesNotThrow(() -> BgiDemo.main(new String[0]));
@@ -78,7 +78,7 @@ public class ExamplesSmokeTest {
 
     @Test
     public void menuReturnsChosenExampleAndClosesItsWindow() {
-        platform.enqueue(new InputEvent.KeyTyped(FIRST_DISPLAY_ID, 'x')); // tecla no válida: se ignora
+        platform.enqueue(new InputEvent.KeyTyped(FIRST_DISPLAY_ID, 'x')); // invalid key: ignored
         platform.enqueue(new InputEvent.KeyTyped(FIRST_DISPLAY_ID, '2'));
 
         Optional<Example> choice = Main.chooseExample();

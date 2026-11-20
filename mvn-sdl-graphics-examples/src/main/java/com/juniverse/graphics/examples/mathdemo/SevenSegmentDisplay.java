@@ -11,22 +11,22 @@ import java.util.Set;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Simula un display de 7 segmentos que cuenta de 00 a 19.
+ * Simulates a 7-segment display that counts from 00 to 19.
  * <p>
- * Cada segmento es un rectángulo con borde rojo que se rellena con
- * {@code floodFill}: en rojo claro si está encendido y en negro si está
- * apagado. Las siete funciones {@code seg_a()} ... {@code seg_g()} del
- * original se reemplazan por la tabla {@link Segment}, y el {@code switch}
- * de {@code num()} por la tabla {@link #DIGITS}.
+ * Each segment is a rectangle with a red border that is filled with
+ * {@code floodFill}: light red if it is on and black if it is
+ * off. The seven functions {@code seg_a()} ... {@code seg_g()} of the
+ * original are replaced by the {@link Segment} table, and the {@code switch}
+ * of {@code num()} by the {@link #DIGITS} table.
  * <p>
  */
 public final class SevenSegmentDisplay {
 
-    /** Color del contorno de los segmentos ({@code setcolor(4)}). */
+    /** Color of the segment outline ({@code setcolor(4)}). */
     private static final BgiColor OUTLINE_COLOR = BgiColor.RED;
-    /** Color de un segmento encendido ({@code setfillstyle(1, 12)}). */
+    /** Color of an on segment ({@code setfillstyle(1, 12)}). */
     private static final BgiColor LIT_COLOR = BgiColor.LIGHT_RED;
-    /** Color de un segmento apagado ({@code setfillstyle(1, 0)}). */
+    /** Color of an off segment ({@code setfillstyle(1, 0)}). */
     private static final BgiColor OFF_COLOR = BgiColor.BLACK;
 
     private static final int TENS_X = 220;
@@ -35,9 +35,9 @@ public final class SevenSegmentDisplay {
     private static final int STEP_MILLIS = 1000;
 
     /**
-     * Segmentos del display. Las coordenadas son relativas a la esquina del
-     * dígito; el relleno empieza 2 píxeles dentro de la esquina superior
-     * izquierda, igual que en el original.
+     * Segments of the display. Coordinates are relative to the corner of the
+     * digit; the fill starts 2 pixels inside the top-left
+     * corner, same as in the original.
      */
     private enum Segment {
         A(0, 0, 60, 15),
@@ -62,14 +62,14 @@ public final class SevenSegmentDisplay {
             this.bottom = bottom;
         }
 
-        /** Dibuja el contorno y lo rellena con el estilo de relleno actual. */
+        /** Draws the outline and fills it with the current fill style. */
         public void draw(int originX, int originY) {
             rectangle(originX + left, originY + top, originX + right, originY + bottom);
             floodFill(originX + left + SEED_OFFSET, originY + top + SEED_OFFSET, OUTLINE_COLOR);
         }
     }
 
-    /** Segmentos encendidos para cada dígito (equivale al switch de num()). */
+    /** On segments for each digit (equivalent to the switch of num()). */
     private static final List<Set<Segment>> DIGITS = List.of(
             EnumSet.of(Segment.A, Segment.B, Segment.C, Segment.D, Segment.E, Segment.F),            // 0
             EnumSet.of(Segment.B, Segment.C),                                                        // 1
@@ -107,7 +107,7 @@ public final class SevenSegmentDisplay {
         }
     }
 
-    /** Muestra un dígito con su esquina en (x, y) (equivale a display()). */
+    /** Shows a digit with its corner at (x, y) (equivalent to display()). */
     private static void showDigit(int x, int y, int digit) {
         setFillStyle(FillPattern.SOLID, OFF_COLOR);
         for (Segment segment : Segment.values()) {

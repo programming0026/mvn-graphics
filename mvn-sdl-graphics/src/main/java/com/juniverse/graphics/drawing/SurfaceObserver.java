@@ -1,13 +1,13 @@
 package com.juniverse.graphics.drawing;
 
 /**
- * Observador que recibe una notificación cada vez que se modifica la página
- * activa. La ventana lo usa para decidir cuándo refrescar la pantalla.
+ * Observer that receives a notification every time the active page
+ * is modified. The window uses it to decide when to refresh the screen.
  */
 @FunctionalInterface
 public interface SurfaceObserver {
 
-    /** Observador que ignora las notificaciones (útil en pruebas). */
+    /** Observer that ignores notifications (useful in tests). */
     SurfaceObserver NONE = () -> { };
 
     void surfaceChanged();

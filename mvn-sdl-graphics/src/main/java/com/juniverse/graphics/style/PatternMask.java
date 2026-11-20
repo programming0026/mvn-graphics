@@ -3,15 +3,15 @@ package com.juniverse.graphics.style;
 import java.util.Arrays;
 
 /**
- * Máscara de relleno inmutable de 8x8 píxeles.
+ * Immutable 8x8-pixel fill mask.
  * <p>
- * Cada fila es un byte; el bit más significativo corresponde a la columna
- * izquierda. Un bit en 1 se pinta con el color de relleno y un bit en 0 con
- * el color de fondo, tal como en BGI.
+ * Each row is a byte; the most significant bit corresponds to the left
+ * column. A bit set to 1 is painted with the fill color and a bit set to 0 with
+ * the background color, just as in BGI.
  */
 public final class PatternMask {
 
-    /** Tamaño de la máscara (8x8). */
+    /** Mask size (8x8). */
     public static final int SIZE = 8;
 
     private final int[] rows;
@@ -21,7 +21,7 @@ public final class PatternMask {
     }
 
     /**
-     * Crea una máscara a partir de 8 filas (solo se usan los 8 bits inferiores).
+     * Creates a mask from 8 rows (only the lower 8 bits are used).
      */
     public static PatternMask of(int... rows) {
         if (rows.length != SIZE) {
@@ -30,12 +30,12 @@ public final class PatternMask {
         return new PatternMask(Arrays.stream(rows).map(row -> row & 0xFF).toArray());
     }
 
-    /** Indica si el bit correspondiente al píxel (x, y) está activo. */
+    /** Tells whether the bit corresponding to pixel (x, y) is set. */
     public boolean isSet(int x, int y) {
         return (rows[y & 7] & (0x80 >> (x & 7))) != 0;
     }
 
-    /** Copia de las filas (equivale a {@code getfillpattern}). */
+    /** Copy of the rows (equivalent to {@code getfillpattern}). */
     public int[] rows() {
         return rows.clone();
     }

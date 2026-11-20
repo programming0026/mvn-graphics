@@ -1,7 +1,7 @@
 package com.juniverse.graphics.dto;
 
 /**
- * Tamaño de la pantalla principal en píxeles.
+ * Size of the main screen in pixels.
  */
 public record ScreenSize(int width, int height) {
 }

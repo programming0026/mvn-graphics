@@ -1,11 +1,11 @@
 package com.juniverse.graphics.driver;
 
 /**
- * Motivo por el que {@link ModeResolver} no pudo resolver un modo gráfico.
+ * Reason why {@link ModeResolver} could not resolve a graphics mode.
  */
 public enum ModeFailureReason {
-    /** El código de controlador no existe (grInvalidDriver). */
+    /** The driver code does not exist (grInvalidDriver). */
     INVALID_DRIVER,
-    /** El controlador no tiene ese modo (grInvalidMode). */
+    /** The driver does not have that mode (grInvalidMode). */
     INVALID_MODE
 }

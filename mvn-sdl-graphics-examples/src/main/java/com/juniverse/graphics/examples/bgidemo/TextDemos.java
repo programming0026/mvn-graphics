@@ -10,7 +10,7 @@ import com.juniverse.graphics.text.VerticalAlignment;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Demostraciones de texto: {@code TextDump} y {@code TextDemo}.
+ * Text demonstrations: {@code TextDump} and {@code TextDemo}.
  */
 public final class TextDemos {
 
@@ -29,16 +29,16 @@ public final class TextDemos {
     }
 
     /**
-     * Muestra todos los caracteres de cada fuente (TextDump).
+     * Shows all the characters of each font (TextDump).
      * <p>
-     * Los códigos 0..255 se convierten con {@link CodePage437}, para mostrar
-     * los mismos caracteres que en DOS (Ç ü é ... ░▒▓ ...). Convertirlos
-     * directamente a {@code char} daría caracteres de control de Unicode.
+     * Codes 0..255 are converted with {@link CodePage437}, to show
+     * the same characters as in DOS (Ç ü é ... ░▒▓ ...). Converting them
+     * directly to {@code char} would give Unicode control characters.
      * <p>
-     * El original medía el ancho de letra antes de cambiar de fuente, así que
-     * con fuentes grandes las líneas se salían por la derecha. Aquí cada
-     * carácter se mide con la fuente actual y se pasa a la línea siguiente
-     * antes de escribir el que ya no cabe.
+     * The original measured the letter width before changing font, so
+     * with large fonts the lines ran off the right edge. Here each
+     * character is measured with the current font and moved to the next line
+     * before writing the one that no longer fits.
      */
     public void textDump() {
         for (FontName font : FontName.values()) {
@@ -70,7 +70,7 @@ public final class TextDemos {
         }
     }
 
-    /** Muestra cada fuente en vertical, en horizontal y en varios tamaños (TextDemo). */
+    /** Shows each font vertically, horizontally and in several sizes (TextDemo). */
     public void textDemo() {
         for (FontName font : FontName.values()) {
             frame.mainWindow(DemoFrame.FONT_NAMES.get(font.ordinal()) + " Demonstration");

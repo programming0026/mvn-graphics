@@ -10,12 +10,12 @@ import com.juniverse.graphics.text.VerticalAlignment;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Demostración de cambio de modo: {@code CRTModeDemo}.
+ * Mode change demonstration: {@code CRTModeDemo}.
  * <p>
- * En DOS, {@code restorecrtmode()} volvía al modo texto y el programa
- * escribía con {@code printf}. Aquí no existe un modo texto: la pantalla de
- * texto se simula dentro de la misma ventana con la fuente de 8x8, en gris
- * claro sobre negro, como la consola de DOS.
+ * In DOS, {@code restorecrtmode()} went back to text mode and the program
+ * wrote with {@code printf}. Here there is no text mode: the text screen
+ * is simulated inside the same window with the 8x8 font, in light
+ * gray on black, like the DOS console.
  */
 public final class ModeDemo {
 
@@ -47,7 +47,7 @@ public final class ModeDemo {
         frame.pause();
     }
 
-    /** Simula la consola de texto: pantalla negra y texto gris desde la esquina superior. */
+    /** Simulates the text console: black screen and gray text from the top corner. */
     private void showTextModeScreen(String... lines) {
         setViewport(0, 0, frame.maxX(), frame.maxY(), true);
         setBkColor(BgiColor.BLACK);

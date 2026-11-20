@@ -5,11 +5,11 @@ import com.juniverse.graphics.raster.Canvas;
 import java.util.Objects;
 
 /**
- * Dependencias compartidas por todas las operaciones de dibujo: el estado
- * gráfico, el lienzo activo y el observador de cambios.
+ * Dependencies shared by all drawing operations: the graphics
+ * state, the active canvas and the change observer.
  * <p>
- * No es un DTO: agrupa colaboradores con comportamiento, por eso es una clase
- * y no un record del paquete {@code dto}.
+ * It is not a DTO: it groups collaborators with behavior, which is why it is a class
+ * and not a record of the {@code dto} package.
  */
 public final class DrawingContext {
 
@@ -18,9 +18,9 @@ public final class DrawingContext {
     private final SurfaceObserver observer;
 
     /**
-     * @param state    estado gráfico de la ventana
-     * @param canvas   lienzo relativo al viewport de la página activa
-     * @param observer receptor de notificaciones de cambio
+     * @param state    graphics state of the window
+     * @param canvas   canvas relative to the viewport of the active page
+     * @param observer receiver of change notifications
      */
     public DrawingContext(DrawingState state, Canvas canvas, SurfaceObserver observer) {
         this.state = Objects.requireNonNull(state);
@@ -40,7 +40,7 @@ public final class DrawingContext {
         return observer;
     }
 
-    /** Notifica que la página activa cambió. */
+    /** Notifies that the active page changed. */
     public void changed() {
         observer.surfaceChanged();
     }

@@ -1,14 +1,14 @@
 package com.juniverse.graphics.dto;
 
 /**
- * Opciones de comportamiento de una ventana gráfica.
+ * Behavior options of a graphics window.
  *
- * @param doubleBuffered si es verdadero se dibuja en la página 1 mientras se
- *                       muestra la página 0 (use {@code swapBuffers} para alternar)
- * @param exitOnClose    si es verdadero, cerrar la ventana termina el programa
+ * @param doubleBuffered if true, drawing goes to page 1 while
+ *                       page 0 is displayed (use {@code swapBuffers} to alternate)
+ * @param exitOnClose    if true, closing the window terminates the program
  */
 public record WindowOptions(boolean doubleBuffered, boolean exitOnClose) {
 
-    /** Opciones por defecto de {@code initwindow}: sin doble búfer y salir al cerrar. */
+    /** Default {@code initwindow} options: no double buffering and exit on close. */
     public static final WindowOptions DEFAULT = new WindowOptions(false, true);
 }

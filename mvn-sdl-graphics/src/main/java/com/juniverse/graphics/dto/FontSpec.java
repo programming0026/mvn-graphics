@@ -3,15 +3,15 @@ package com.juniverse.graphics.dto;
 import com.juniverse.graphics.text.FontName;
 
 /**
- * Descripción concreta de la fuente con la que se rasteriza un texto.
+ * Concrete description of the font a text is rasterized with.
  *
- * @param font      fuente BGI
- * @param pixelSize tamaño de la fuente en píxeles
- * @param stretchX  factor de estiramiento horizontal (1 = proporción natural)
+ * @param font      BGI font
+ * @param pixelSize font size in pixels
+ * @param stretchX  horizontal stretch factor (1 = natural proportion)
  */
 public record FontSpec(FontName font, float pixelSize, double stretchX) {
 
-    /** Tamaño base usado como referencia por {@code USER_CHAR_SIZE} (equivale a charSize 4). */
+    /** Base size used as reference by {@code USER_CHAR_SIZE} (equivalent to charSize 4). */
     private static final int USER_REFERENCE_SIZE = 4;
 
     public FontSpec {
@@ -20,7 +20,7 @@ public record FontSpec(FontName font, float pixelSize, double stretchX) {
         }
     }
 
-    /** Calcula la especificación a partir de la configuración de texto actual. */
+    /** Computes the specification from the current text settings. */
     public static FontSpec from(TextSettings settings, CharScale scale) {
         FontName font = settings.font();
         if (settings.charSize() == TextSettings.USER_CHAR_SIZE) {

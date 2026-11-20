@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Port de {@code BGIDEMO.C}, la demostración oficial de la Borland Graphics
- * Interface: recorre colores, paleta, píxeles, imágenes, barras, arcos,
- * círculos, pasteles, líneas, fuentes, rellenos y polígonos.
+ * Port of {@code BGIDEMO.C}, the official demonstration of the Borland Graphics
+ * Interface: it goes through colors, palette, pixels, images, bars, arcs,
+ * circles, pies, lines, fonts, fills and polygons.
  * <p>
- * Cada pantalla espera una tecla; ESC termina en cualquier momento. Las
- * demostraciones están agrupadas por tema en clases de este paquete y
- * comparten el marco común de {@link DemoFrame}.
+ * Each screen waits for a key; ESC ends at any moment. The
+ * demonstrations are grouped by topic in classes of this package and
+ * share the common frame of {@link DemoFrame}.
  * <p>
  */
 public final class BgiDemo {
@@ -36,7 +36,7 @@ public final class BgiDemo {
             setWindowScaling(ScalingMode.KEEP_ASPECT);
             runAll(frame);
         } catch (ExampleAbortedException e) {
-            // ESC o error al iniciar: se termina sin cerrar la aplicación (antes era exit()).
+            // ESC or init error: ends without closing the application (it used to be exit()).
             LOG.atInfo()
                     .setMessage("BgiDemo ended early: {}")
                     .addArgument(e::getMessage)
@@ -46,7 +46,7 @@ public final class BgiDemo {
         }
     }
 
-    /** Ejecuta todas las demostraciones en el orden del original. */
+    /** Runs all the demonstrations in the original order. */
     private static void runAll(DemoFrame frame) {
         ColorDemos colors = new ColorDemos(frame);
         PixelDemos pixels = new PixelDemos(frame);
@@ -82,7 +82,7 @@ public final class BgiDemo {
         sayGoodbye(frame);
     }
 
-    /** Pantalla de despedida (SayGoodbye). */
+    /** Goodbye screen (SayGoodbye). */
     private static void sayGoodbye(DemoFrame frame) {
         frame.mainWindow("== Finale ==");
 

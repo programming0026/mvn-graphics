@@ -1,15 +1,15 @@
 package com.juniverse.graphics.dto;
 
 /**
- * Área de dibujo activa (equivalente a {@code viewporttype}).
+ * Active drawing area (equivalent to {@code viewporttype}).
  * <p>
- * Todas las coordenadas de dibujo son relativas a la esquina superior
- * izquierda del viewport. Si {@code clip} es verdadero, lo que quede fuera
- * del viewport no se dibuja.
+ * All drawing coordinates are relative to the top-left
+ * corner of the viewport. If {@code clip} is true, whatever falls outside
+ * the viewport is not drawn.
  */
 public record Viewport(int left, int top, int right, int bottom, boolean clip) {
 
-    /** Crea un viewport validando que las coordenadas estén ordenadas. */
+    /** Creates a viewport, validating that the coordinates are ordered. */
     public Viewport {
         if (right < left || bottom < top) {
             throw new IllegalArgumentException("Invalid viewport: (" + left + "," + top
@@ -17,22 +17,22 @@ public record Viewport(int left, int top, int right, int bottom, boolean clip) {
         }
     }
 
-    /** Viewport que cubre una ventana completa sin recorte. */
+    /** Viewport that covers a whole window without clipping. */
     public static Viewport fullScreen(int width, int height) {
         return new Viewport(0, 0, width - 1, height - 1, false);
     }
 
-    /** Ancho del viewport en píxeles. */
+    /** Width of the viewport in pixels. */
     public int width() {
         return right - left + 1;
     }
 
-    /** Alto del viewport en píxeles. */
+    /** Height of the viewport in pixels. */
     public int height() {
         return bottom - top + 1;
     }
 
-    /** Indica si un punto absoluto de pantalla cae dentro del viewport. */
+    /** Tells whether an absolute screen point falls inside the viewport. */
     public boolean containsAbsolute(int x, int y) {
         return x >= left && x <= right && y >= top && y <= bottom;
     }

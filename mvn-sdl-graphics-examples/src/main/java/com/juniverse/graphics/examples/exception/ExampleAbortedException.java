@@ -1,12 +1,12 @@
 package com.juniverse.graphics.examples.exception;
 
 /**
- * Indica que un ejemplo terminó antes de tiempo: el usuario presionó ESC o
- * no se pudo iniciar el modo gráfico.
+ * Indicates that an example ended early: the user pressed ESC or
+ * the graphics mode could not be started.
  * <p>
- * Reemplaza los {@code exit()} de los programas originales de Turbo C. Así
- * cada ejemplo termina limpiamente y el menú de {@link Main} recupera el
- * control, en lugar de cerrar toda la aplicación con {@code System.exit}.
+ * Replaces the {@code exit()} calls of the original Turbo C programs. This way
+ * each example ends cleanly and the {@link Main} menu regains
+ * control, instead of closing the whole application with {@code System.exit}.
  */
 public class ExampleAbortedException extends RuntimeException {
 

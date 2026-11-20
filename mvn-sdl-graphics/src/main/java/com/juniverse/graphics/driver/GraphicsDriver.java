@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Controladores gráficos de BGI ({@code graphics_drivers}) con sus modos.
+ * BGI graphics drivers ({@code graphics_drivers}) with their modes.
  * <p>
- * No existe hardware CGA/EGA/VGA real: cada controlador solo define las
- * resoluciones de sus modos, que determinan el tamaño de la ventana que
- * abre {@code initGraph}.
+ * There is no real CGA/EGA/VGA hardware: each driver only defines the
+ * resolutions of its modes, which determine the size of the window that
+ * {@code initGraph} opens.
  */
 public enum GraphicsDriver {
-    /** Autodetección: siempre selecciona VGA en su modo más alto (VGAHI). */
+    /** Autodetection: always selects VGA in its highest mode (VGAHI). */
     DETECT(0, "DETECT"),
     CGA(1, "CGA"),
     MCGA(2, "CGA"),
@@ -59,42 +59,42 @@ public enum GraphicsDriver {
         return this;
     }
 
-    /** Código numérico BGI del controlador. */
+    /** BGI numeric code of the driver. */
     public int code() {
         return code;
     }
 
-    /** Nombre del archivo de controlador de Borland (equivale a {@code getdrivername}). */
+    /** Name of the Borland driver file (equivalent to {@code getdrivername}). */
     public String fileName() {
         return fileName;
     }
 
-    /** Modos del controlador, ordenados por número. */
+    /** Modes of the driver, sorted by number. */
     public List<GraphicsMode> modes() {
         return modes;
     }
 
-    /** Modo con el número indicado, si existe. */
+    /** Mode with the given number, if it exists. */
     public Optional<GraphicsMode> mode(int number) {
         return modes.stream().filter(mode -> mode.number() == number).findFirst();
     }
 
-    /** Modo de mayor resolución (el que elige la autodetección). */
+    /** Highest-resolution mode (the one chosen by autodetection). */
     public Optional<GraphicsMode> highestMode() {
         return modes.isEmpty() ? Optional.empty() : Optional.of(modes.get(modes.size() - 1));
     }
 
-    /** Número de modo más bajo (equivale al {@code lomode} de {@code getmoderange}). */
+    /** Lowest mode number (equivalent to the {@code lomode} of {@code getmoderange}). */
     public int lowestModeNumber() {
         return modes.isEmpty() ? -1 : modes.get(0).number();
     }
 
-    /** Número de modo más alto (equivale al {@code himode} de {@code getmoderange}). */
+    /** Highest mode number (equivalent to the {@code himode} of {@code getmoderange}). */
     public int highestModeNumber() {
         return modes.isEmpty() ? -1 : modes.get(modes.size() - 1).number();
     }
 
-    /** Controlador correspondiente a un código numérico BGI. */
+    /** Driver that corresponds to a BGI numeric code. */
     public static Optional<GraphicsDriver> fromCode(int code) {
         for (GraphicsDriver driver : values()) {
             if (driver.code == code) {

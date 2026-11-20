@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Rasterizador compuesto que elige el motor según la fuente: algunas fuentes
- * tienen un rasterizador propio (por ejemplo, {@link FontName#DEFAULT} con la
- * fuente de mapa de bits) y el resto usa uno general.
+ * Composite rasterizer that chooses the engine according to the font: some fonts
+ * have their own rasterizer (for example, {@link FontName#DEFAULT} with the
+ * bitmap font) and the rest use a general one.
  * <p>
- * Permite agregar motores para nuevas fuentes sin modificar las clases
- * existentes (principio abierto/cerrado).
+ * It allows adding engines for new fonts without modifying the
+ * existing classes (open/closed principle).
  */
 public final class FontRoutingRasterizer implements GlyphRasterizer {
 
@@ -19,15 +19,15 @@ public final class FontRoutingRasterizer implements GlyphRasterizer {
     private final GlyphRasterizer fallback;
 
     /**
-     * @param routes   rasterizador específico para cada fuente
-     * @param fallback rasterizador para las fuentes sin ruta propia
+     * @param routes   specific rasterizer for each font
+     * @param fallback rasterizer for fonts without their own route
      */
     public FontRoutingRasterizer(Map<FontName, GlyphRasterizer> routes, GlyphRasterizer fallback) {
         this.routes = routes.isEmpty() ? new EnumMap<>(FontName.class) : new EnumMap<>(routes);
         this.fallback = Objects.requireNonNull(fallback);
     }
 
-    /** Configuración estándar: fuente por defecto en mapa de bits y el resto con AWT. */
+    /** Standard configuration: default font as a bitmap and the rest with AWT. */
     public static FontRoutingRasterizer standard() {
         return new FontRoutingRasterizer(Map.of(FontName.DEFAULT, new BitmapGlyphRasterizer()),
                 new AwtGlyphRasterizer());

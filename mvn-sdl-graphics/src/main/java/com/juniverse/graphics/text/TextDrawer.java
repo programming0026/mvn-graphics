@@ -9,10 +9,10 @@ import com.juniverse.graphics.style.RasterOperation;
 import java.util.Objects;
 
 /**
- * Implementación de {@link TextOperations}.
+ * Implementation of {@link TextOperations}.
  * <p>
- * Depende de la abstracción {@link GlyphRasterizer} para obtener los glifos,
- * por lo que el motor de fuentes puede reemplazarse libremente.
+ * It depends on the {@link GlyphRasterizer} abstraction to obtain the glyphs,
+ * so the font engine can be freely replaced.
  */
 public final class TextDrawer implements TextOperations {
 

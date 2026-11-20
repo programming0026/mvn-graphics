@@ -4,11 +4,11 @@ import java.nio.IntBuffer;
 import java.util.Arrays;
 
 /**
- * Página de dibujo en memoria: una matriz de píxeles ARGB.
+ * In-memory drawing page: an array of ARGB pixels.
  * <p>
- * Es el equivalente a cada uno de los "device contexts" de memoria que
- * WinBGI usaba para la doble/múltiple página. No sabe nada de ventanas ni de
- * SDL: solo almacena píxeles.
+ * It is the equivalent of each of the in-memory "device contexts" that
+ * WinBGI used for double/multiple pages. It knows nothing about windows or
+ * SDL: it only stores pixels.
  */
 public final class FrameBuffer {
 
@@ -33,27 +33,27 @@ public final class FrameBuffer {
         return height;
     }
 
-    /** Indica si la coordenada absoluta está dentro de la página. */
+    /** Tells whether the absolute coordinate is inside the page. */
     public boolean contains(int x, int y) {
         return x >= 0 && y >= 0 && x < width && y < height;
     }
 
-    /** Lee un píxel ARGB. La coordenada debe estar dentro de la página. */
+    /** Reads an ARGB pixel. The coordinate must be inside the page. */
     public int get(int x, int y) {
         return pixels[y * width + x];
     }
 
-    /** Escribe un píxel ARGB. La coordenada debe estar dentro de la página. */
+    /** Writes an ARGB pixel. The coordinate must be inside the page. */
     public void set(int x, int y, int argb) {
         pixels[y * width + x] = argb;
     }
 
-    /** Rellena toda la página con un color. */
+    /** Fills the whole page with a color. */
     public void fill(int argb) {
         Arrays.fill(pixels, argb);
     }
 
-    /** Copia el contenido de otra página de las mismas dimensiones. */
+    /** Copies the content of another page of the same dimensions. */
     public void copyFrom(FrameBuffer other) {
         if (other.width != width || other.height != height) {
             throw new IllegalArgumentException("Pages have different dimensions");
@@ -62,8 +62,8 @@ public final class FrameBuffer {
     }
 
     /**
-     * Copia la zona común con otra página de cualquier tamaño, anclada en la
-     * esquina superior izquierda (se usa al cambiar el tamaño de la página).
+     * Copies the common area with another page of any size, anchored at the
+     * top-left corner (used when the page size changes).
      */
     public void copyOverlapFrom(FrameBuffer other) {
         int copyWidth = Math.min(width, other.width);
@@ -74,17 +74,17 @@ public final class FrameBuffer {
     }
 
     /**
-     * Vuelca los píxeles en un búfer (por ejemplo, la memoria de una textura).
-     * El búfer destino debe tener capacidad para {@code width * height} enteros.
+     * Dumps the pixels into a buffer (for example, texture memory).
+     * The target buffer must have capacity for {@code width * height} integers.
      */
     public void copyTo(IntBuffer target) {
         copyTo(target, width, height);
     }
 
     /**
-     * Vuelca solo la región superior izquierda indicada (por ejemplo, la parte
-     * visible de una página más grande que la ventana). El búfer destino debe
-     * tener capacidad para {@code regionWidth * regionHeight} enteros.
+     * Dumps only the given top-left region (for example, the visible
+     * part of a page larger than the window). The target buffer must
+     * have capacity for {@code regionWidth * regionHeight} integers.
      */
     public void copyTo(IntBuffer target, int regionWidth, int regionHeight) {
         if (regionWidth > width || regionHeight > height) {

@@ -14,34 +14,34 @@ import java.math.MathContext;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Port de {@code GRAFICA.H}: pequeña biblioteca para graficar funciones en
- * coordenadas lógicas (las del problema matemático) sobre la pantalla.
+ * Port of {@code GRAFICA.H}: small library to graph functions in
+ * logical coordinates (those of the mathematical problem) on the screen.
  * <p>
- * Las variables globales del original ({@code W1..W4}, {@code V1..V4},
- * {@code U1}, {@code U2}) pasan a ser el estado de una instancia: la
- * "ventana lógica" que se transforma en coordenadas de pantalla.
+ * The global variables of the original ({@code W1..W4}, {@code V1..V4},
+ * {@code U1}, {@code U2}) become the state of an instance: the
+ * "logical window" that is transformed into screen coordinates.
  * <p>
- * Equivalencias: {@code VentanaLogica} → {@link #setLogicalWindow},
+ * Equivalences: {@code VentanaLogica} → {@link #setLogicalWindow},
  * {@code Transforma} → {@link #toScreen}, {@code CoordenadasXY} →
  * {@link #drawCoordinates}, {@code Plot2D} → {@link #plot}, etc.
  */
 public final class Plot2D {
 
-    /** Número de divisiones de cada eje. */
+    /** Number of divisions of each axis. */
     private static final double DIVISIONS = 10.0;
-    /** Las marcas de los ejes miden 1/50 del rango. */
+    /** The axis ticks measure 1/50 of the range. */
     private static final double TICK_RATIO = 50.0;
-    /** Dígitos significativos de las etiquetas (como {@code gcvt(n, 3, ...)}). */
+    /** Significant digits of the labels (like {@code gcvt(n, 3, ...)}). */
     private static final MathContext LABEL_PRECISION = new MathContext(3);
-    /** Separación en píxeles entre una marca del eje y su número. */
+    /** Separation in pixels between an axis tick and its number. */
     private static final int LABEL_GAP = 3;
 
-    // Ventana lógica.
+    // Logical window.
     private double minX;
     private double maxX;
     private double minY;
     private double maxY;
-    // Ventana de pantalla y factores de escala.
+    // Screen window and scale factors.
     private int screenLeft;
     private int screenRight;
     private int screenTop;
@@ -49,15 +49,15 @@ public final class Plot2D {
     private double scaleX;
     private double scaleY;
 
-    /** Equivale a {@code ClosePlot2D}: espera una tecla y cierra la ventana gráfica. */
+    /** Equivalent to {@code ClosePlot2D}: waits for a key and closes the graphics window. */
     public void close() {
         getch();
         closeGraph();
     }
 
     /**
-     * Prepara la ventana lógica, dibuja los ejes y escribe sus valores
-     * (equivale a {@code CoordenadasXY}).
+     * Prepares the logical window, draws the axes and writes their values
+     * (equivalent to {@code CoordenadasXY}).
      */
     public void drawCoordinates(double a, double b, double yMin, double yMax) {
         setLogicalWindow(a, yMin, b, yMax);
@@ -66,7 +66,7 @@ public final class Plot2D {
     }
 
     /**
-     * Define el rectángulo lógico que ocupa toda la pantalla (equivale a
+     * Defines the logical rectangle that occupies the whole screen (equivalent to
      * {@code VentanaLogica}).
      */
     public void setLogicalWindow(double x1, double y1, double x2, double y2) {
@@ -82,7 +82,7 @@ public final class Plot2D {
         scaleY = (screenBottom - screenTop) / (maxY - minY);
     }
 
-    /** Convierte un punto lógico a coordenadas de pantalla (equivale a {@code Transforma}). */
+    /** Converts a logical point to screen coordinates (equivalent to {@code Transforma}). */
     public Point toScreen(double x, double y) {
         int screenX = (int) ((x - minX) * scaleX);
         int screenY = (int) ((screenBottom - screenTop) - (y - minY) * scaleY);
@@ -90,8 +90,8 @@ public final class Plot2D {
     }
 
     /**
-     * Dibuja un punto de la gráfica unido con el anterior (equivale a
-     * {@code Plot2D}). Los puntos fuera de la pantalla se ignoran.
+     * Draws a point of the graph joined to the previous one (equivalent to
+     * {@code Plot2D}). Points outside the screen are ignored.
      */
     public void plot(double x, double y, BgiColor color) {
         Point point = toScreen(x, y);
@@ -108,7 +108,7 @@ public final class Plot2D {
         lineTo(point.x(), point.y());
     }
 
-    /** Dibuja un segmento en coordenadas lógicas (equivale a {@code Line}). */
+    /** Draws a segment in logical coordinates (equivalent to {@code Line}). */
     public void line(double x0, double y0, double x1, double y1, BgiColor color) {
         setColor(color);
         Point start = toScreen(x0, y0);
@@ -116,7 +116,7 @@ public final class Plot2D {
         com.juniverse.graphics.api.Bgi.line(start.x(), start.y(), end.x(), end.y());
     }
 
-    /** Dibuja un rectángulo en coordenadas lógicas (equivale a {@code Rectangle}). */
+    /** Draws a rectangle in logical coordinates (equivalent to {@code Rectangle}). */
     public void rectangle(double x1, double y1, double x2, double y2, BgiColor color) {
         setColor(color);
         Point corner1 = toScreen(x1, y1);
@@ -124,7 +124,7 @@ public final class Plot2D {
         com.juniverse.graphics.api.Bgi.rectangle(corner1.x(), corner1.y(), corner2.x(), corner2.y());
     }
 
-    /** Escribe un texto en una posición lógica (equivale a {@code Letrero}). */
+    /** Writes a text at a logical position (equivalent to {@code Letrero}). */
     public void label(double x, double y, String message, BgiColor color, TextDirection direction) {
         setTextStyle(FontName.DEFAULT, direction, 1);
         setColor(color);
@@ -133,12 +133,12 @@ public final class Plot2D {
     }
 
     /**
-     * Escribe un título en una posición lógica (equivale a {@code Title}).
+     * Writes a title at a logical position (equivalent to {@code Title}).
      * <p>
-     * El original calculaba la posición en pantalla pero escribía con las
-     * coordenadas lógicas ({@code outtextxy(x, y, ...)}), por lo que el
-     * título quedaba en la esquina superior izquierda. Aquí se usa la
-     * posición transformada, que era la intención.
+     * The original computed the screen position but wrote with the
+     * logical coordinates ({@code outtextxy(x, y, ...)}), so the
+     * title ended up in the top-left corner. Here the
+     * transformed position is used, which was the intention.
      */
     public void title(double x, double y, String message, BgiColor color) {
         setColor(color);
@@ -148,7 +148,7 @@ public final class Plot2D {
         outTextXY(point.x(), point.y(), message);
     }
 
-    /** Fondo azul, marco, ejes y marcas (equivale a {@code Ejes}). */
+    /** Blue background, frame, axes and ticks (equivalent to {@code Ejes}). */
     private void drawAxes(double a, double b, double yMin, double yMax) {
         setFillStyle(FillPattern.SOLID, BgiColor.BLUE);
         bar3d(0, 0, getMaxX(), getMaxY(), 0, false);
@@ -158,7 +158,7 @@ public final class Plot2D {
         drawTicks(a, b, yMin, yMax);
     }
 
-    /** Marcas de división en ambos ejes (equivale a {@code Divisiones}). */
+    /** Division ticks on both axes (equivalent to {@code Divisiones}). */
     private void drawTicks(double a, double b, double yMin, double yMax) {
         double deltaX = (b - a) / DIVISIONS;
         double deltaY = (yMax - yMin) / DIVISIONS;
@@ -173,14 +173,14 @@ public final class Plot2D {
     }
 
     /**
-     * Valores numéricos de las divisiones (equivale a {@code Textos}).
+     * Numeric values of the divisions (equivalent to {@code Textos}).
      * <p>
-     * El original escribía cada número con su esquina en la marca, así que
-     * las marcas del eje Y tachaban los números y el eje Y cruzaba el 0.
-     * Aquí los números del eje X van debajo del eje, centrados en su marca,
-     * los del eje Y a la derecha de la marca y centrados verticalmente, y el
-     * 0 se escribe una sola vez junto al origen. Ningún número se sale de la
-     * pantalla.
+     * The original wrote each number with its corner at the tick, so
+     * the Y axis ticks struck through the numbers and the Y axis crossed the 0.
+     * Here the X axis numbers go below the axis, centered on their tick,
+     * the Y axis ones to the right of the tick and vertically centered, and the
+     * 0 is written only once next to the origin. No number goes off the
+     * screen.
      */
     private void drawAxisLabels(double a, double b, double yMin, double yMax) {
         double deltaX = (b - a) / DIVISIONS;
@@ -210,7 +210,7 @@ public final class Plot2D {
         }
     }
 
-    /** Ajusta una coordenada para que el texto no se salga de la pantalla. */
+    /** Adjusts a coordinate so that the text does not go off the screen. */
     private static int clamp(int position, int maxPosition) {
         return Math.max(LABEL_GAP, Math.min(maxPosition - LABEL_GAP, position));
     }
@@ -219,7 +219,7 @@ public final class Plot2D {
         return Math.abs(value) < 1e-9;
     }
 
-    /** Número con 3 dígitos significativos, sin ceros sobrantes (como {@code gcvt}). */
+    /** Number with 3 significant digits, without trailing zeros (like {@code gcvt}). */
     public static String formatNumber(double value) {
         if (isZero(value)) {
             return "0";

@@ -3,13 +3,13 @@ package com.juniverse.graphics.text;
 import com.juniverse.graphics.dto.FontSpec;
 
 /**
- * Estrategia para convertir un texto en un mapa de bits.
+ * Strategy to convert a text into a bitmap.
  * <p>
- * Permite sustituir el motor de fuentes (AWT, fuentes bitmap propias,
- * SDL_ttf, etc.) sin modificar {@link TextDrawer}.
+ * Allows replacing the font engine (AWT, custom bitmap fonts,
+ * SDL_ttf, etc.) without modifying {@link TextDrawer}.
  */
 public interface GlyphRasterizer {
 
-    /** Rasteriza el texto horizontalmente con la fuente indicada. */
+    /** Rasterizes the text horizontally with the given font. */
     TextMask render(String text, FontSpec spec);
 }

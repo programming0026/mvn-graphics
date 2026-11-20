@@ -1,12 +1,12 @@
 package com.juniverse.graphics.dto;
 
 /**
- * Factores de escala definidos con {@code setusercharsize}.
- * El ancho se multiplica por {@code multX/divX} y el alto por {@code multY/divY}.
+ * Scale factors defined with {@code setusercharsize}.
+ * The width is multiplied by {@code multX/divX} and the height by {@code multY/divY}.
  */
 public record CharScale(int multX, int divX, int multY, int divY) {
 
-    /** Escala neutra. */
+    /** Neutral scale. */
     public static final CharScale IDENTITY = new CharScale(1, 1, 1, 1);
 
     public CharScale {

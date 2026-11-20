@@ -1,17 +1,17 @@
 package com.juniverse.graphics.dto;
 
 /**
- * Información del último arco dibujado (equivalente a {@code arccoordstype}).
+ * Information about the last arc drawn (equivalent to {@code arccoordstype}).
  *
- * @param x      centro horizontal del arco
- * @param y      centro vertical del arco
- * @param xStart coordenada x del punto inicial
- * @param yStart coordenada y del punto inicial
- * @param xEnd   coordenada x del punto final
- * @param yEnd   coordenada y del punto final
+ * @param x      horizontal center of the arc
+ * @param y      vertical center of the arc
+ * @param xStart x coordinate of the start point
+ * @param yStart y coordinate of the start point
+ * @param xEnd   x coordinate of the end point
+ * @param yEnd   y coordinate of the end point
  */
 public record ArcCoordinates(int x, int y, int xStart, int yStart, int xEnd, int yEnd) {
 
-    /** Valor inicial antes de dibujar cualquier arco. */
+    /** Initial value before any arc is drawn. */
     public static final ArcCoordinates EMPTY = new ArcCoordinates(0, 0, 0, 0, 0, 0);
 }

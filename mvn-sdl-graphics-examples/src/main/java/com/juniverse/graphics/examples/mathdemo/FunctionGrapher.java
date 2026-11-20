@@ -14,25 +14,25 @@ import java.util.function.DoubleUnaryOperator;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Graficadora de funciones.
+ * Function grapher.
  * <p>
- * Primero muestra una tabla con los valores de x y f(x) de -20 a 20 (en
- * pasos de 0.25) y, al presionar una tecla, grafica la función con
- * {@link Plot2D}. La función del original es {@code f(x) = x²}; para graficar
- * otra basta con cambiar {@link #FUNCTION}.
+ * First it shows a table with the values of x and f(x) from -20 to 20 (in
+ * steps of 0.25) and, when a key is pressed, graphs the function with
+ * {@link Plot2D}. The function of the original is {@code f(x) = x²}; to graph
+ * another one it is enough to change {@link #FUNCTION}.
  * <p>
  */
 public final class FunctionGrapher {
 
     private static final Logger LOG = LoggerFactory.getLogger(FunctionGrapher.class);
 
-    /** Función a graficar (equivale a {@code float f(float)}). */
+    /** Function to graph (equivalent to {@code float f(float)}). */
     private static final DoubleUnaryOperator FUNCTION = x -> x * x * x;
     private static final String FUNCTION_NAME = "x³";
 
     /**
-     * Posición lógica del título: esquina superior izquierda, lejos de los
-     * ejes y de sus números (en el original estaba en (5, 1), encima del eje X).
+     * Logical position of the title: top-left corner, away from the
+     * axes and their numbers (in the original it was at (5, 1), above the X axis).
      */
     private static final double TITLE_X = -19.0;
     private static final double TITLE_Y = 19.0;
@@ -67,14 +67,14 @@ public final class FunctionGrapher {
             }
             plot.close();
         } finally {
-            // Si algo falla antes de plot.close(), la ventana también se cierra.
+            // If something fails before plot.close(), the window is also closed.
             closeGraph();
         }
     }
 
     /**
-     * Tabula la función. Igual que en el original, la tabla tiene 161 filas y
-     * solo caben en pantalla las primeras.
+     * Tabulates the function. Same as in the original, the table has 161 rows and
+     * only the first ones fit on screen.
      */
     private static void showTable() {
         clearDevice();

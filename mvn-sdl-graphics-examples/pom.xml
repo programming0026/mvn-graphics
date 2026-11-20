@@ -33,7 +33,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Registro de mensajes (log): API de SLF4J y su implementación simple para consola. -->
+        <!-- Logging: SLF4J API and its simple console implementation. -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

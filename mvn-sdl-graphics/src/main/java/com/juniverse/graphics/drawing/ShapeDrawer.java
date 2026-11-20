@@ -8,7 +8,7 @@ import com.juniverse.graphics.raster.EllipseRasterizer;
 import java.util.List;
 
 /**
- * Implementación de {@link ShapeOperations} sobre un {@link DrawingContext}.
+ * Implementation of {@link ShapeOperations} on a {@link DrawingContext}.
  */
 public final class ShapeDrawer implements ShapeOperations {
 
@@ -69,7 +69,7 @@ public final class ShapeDrawer implements ShapeOperations {
         context.changed();
     }
 
-    /** Guarda los extremos del arco para {@code getarccoords}. */
+    /** Stores the arc endpoints for {@code getarccoords}. */
     public static void rememberArc(DrawingState state, int x, int y, int startAngle, int endAngle,
                             int radiusX, int radiusY) {
         Point start = EllipseRasterizer.pointAt(x, y, radiusX, radiusY, startAngle);

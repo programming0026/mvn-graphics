@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Relleno de polígonos por barrido de líneas (scanline) con la regla par-impar.
+ * Polygon fill by scanline with the even-odd rule.
  */
 public final class PolygonRasterizer {
 
@@ -14,8 +14,8 @@ public final class PolygonRasterizer {
     }
 
     /**
-     * Genera los tramos horizontales del interior del polígono. El polígono se
-     * cierra automáticamente entre el último y el primer vértice.
+     * Generates the horizontal spans of the polygon's interior. The polygon is
+     * closed automatically between the last and the first vertex.
      */
     public static void fill(List<Point> vertices, SpanSink sink) {
         int count = vertices.size();

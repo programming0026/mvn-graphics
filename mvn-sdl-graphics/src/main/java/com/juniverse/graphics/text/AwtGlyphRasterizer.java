@@ -14,17 +14,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Rasterizador de texto basado en las fuentes de Java (AWT en modo headless).
+ * Text rasterizer based on Java fonts (AWT in headless mode).
  * <p>
- * El texto se dibuja sin suavizado sobre una imagen en escala de grises y se
- * convierte en una {@link TextMask}. Los resultados se guardan en una caché
- * LRU porque los programas BGI suelen repetir los mismos textos.
+ * The text is drawn without anti-aliasing on a grayscale image and
+ * converted into a {@link TextMask}. Results are stored in an LRU
+ * cache because BGI programs tend to repeat the same texts.
  */
 public final class AwtGlyphRasterizer implements GlyphRasterizer {
 
     private static final int CACHE_SIZE = 256;
     private static final int THRESHOLD = 128;
-    /** Carácter que se muestra en lugar de los que la fuente no puede dibujar. */
+    /** Character shown in place of those the font cannot draw. */
     private static final int MISSING_GLYPH = '?';
 
     static {
@@ -81,11 +81,11 @@ public final class AwtGlyphRasterizer implements GlyphRasterizer {
     }
 
     /**
-     * Sustituye por {@link #MISSING_GLYPH} los caracteres que no se pueden
-     * dibujar: los de control (por ejemplo, U+0080..U+009F, que es lo que se
-     * obtiene al convertir a {@code char} los códigos 128..159 de DOS) y los
-     * que la fuente no tiene. Sin esto, AWT dibuja un cuadro vacío por cada uno.
-     * Es el mismo criterio que usa {@link BitmapFont}.
+     * Replaces with {@link #MISSING_GLYPH} the characters that cannot be
+     * drawn: control characters (for example, U+0080..U+009F, which is what you
+     * get when converting DOS codes 128..159 to {@code char}) and those
+     * the font does not have. Without this, AWT draws an empty box for each one.
+     * It is the same criterion used by {@link BitmapFont}.
      */
     private static String displayableText(String text, Font font) {
         StringBuilder displayable = new StringBuilder(text.length());

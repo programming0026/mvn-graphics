@@ -6,14 +6,14 @@ import com.juniverse.graphics.dto.TextSettings;
 import java.util.Objects;
 
 /**
- * Estado de texto de una ventana: configuración y escala de usuario.
+ * Text state of a window: settings and user scale.
  */
 public final class TextState {
 
     private TextSettings settings = TextSettings.DEFAULT;
     private CharScale charScale = CharScale.IDENTITY;
 
-    /** Restaura los valores por defecto. */
+    /** Restores the default values. */
     public void reset() {
         settings = TextSettings.DEFAULT;
         charScale = CharScale.IDENTITY;
@@ -35,7 +35,7 @@ public final class TextState {
         this.charScale = Objects.requireNonNull(charScale);
     }
 
-    /** Fuente efectiva según la configuración actual. */
+    /** Effective font according to the current settings. */
     public FontSpec fontSpec() {
         return FontSpec.from(settings, charScale);
     }

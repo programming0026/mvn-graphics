@@ -6,10 +6,10 @@ import com.juniverse.graphics.style.PatternMask;
 import com.juniverse.graphics.style.RasterOperation;
 
 /**
- * Pinta tramos horizontales usando el patrón y el color de relleno actuales.
+ * Paints horizontal spans using the current fill pattern and color.
  * <p>
- * Los bits activos del patrón usan el color de relleno y los inactivos el
- * color de fondo, igual que en BGI.
+ * The set bits of the pattern use the fill color and the unset ones the
+ * background color, same as in BGI.
  */
 public final class PatternPainter implements SpanSink {
 

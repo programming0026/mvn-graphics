@@ -25,7 +25,7 @@ public class CodePage437Test {
         assertEquals('░', CodePage437.toUnicode(0xB0));
         assertEquals('█', CodePage437.toUnicode(0xDB));
         assertEquals('■', CodePage437.toUnicode(0xFE));
-        // Igual que un char de C: solo cuentan los 8 bits inferiores.
+        // Same as a C char: only the lower 8 bits count.
         assertEquals('Ç', CodePage437.toUnicode((byte) 0x80));
         assertEquals("Ñandú", CodePage437.decode(new byte[]{(byte) 0xA5, 'a', 'n', 'd', (byte) 0xA3}));
     }

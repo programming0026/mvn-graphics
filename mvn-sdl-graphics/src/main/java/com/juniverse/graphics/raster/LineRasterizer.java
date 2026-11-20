@@ -1,7 +1,7 @@
 package com.juniverse.graphics.raster;
 
 /**
- * Rasterizado de segmentos de recta mediante el algoritmo de Bresenham.
+ * Rasterization of line segments using Bresenham's algorithm.
  */
 public final class LineRasterizer {
 
@@ -9,7 +9,7 @@ public final class LineRasterizer {
     }
 
     /**
-     * Genera, en orden, todos los píxeles del segmento (ambos extremos incluidos).
+     * Generates, in order, all the pixels of the segment (both endpoints included).
      */
     public static void trace(int x0, int y0, int x1, int y1, PointSink sink) {
         int dx = Math.abs(x1 - x0);
@@ -36,7 +36,7 @@ public final class LineRasterizer {
         }
     }
 
-    /** Indica si el segmento es mayormente horizontal (|dx| &gt;= |dy|). */
+    /** Tells whether the segment is mostly horizontal (|dx| &gt;= |dy|). */
     public static boolean isMostlyHorizontal(int x0, int y0, int x1, int y1) {
         return Math.abs(x1 - x0) >= Math.abs(y1 - y0);
     }

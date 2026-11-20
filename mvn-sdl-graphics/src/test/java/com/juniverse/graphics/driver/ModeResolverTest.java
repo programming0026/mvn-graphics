@@ -12,7 +12,7 @@ public class ModeResolverTest {
 
     @Test
     public void detectIgnoresModeAndSelectsVgaHigh() {
-        // Equivale a: int gd = DETECT, gm = VGA; initgraph(&gd, &gm, "");
+        // Equivalent to: int gd = DETECT, gm = VGA; initgraph(&gd, &gm, "");
         ModeResolution result = ModeResolver.resolve(GraphicsDriver.DETECT.code(), GraphicsDriver.VGA.code());
 
         GraphicsMode mode = assertInstanceOf(ModeResolution.Resolved.class, result).mode();

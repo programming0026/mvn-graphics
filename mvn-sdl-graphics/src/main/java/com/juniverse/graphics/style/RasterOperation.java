@@ -3,11 +3,11 @@ package com.juniverse.graphics.style;
 import com.juniverse.graphics.color.ColorCode;
 
 /**
- * Operaciones de combinación de píxeles usadas por {@code setwritemode} y
+ * Pixel combination operations used by {@code setwritemode} and
  * {@code putimage} ({@code putimage_ops}).
  * <p>
- * Cada operación combina el píxel destino con el píxel fuente sobre los 24
- * bits de color y conserva el canal alfa opaco.
+ * Each operation combines the destination pixel with the source pixel over the 24
+ * color bits and keeps the alpha channel opaque.
  */
 public enum RasterOperation {
     COPY {
@@ -41,14 +41,14 @@ public enum RasterOperation {
         }
     };
 
-    /** Combina dos píxeles ARGB y devuelve el resultado opaco. */
+    /** Combines two ARGB pixels and returns the opaque result. */
     public int apply(int destination, int source) {
         return ColorCode.OPAQUE | (combine(destination, source) & ColorCode.RGB_MASK);
     }
 
     protected abstract int combine(int destination, int source);
 
-    /** Obtiene la operación a partir de su código numérico BGI. */
+    /** Gets the operation from its BGI numeric code. */
     public static RasterOperation fromCode(int code) {
         if (code < 0 || code >= values().length) {
             throw new IllegalArgumentException("Invalid write mode: " + code);

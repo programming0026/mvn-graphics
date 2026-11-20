@@ -1,7 +1,7 @@
 package com.juniverse.graphics.input;
 
 /**
- * Botones del mouse reconocidos por la biblioteca.
+ * Mouse buttons recognized by the library.
  */
 public enum MouseButton {
     LEFT,

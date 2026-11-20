@@ -5,28 +5,28 @@ import com.juniverse.graphics.dto.Point;
 import java.util.List;
 
 /**
- * Operaciones de píxeles y contornos (figuras sin relleno).
+ * Pixel and outline operations (unfilled shapes).
  */
 public interface ShapeOperations {
 
-    /** Dibuja un píxel con el código de color indicado. */
+    /** Draws a pixel with the given color code. */
     void putPixel(int x, int y, int colorCode);
 
-    /** Lee el código de color de un píxel (0 si está fuera del área dibujable). */
+    /** Reads the color code of a pixel (0 if outside the drawable area). */
     int getPixel(int x, int y);
 
-    /** Dibuja el contorno de un rectángulo con el estilo de línea actual. */
+    /** Draws the outline of a rectangle with the current line style. */
     void rectangle(int left, int top, int right, int bottom);
 
-    /** Dibuja una circunferencia. */
+    /** Draws a circle. */
     void circle(int x, int y, int radius);
 
-    /** Dibuja un arco circular entre dos ángulos (en grados). */
+    /** Draws a circular arc between two angles (in degrees). */
     void arc(int x, int y, int startAngle, int endAngle, int radius);
 
-    /** Dibuja un arco elíptico entre dos ángulos (en grados). */
+    /** Draws an elliptical arc between two angles (in degrees). */
     void ellipse(int x, int y, int startAngle, int endAngle, int radiusX, int radiusY);
 
-    /** Dibuja una polilínea abierta con los vértices indicados. */
+    /** Draws an open polyline with the given vertices. */
     void drawPoly(List<Point> points);
 }

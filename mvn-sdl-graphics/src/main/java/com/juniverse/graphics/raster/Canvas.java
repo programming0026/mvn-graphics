@@ -4,35 +4,35 @@ import com.juniverse.graphics.dto.Rect;
 import com.juniverse.graphics.style.RasterOperation;
 
 /**
- * Superficie de dibujo con coordenadas relativas al viewport activo.
+ * Drawing surface with coordinates relative to the active viewport.
  * <p>
- * Es la abstracción de la que dependen todos los dibujantes de alto nivel
- * (principio de inversión de dependencias): no conocen páginas, viewports ni
- * recortes, solo trazan y leen píxeles.
+ * It is the abstraction that all the high-level painters depend on
+ * (dependency inversion principle): they know nothing about pages, viewports or
+ * clipping, they only plot and read pixels.
  */
 public interface Canvas {
 
-    /** Valor devuelto por {@link #read} para coordenadas fuera del área dibujable. */
+    /** Value returned by {@link #read} for coordinates outside the drawable area. */
     int OUTSIDE = 0x00000000;
 
-    /** Ancho del área de dibujo (viewport). */
+    /** Width of the drawing area (viewport). */
     int width();
 
-    /** Alto del área de dibujo (viewport). */
+    /** Height of the drawing area (viewport). */
     int height();
 
     /**
-     * Rectángulo (en coordenadas relativas al viewport) que contiene todos los
-     * puntos dibujables. Si el viewport no recorta, abarca la página completa.
+     * Rectangle (in viewport-relative coordinates) that contains all the
+     * drawable points. If the viewport does not clip, it covers the whole page.
      */
     Rect drawableBounds();
 
-    /** Indica si un punto relativo al viewport puede dibujarse. */
+    /** Tells whether a viewport-relative point can be drawn. */
     boolean isDrawable(int x, int y);
 
-    /** Dibuja un píxel ARGB combinándolo con la operación indicada. */
+    /** Draws an ARGB pixel combining it with the given operation. */
     void plot(int x, int y, int argb, RasterOperation operation);
 
-    /** Lee un píxel ARGB, o {@link #OUTSIDE} si la coordenada no es dibujable. */
+    /** Reads an ARGB pixel, or {@link #OUTSIDE} if the coordinate is not drawable. */
     int read(int x, int y);
 }

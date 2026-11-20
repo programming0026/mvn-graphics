@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de {@link FillOperations} sobre un {@link DrawingContext}.
+ * Implementation of {@link FillOperations} on a {@link DrawingContext}.
  */
 public final class FillDrawer implements FillOperations {
 
-    /** Ángulo de la profundidad de {@code bar3d} (30°, igual que BGI). */
+    /** Depth angle of {@code bar3d} (30°, same as BGI). */
     private static final double BAR3D_ANGLE = Math.toRadians(30.0);
 
     private final DrawingContext context;

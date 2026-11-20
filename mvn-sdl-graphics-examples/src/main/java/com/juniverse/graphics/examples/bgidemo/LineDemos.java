@@ -14,8 +14,8 @@ import java.util.List;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Demostraciones de líneas: {@code LineRelDemo}, {@code LineToDemo},
- * {@code LineStyleDemo} y {@code UserLineStyleDemo}.
+ * Line demonstrations: {@code LineRelDemo}, {@code LineToDemo},
+ * {@code LineStyleDemo} and {@code UserLineStyleDemo}.
  */
 public final class LineDemos {
 
@@ -27,7 +27,7 @@ public final class LineDemos {
         this.frame = frame;
     }
 
-    /** Dibuja un "teseracto" con moveRel y lineRel (LineRelDemo). */
+    /** Draws a "tesseract" with moveRel and lineRel (LineRelDemo). */
     public void lineRelDemo() {
         frame.mainWindow("MoveRel / LineRel Demonstration");
         frame.statusLine("Press any key to continue, ESC to Abort");
@@ -91,7 +91,7 @@ public final class LineDemos {
         frame.pause();
     }
 
-    /** Une con cuerdas 15 puntos de una circunferencia (LineToDemo). */
+    /** Joins 15 points of a circle with chords (LineToDemo). */
     public void lineToDemo() {
         frame.mainWindow("MoveTo / LineTo Demonstration");
 
@@ -121,7 +121,7 @@ public final class LineDemos {
         frame.pause();
     }
 
-    /** Muestra los 4 estilos de línea en grosor normal y grueso (LineStyleDemo). */
+    /** Shows the 4 line styles in normal and thick widths (LineStyleDemo). */
     public void lineStyleDemo() {
         frame.mainWindow("Pre-defined line styles");
 
@@ -156,12 +156,12 @@ public final class LineDemos {
     }
 
     /**
-     * Líneas con patrones de usuario: primero se van encendiendo los 16 bits
-     * del patrón y luego se van apagando (UserLineStyleDemo).
+     * Lines with user patterns: first the 16 bits of the pattern are
+     * turned on one by one and then turned off (UserLineStyleDemo).
      * <p>
-     * El original apagaba los bits con {@code style & !(0x8000 >> i)}; el
-     * {@code !} (negación lógica) vale 0, así que borraba todo el patrón de
-     * golpe. Aquí se usa {@code ~} (negación de bits), que era la intención.
+     * The original turned the bits off with {@code style & !(0x8000 >> i)}; the
+     * {@code !} (logical negation) is 0, so it cleared the whole pattern at
+     * once. Here {@code ~} (bitwise negation) is used, which was the intention.
      */
     public void userLineStyleDemo() {
         frame.mainWindow("User defined line styles");

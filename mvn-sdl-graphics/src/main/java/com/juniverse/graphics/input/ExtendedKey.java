@@ -1,10 +1,10 @@
 package com.juniverse.graphics.input;
 
 /**
- * Teclas extendidas de BGI/conio.
+ * Extended BGI/conio keys.
  * <p>
- * Cuando se presiona una de estas teclas, {@code getch()} devuelve primero un
- * 0 y en la siguiente llamada el código de la tecla, igual que en DOS.
+ * When one of these keys is pressed, {@code getch()} first returns a
+ * 0 and on the next call the key code, just as in DOS.
  */
 public enum ExtendedKey {
     HOME(71),
@@ -34,7 +34,7 @@ public enum ExtendedKey {
         this.code = code;
     }
 
-    /** Código que devuelve {@code getch()} después del 0. */
+    /** Code returned by {@code getch()} after the 0. */
     public int code() {
         return code;
     }

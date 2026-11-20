@@ -1,7 +1,7 @@
 package com.juniverse.graphics.style;
 
 /**
- * Patrones de relleno estándar de BGI ({@code fill_styles}).
+ * Standard BGI fill patterns ({@code fill_styles}).
  */
 public enum FillPattern {
     EMPTY(PatternMask.of(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)),
@@ -16,7 +16,7 @@ public enum FillPattern {
     INTERLEAVE(PatternMask.of(0xCC, 0x33, 0xCC, 0x33, 0xCC, 0x33, 0xCC, 0x33)),
     WIDE_DOT(PatternMask.of(0x80, 0x00, 0x08, 0x00, 0x80, 0x00, 0x08, 0x00)),
     CLOSE_DOT(PatternMask.of(0x88, 0x00, 0x22, 0x00, 0x88, 0x00, 0x22, 0x00)),
-    /** Patrón definido por el usuario mediante {@code setfillpattern}. */
+    /** Pattern defined by the user through {@code setfillpattern}. */
     USER(null);
 
     private final PatternMask mask;
@@ -26,9 +26,9 @@ public enum FillPattern {
     }
 
     /**
-     * Máscara predefinida del patrón.
+     * Predefined mask of the pattern.
      *
-     * @throws IllegalStateException si se solicita para {@link #USER}
+     * @throws IllegalStateException if requested for {@link #USER}
      */
     public PatternMask mask() {
         if (mask == null) {
@@ -37,7 +37,7 @@ public enum FillPattern {
         return mask;
     }
 
-    /** Obtiene el patrón a partir de su código numérico BGI. */
+    /** Gets the pattern from its BGI numeric code. */
     public static FillPattern fromCode(int code) {
         if (code < 0 || code >= values().length) {
             throw new IllegalArgumentException("Invalid fill pattern: " + code);

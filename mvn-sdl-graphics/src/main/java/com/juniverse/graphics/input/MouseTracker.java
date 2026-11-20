@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Estado del mouse de una ventana: posición, clics pendientes y manejadores.
+ * Mouse state of a window: position, pending clicks and handlers.
  * <p>
- * Por defecto cada tipo de evento conserva solo el último clic; con
- * {@link #setQueueStatus} pueden encolarse todos (igual que WinBGI).
+ * By default each event kind keeps only the last click; with
+ * {@link #setQueueStatus} all of them can be queued (same as WinBGI).
  */
 public final class MouseTracker {
 
@@ -28,7 +28,7 @@ public final class MouseTracker {
         }
     }
 
-    /** Registra un evento, actualiza la posición e invoca el manejador si existe. */
+    /** Records an event, updates the position and invokes the handler if there is one. */
     public void record(MouseEventKind kind, int x, int y) {
         Deque<Point> queue = clicks.get(kind);
         if (!queuing.get(kind)) {
@@ -43,42 +43,42 @@ public final class MouseTracker {
         }
     }
 
-    /** Coordenada x del mouse (equivale a {@code mousex}). */
+    /** Mouse x coordinate (equivalent to {@code mousex}). */
     public int x() {
         return position.x();
     }
 
-    /** Coordenada y del mouse (equivale a {@code mousey}). */
+    /** Mouse y coordinate (equivalent to {@code mousey}). */
     public int y() {
         return position.y();
     }
 
-    /** Indica si hay un evento pendiente de ese tipo (equivale a {@code ismouseclick}). */
+    /** Tells whether there is a pending event of that kind (equivalent to {@code ismouseclick}). */
     public boolean hasClick(MouseEventKind kind) {
         return !clicks.get(kind).isEmpty();
     }
 
     /**
-     * Extrae el siguiente evento pendiente (equivale a {@code getmouseclick}).
+     * Takes the next pending event (equivalent to {@code getmouseclick}).
      *
-     * @return la posición del evento, o {@link Point#NONE} si no hay ninguno
+     * @return the position of the event, or {@link Point#NONE} if there is none
      */
     public Point pollClick(MouseEventKind kind) {
         Point click = clicks.get(kind).pollFirst();
         return click == null ? Point.NONE : click;
     }
 
-    /** Descarta los eventos pendientes de ese tipo (equivale a {@code clearmouseclick}). */
+    /** Discards the pending events of that kind (equivalent to {@code clearmouseclick}). */
     public void clearClicks(MouseEventKind kind) {
         clicks.get(kind).clear();
     }
 
-    /** Activa o desactiva el encolado de eventos (equivale a {@code setmousequeuestatus}). */
+    /** Enables or disables event queueing (equivalent to {@code setmousequeuestatus}). */
     public void setQueueStatus(MouseEventKind kind, boolean enabled) {
         queuing.put(Objects.requireNonNull(kind), enabled);
     }
 
-    /** Registra un manejador; {@code null} elimina el existente. */
+    /** Registers a handler; {@code null} removes the existing one. */
     public void registerHandler(MouseEventKind kind, MouseHandler handler) {
         if (handler == null) {
             handlers.remove(kind);

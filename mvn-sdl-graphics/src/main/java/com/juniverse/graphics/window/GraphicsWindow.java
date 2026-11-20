@@ -33,11 +33,11 @@ import com.juniverse.graphics.text.TextState;
 import java.util.Objects;
 
 /**
- * Ventana gráfica BGI.
+ * BGI graphics window.
  * <p>
- * Compone las piezas de una ventana (páginas, estado, dibujantes, teclado y
- * mouse) y decide cuándo enviar la página visual a la pantalla. Cada
- * responsabilidad concreta vive en su propia clase; esta solo las conecta.
+ * Composes the pieces of a window (pages, state, painters, keyboard and
+ * mouse) and decides when to send the visual page to the screen. Each
+ * specific responsibility lives in its own class; this one only connects them.
  */
 public final class GraphicsWindow implements SurfaceObserver {
 
@@ -70,14 +70,14 @@ public final class GraphicsWindow implements SurfaceObserver {
     private GraphicsError lastError = GraphicsError.OK;
 
     /**
-     * @param id        identificador BGI de la ventana (índice devuelto por initWindow)
-     * @param display   ventana nativa donde se muestran las páginas
-     * @param spec      parámetros con los que se creó la ventana (definen el área de dibujo)
-     * @param mode      modo gráfico BGI asociado a la ventana
-     * @param options   opciones de comportamiento
-     * @param scheduler política de refresco automático
-     * @param glyphs    motor de rasterizado de texto
-     * @param fileStore almacenamiento de archivos de imagen
+     * @param id        BGI identifier of the window (index returned by initWindow)
+     * @param display   native window where the pages are shown
+     * @param spec      parameters the window was created with (they define the drawing area)
+     * @param mode      BGI graphics mode associated with the window
+     * @param options   behavior options
+     * @param scheduler automatic refresh policy
+     * @param glyphs    text rasterization engine
+     * @param fileStore image file storage
      */
     public GraphicsWindow(int id, Display display, DisplaySpec spec, GraphicsMode mode, WindowOptions options,
                           FrameScheduler scheduler, GlyphRasterizer glyphs, ImageFileStore fileStore) {
@@ -106,14 +106,14 @@ public final class GraphicsWindow implements SurfaceObserver {
     }
 
     // ------------------------------------------------------------------
-    // Identidad y componentes
+    // Identity and components
     // ------------------------------------------------------------------
 
     public int id() {
         return id;
     }
 
-    /** Identificador nativo de la ventana (usado para enrutar eventos). */
+    /** Native identifier of the window (used to route events). */
     public int displayId() {
         return display.id();
     }
@@ -130,12 +130,12 @@ public final class GraphicsWindow implements SurfaceObserver {
         return options;
     }
 
-    /** Parámetros con los que se creó la ventana. */
+    /** Parameters the window was created with. */
     public DisplaySpec spec() {
         return spec;
     }
 
-    /** Modo gráfico BGI de la ventana (equivale a {@code getgraphmode}/{@code getdrivername}). */
+    /** BGI graphics mode of the window (equivalent to {@code getgraphmode}/{@code getdrivername}). */
     public GraphicsMode graphicsMode() {
         return mode;
     }
@@ -185,10 +185,10 @@ public final class GraphicsWindow implements SurfaceObserver {
     }
 
     // ------------------------------------------------------------------
-    // Configuración general
+    // General settings
     // ------------------------------------------------------------------
 
-    /** Restaura todos los valores por defecto (equivale a {@code graphdefaults}). */
+    /** Restores all default values (equivalent to {@code graphdefaults}). */
     public void graphDefaults() {
         drawingState.reset();
         textState.reset();
@@ -196,9 +196,9 @@ public final class GraphicsWindow implements SurfaceObserver {
     }
 
     /**
-     * Vuelve a entrar en un modo gráfico de la misma resolución (equivale a
-     * {@code setgraphmode} sin cambio de tamaño): borra todas las páginas,
-     * restaura los valores por defecto y conserva la ventana nativa.
+     * Re-enters a graphics mode of the same resolution (equivalent to
+     * {@code setgraphmode} without a size change): clears all pages,
+     * restores the default values and keeps the native window.
      */
     public void resetGraphMode(GraphicsMode newMode) {
         mode = Objects.requireNonNull(newMode);
@@ -209,12 +209,12 @@ public final class GraphicsWindow implements SurfaceObserver {
         invalidate();
     }
 
-    /** Registra un error para {@code graphresult}. */
+    /** Records an error for {@code graphresult}. */
     public void reportError(GraphicsError error) {
         lastError = Objects.requireNonNull(error);
     }
 
-    /** Devuelve el último error y lo reinicia a {@link GraphicsError#OK}. */
+    /** Returns the last error and resets it to {@link GraphicsError#OK}. */
     public GraphicsError takeLastError() {
         GraphicsError error = lastError;
         lastError = GraphicsError.OK;
@@ -222,7 +222,7 @@ public final class GraphicsWindow implements SurfaceObserver {
     }
 
     // ------------------------------------------------------------------
-    // Páginas
+    // Pages
     // ------------------------------------------------------------------
 
     public void setActivePage(int page) {
@@ -239,32 +239,32 @@ public final class GraphicsWindow implements SurfaceObserver {
         }
     }
 
-    /** Alterna las páginas 0 y 1 y muestra la recién dibujada. */
+    /** Swaps pages 0 and 1 and shows the one just drawn. */
     public void swapBuffers() {
         pages.swap();
         invalidate();
     }
 
     // ------------------------------------------------------------------
-    // Refresco de pantalla
+    // Screen refresh
     // ------------------------------------------------------------------
 
     public boolean isRefreshing() {
         return refreshing;
     }
 
-    /** Activa o desactiva el refresco automático tras cada operación. */
+    /** Enables or disables automatic refresh after each operation. */
     public void setRefreshing(boolean refreshing) {
         this.refreshing = refreshing;
     }
 
-    /** Fuerza que la página visual se muestre en el próximo ciclo. */
+    /** Forces the visual page to be shown on the next cycle. */
     public void invalidate() {
         presentPending = true;
         scheduler.requestFrame();
     }
 
-    /** Muestra inmediatamente la página visual. */
+    /** Shows the visual page immediately. */
     public void refreshNow() {
         presentPending = false;
         display.present(pages.visual(), new Size(width, height), drawingState.backgroundArgb());
@@ -274,7 +274,7 @@ public final class GraphicsWindow implements SurfaceObserver {
         return scalingMode;
     }
 
-    /** Cambia cómo se ajusta la página al tamaño de la ventana y la vuelve a mostrar. */
+    /** Changes how the page fits the window size and shows it again. */
     public void setScalingMode(ScalingMode scalingMode) {
         this.scalingMode = Objects.requireNonNull(scalingMode);
         display.setScalingMode(scalingMode);
@@ -285,13 +285,13 @@ public final class GraphicsWindow implements SurfaceObserver {
     }
 
     /**
-     * En modo {@link ScalingMode#RESIZE}, ajusta el área visible de dibujo al
-     * tamaño real de la ventana, sin bajar nunca de la resolución inicial.
+     * In {@link ScalingMode#RESIZE} mode, adjusts the visible drawing area to the
+     * real size of the window, never going below the initial resolution.
      * <p>
-     * Las páginas en memoria solo crecen: si la ventana se reduce o se
-     * minimiza, únicamente cambia la parte visible ({@code getMaxX()},
-     * {@code getMaxY()}); lo dibujado fuera de ella se conserva y vuelve a
-     * verse al agrandar la ventana.
+     * The in-memory pages only grow: if the window shrinks or is
+     * minimized, only the visible part changes ({@code getMaxX()},
+     * {@code getMaxY()}); what was drawn outside it is kept and becomes
+     * visible again when the window is enlarged.
      */
     private void adaptSurfaceToWindow() {
         Size output = display.outputSize();
@@ -306,7 +306,7 @@ public final class GraphicsWindow implements SurfaceObserver {
         height = newHeight;
     }
 
-    /** Muestra la página visual solo si hay cambios pendientes. */
+    /** Shows the visual page only if there are pending changes. */
     public void presentIfPending() {
         if (presentPending) {
             refreshNow();
@@ -321,10 +321,10 @@ public final class GraphicsWindow implements SurfaceObserver {
     }
 
     // ------------------------------------------------------------------
-    // Entrada
+    // Input
     // ------------------------------------------------------------------
 
-    /** Aplica un evento de teclado, mouse o exposición a esta ventana. */
+    /** Applies a keyboard, mouse or expose event to this window. */
     public void handle(InputEvent event) {
         switch (event) {
             case InputEvent.KeyTyped key -> keyboard.push(key.code());
@@ -340,20 +340,20 @@ public final class GraphicsWindow implements SurfaceObserver {
                 invalidate();
             }
             case InputEvent.CloseRequested ignored -> {
-                // El cierre lo gestiona WindowManager.
+                // Closing is handled by WindowManager.
             }
             case InputEvent.QuitRequested ignored -> {
-                // La salida la gestiona WindowManager.
+                // Exit is handled by WindowManager.
             }
         }
     }
 
-    /** Indica si la ventana cambió de tamaño (equivale a {@code isresizeevent}). */
+    /** Tells whether the window changed size (equivalent to {@code isresizeevent}). */
     public boolean isResizeEvent() {
         return resizeEvent;
     }
 
-    /** Descarta el aviso de cambio de tamaño (equivale a {@code clearresizeevent}). */
+    /** Discards the resize notice (equivalent to {@code clearresizeevent}). */
     public void clearResizeEvent() {
         resizeEvent = false;
     }
@@ -371,8 +371,8 @@ public final class GraphicsWindow implements SurfaceObserver {
         }
     }
 
-    // Al escalar la ventana pueden aparecer bandas negras: un clic sobre ellas
-    // se ajusta al borde más cercano del área de dibujo.
+    // When scaling the window, black bands may appear: a click on them
+    // is adjusted to the nearest edge of the drawing area.
     private int clampX(int x) {
         return Math.max(0, Math.min(width - 1, x));
     }
@@ -381,7 +381,7 @@ public final class GraphicsWindow implements SurfaceObserver {
         return Math.max(0, Math.min(height - 1, y));
     }
 
-    /** Cierra la ventana nativa. */
+    /** Closes the native window. */
     public void close() {
         display.close();
     }

@@ -1,11 +1,11 @@
 package com.juniverse.graphics.examples.dto;
 
 /**
- * Un ejemplo del menú principal.
+ * An example of the main menu.
  *
- * @param title       nombre que se muestra (el de la clase)
- * @param description descripción breve (máximo unos 60 caracteres)
- * @param entryPoint  acción que ejecuta el ejemplo completo
+ * @param title       displayed name (the class name)
+ * @param description short description (at most about 60 characters)
+ * @param entryPoint  action that runs the whole example
  */
 public record Example(String title, String description, Runnable entryPoint) {
 }

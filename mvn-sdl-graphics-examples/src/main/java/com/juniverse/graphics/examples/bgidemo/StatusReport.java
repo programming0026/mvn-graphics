@@ -10,8 +10,8 @@ import com.juniverse.graphics.text.VerticalAlignment;
 import static com.juniverse.graphics.api.Bgi.*;
 
 /**
- * Informe de la configuración tras iniciar el modo gráfico
- * (equivale a {@code ReportStatus} de {@code BGIDEMO.C}).
+ * Report of the configuration after starting the graphics mode
+ * (equivalent to {@code ReportStatus} of {@code BGIDEMO.C}).
  */
 public final class StatusReport {
 

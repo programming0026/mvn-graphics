@@ -1,5 +1,7 @@
 # mvn-graphics
 
+[Read in English](README.en.md)
+
 [![CI](https://github.com/programming0026/mvn-graphics/actions/workflows/ci.yml/badge.svg)](https://github.com/programming0026/mvn-graphics/actions/workflows/ci.yml)
 
 Reescritura en **Java 21** de la biblioteca gráfica **BGI** (`graphics.h`) de Borland

@@ -3,25 +3,25 @@ package com.juniverse.graphics.color;
 import java.util.Arrays;
 
 /**
- * Paleta de 16 entradas que traduce códigos de color BGI a valores ARGB.
+ * 16-entry palette that translates BGI color codes to ARGB values.
  * <p>
- * Su única responsabilidad es la conversión entre códigos de color
- * ({@link ColorCode}) y píxeles ARGB, además de permitir redefinir las
- * entradas (equivalente a {@code setpalette}, {@code setrgbpalette}, etc.).
+ * Its only responsibility is the conversion between color codes
+ * ({@link ColorCode}) and ARGB pixels, plus allowing the entries to be
+ * redefined (equivalent to {@code setpalette}, {@code setrgbpalette}, etc.).
  */
 public final class Palette {
 
-    /** Número de entradas de la paleta (equivale a {@code getpalettesize()}). */
+    /** Number of palette entries (equivalent to {@code getpalettesize()}). */
     public static final int SIZE = BgiColor.MAX_COLOR + 1;
 
     private final int[] entries = new int[SIZE];
 
-    /** Crea una paleta inicializada con los colores por defecto. */
+    /** Creates a palette initialized with the default colors. */
     public Palette() {
         reset();
     }
 
-    /** Restaura los colores VGA por defecto. */
+    /** Restores the default VGA colors. */
     public void reset() {
         for (BgiColor color : BgiColor.values()) {
             entries[color.code()] = color.defaultRgb();
@@ -29,7 +29,7 @@ public final class Palette {
     }
 
     /**
-     * Convierte un código de color (BGI o RGB) a un píxel ARGB opaco.
+     * Converts a color code (BGI or RGB) to an opaque ARGB pixel.
      */
     public int toArgb(int colorCode) {
         int rgb = ColorCode.isBgiColor(colorCode) ? entries[colorCode] : colorCode & ColorCode.RGB_MASK;
@@ -37,9 +37,9 @@ public final class Palette {
     }
 
     /**
-     * Convierte un píxel ARGB al código de color que lo representa: si coincide
-     * con alguna entrada de la paleta se devuelve su índice; en caso contrario
-     * se devuelve el código RGB ({@code 0x03RRGGBB}).
+     * Converts an ARGB pixel to the color code that represents it: if it matches
+     * a palette entry its index is returned; otherwise
+     * the RGB code ({@code 0x03RRGGBB}) is returned.
      */
     public int toColorCode(int argb) {
         int rgb = argb & ColorCode.RGB_MASK;
@@ -51,14 +51,14 @@ public final class Palette {
         return ColorCode.RGB_FLAG | rgb;
     }
 
-    /** Devuelve el valor 0xRRGGBB de un código de color. */
+    /** Returns the 0xRRGGBB value of a color code. */
     public int toRgb(int colorCode) {
         return toArgb(colorCode) & ColorCode.RGB_MASK;
     }
 
     /**
-     * Asigna a la entrada {@code index} el color indicado por {@code colorCode}
-     * (equivalente a {@code setpalette}).
+     * Assigns to entry {@code index} the color given by {@code colorCode}
+     * (equivalent to {@code setpalette}).
      */
     public void setEntry(int index, int colorCode) {
         checkIndex(index);
@@ -68,18 +68,18 @@ public final class Palette {
         entries[index] = rgb;
     }
 
-    /** Asigna un valor RGB a una entrada (equivalente a {@code setrgbpalette}). */
+    /** Assigns an RGB value to an entry (equivalent to {@code setrgbpalette}). */
     public void setRgb(int index, int red, int green, int blue) {
         checkIndex(index);
         entries[index] = ColorCode.rgb(red, green, blue) & ColorCode.RGB_MASK;
     }
 
-    /** Copia de las entradas actuales en formato 0xRRGGBB (equivale a {@code getpalette}). */
+    /** Copy of the current entries in 0xRRGGBB format (equivalent to {@code getpalette}). */
     public int[] entries() {
         return entries.clone();
     }
 
-    /** Reemplaza todas las entradas (equivale a {@code setallpalette}). */
+    /** Replaces all entries (equivalent to {@code setallpalette}). */
     public void setAll(int[] rgbEntries) {
         if (rgbEntries.length != SIZE) {
             throw new IllegalArgumentException("Palette must have " + SIZE + " entries");
@@ -89,7 +89,7 @@ public final class Palette {
         }
     }
 
-    /** Entradas por defecto (equivale a {@code getdefaultpalette}). */
+    /** Default entries (equivalent to {@code getdefaultpalette}). */
     public static int[] defaultEntries() {
         return Arrays.stream(BgiColor.values()).mapToInt(BgiColor::defaultRgb).toArray();
     }

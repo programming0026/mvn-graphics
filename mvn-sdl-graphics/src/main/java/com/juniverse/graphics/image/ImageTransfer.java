@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 /**
- * Implementación de {@link ImageOperations} sobre el lienzo activo.
+ * Implementation of {@link ImageOperations} on the active canvas.
  */
 public final class ImageTransfer implements ImageOperations {
 

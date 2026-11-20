@@ -1,8 +1,8 @@
 package com.juniverse.graphics.input;
 
 /**
- * Manejador de eventos de mouse (equivale a {@code registermousehandler}).
- * Recibe las coordenadas del evento en la ventana.
+ * Mouse event handler (equivalent to {@code registermousehandler}).
+ * Receives the coordinates of the event in the window.
  */
 @FunctionalInterface
 public interface MouseHandler {
